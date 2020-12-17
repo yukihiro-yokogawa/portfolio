@@ -1,0 +1,230 @@
+html {
+  background-color: #f0ffff;
+}
+
+/*FontAwesomeを使用しています。*/
+.header-8 {
+  box-sizing: border-box;
+  width: 100%;
+  height: 120px;
+}
+
+.box {
+  box-sizing: border-box;
+}
+
+/* ========== header ========== */
+.box-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+}
+
+.logo-img {
+  width: 100px;
+}
+
+.sp-nav {
+  display: none;
+}
+
+/* ========== nav ========== */
+.box-nav {
+  width: 100%;
+  height: 40px;
+}
+
+.inner-nav {
+  display: flex;
+  justify-content: center;
+  max-width: 1024px;
+  padding: 0;
+  margin: 0 auto;
+  line-height: 40px;
+  list-style: none;
+}
+
+.menu {
+  position: relative;
+  padding: 0 4em;
+  cursor: pointer;
+}
+
+.menu:not(:first-of-type)::before {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 1px;
+  height: 50%;
+  content: '';
+  background: #3a3a3a;
+}
+
+.menu:hover {
+  opacity: 0.7;
+}
+
+.content_wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  max-width: 800px;
+  padding: 0;
+  margin: 0 auto;
+  line-height: 40px;
+  list-style: none;
+}
+
+.content_big {
+  height: 80%;
+  max-width: 1024px;
+  background-color: white;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.content_small {
+  width: 45%;
+  max-width: 512px;
+  background-color: white;
+  padding: 0;
+  margin: 0 auto;
+  border: solid 1px #beffff;
+  border-radius: 1%;
+  text-align: center;
+}
+
+.borderless_table {
+  margin: auto
+}
+
+table {
+  tbody {
+    td {
+      p {
+          display: table-cell;
+          vertical-align: middle;
+      }
+    }
+  }
+}
+
+.work {
+    max-width: 1024px;
+    table {
+      margin: auto;
+      max-width: 1024px;
+      width: 100%;
+      tbody {
+        tr {
+          th {
+            text-align: center;
+            background-color: #cccccc;
+          }
+        }
+      }
+    }
+  }
+
+/* ========== sp ========== */
+@media screen and (max-width: 480px) {
+  .header-8 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 0.8em;
+  }
+
+  .box-nav {
+    display: none;
+  }
+
+  .sp-nav {
+    display: block;
+  }
+
+  .box-logo {
+    height: 60px;
+  }
+
+  .logo-img {
+    width: 70px;
+  }
+}
+
+//レート評価 変数
+$starFull: 16px;//星1個の幅
+$starHalf: $starFull / 2;//星半分（0.5）の幅
+
+$rate1: $starFull;//星1
+$rate1_5: $starFull + $starHalf;//星1.5
+$rate2: $starFull * 2;//星2
+$rate2_5: ($starFull * 2) + $starHalf;//星2.5
+$rate3: $starFull * 3;//星3
+$rate3_5: ($starFull * 3) + $starHalf;//星3.5
+$rate4: $starFull * 4;//星4
+$rate4_5: ($starFull * 4) + $starHalf;//星4.5
+$rate5 :$starFull * 5;//星5
+
+.rate{
+  position: relative;
+  display: inline-block;
+  width: $starFull * 5;
+  height: $starFull;
+  font-size: $starFull;
+  &:before,&:after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '★★★★★';
+    display: inline-block;
+    height: $starFull;
+    line-height: $starFull;
+  }
+  &:before{
+  color: rgb(197, 197, 197);
+  }
+  &:after{
+  color: #414141;
+  overflow: hidden;
+  white-space: nowrap;//これがないと改行されて星の半分（0.5）が表現できなくなる
+  }
+}
+.rate0:after{//星0
+  width: 0;
+}
+.rate1:after{//星1
+  width: $rate1;
+}
+.rate1_5:after{//星1.5
+  width: $rate1_5;
+}
+.rate2:after{//星2
+  width: $rate2;
+}
+.rate2_5:after{//星2.5
+  width: $rate2_5;
+}
+.rate3:after{//星3
+  width: $rate3;
+}
+.rate3_5:after{//星3.5
+  width: $rate3_5;
+}
+.rate4:after{//星4
+  width: $rate4;
+}
+.rate4_5:after{//星4.5
+  width: $rate4_5;
+}
+.rate5:after{//星5
+  width: $rate5;
+}
+
+.wrap{
+  width: 80%;
+  max-width: 512px;
+  margin: 0 auto;
+}
