@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import Slider from 'react-slick';
 
 const slideshow: React.FC = () => {
@@ -9,26 +10,30 @@ const slideshow: React.FC = () => {
 		slidesToShow: 1,
 		slidesToScroll: 1,
 	};
+
 	return (
 		<>
-			<Slider {...settings}>
+			<Slider {...settings} className="content_big slideShow">
 				<div>
-					<h3>1</h3>
+					<Image src="/img/ancate/ancate_top.png" width={1920} height={1080} />
 				</div>
 				<div>
-					<h3>2</h3>
+					<Image src="/img/ancate/ancate_content.png" width={1920} height={1080} />
 				</div>
 				<div>
-					<h3>3</h3>
+					<Image src="/img/ancate/ancate_edit.png" width={1920} height={1080} />
 				</div>
 				<div>
-					<h3>4</h3>
+					<Image src="/img/ancate/ancate_admin.png" width={1920} height={1080} />
 				</div>
 				<div>
-					<h3>5</h3>
+					<Image src="/img/ancate/ancate_admin_edit.png" width={1920} height={1080} />
 				</div>
 				<div>
-					<h3>6</h3>
+					<Image src="/img/ancate/ancate_userinsert.png" width={1920} height={1080} />
+				</div>
+				<div>
+					<Image src="/img/ancate/ancate_userprofile.png" width={1920} height={1080} />
 				</div>
 			</Slider>
 		</>

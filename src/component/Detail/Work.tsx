@@ -8,14 +8,6 @@ const Work: React.FC = () => {
 				<table>
 					<tbody>
 						<tr>
-							<th scope="col1">サンプル画像</th>
-						</tr>
-						<tr>
-							<td scope="col1">
-								<Image src="/sample.jpg" width={1920} height={1080} />
-							</td>
-						</tr>
-						<tr>
 							<th scope="col1">Git</th>
 						</tr>
 						<tr>
