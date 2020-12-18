@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import Work from '~/component/Detail/Work';
 import SideBar from '~/container/SideBar';
+import { filter } from 'lodash';
+import { Work as WorkType } from '~/Type/Work';
 
 const work = (): JSX.Element => {
-	const [state] = useState([
+	const [worksState] = useState([
 		{
 			projectId: 1,
 			projectName: 'アンケート',
 			sampleImgPathArr: [],
-			gitUrl: '',
+			gitUrl: 'test1',
 			techniqueArr: [
 				{
-					techniqueName: '',
-					version: '',
+					techniqueName: 'Java',
+					version: '11',
+				},
+				{
+					techniqueName: 'PostgreSql',
+					version: '11',
 				},
 			],
 			feature: '' /**機能*/,
@@ -23,11 +29,15 @@ const work = (): JSX.Element => {
 			projectId: 2,
 			projectName: 'ロジカルシンキング',
 			sampleImgPathArr: [],
-			gitUrl: '',
+			gitUrl: 'test2',
 			techniqueArr: [
 				{
-					techniqueName: '',
-					version: '',
+					techniqueName: 'Java',
+					version: '14',
+				},
+				{
+					techniqueName: 'PostgreSql',
+					version: '13',
 				},
 			],
 			feature: '' /**機能*/,
@@ -36,10 +46,19 @@ const work = (): JSX.Element => {
 		},
 	]);
 
+	const [workState, setWorkState] = useState(worksState[0]);
+
+	const handleClickSideBar = (projectId: number) => {
+		const work: WorkType = filter(worksState, (value) => {
+			return value.projectId == projectId;
+		});
+		setWorkState(work[0]);
+	};
+
 	return (
 		<>
-			<SideBar work={state}></SideBar>
-			<Work />
+			<SideBar work={worksState} handleClick={(projectId: number) => handleClickSideBar(projectId)}></SideBar>
+			<Work work={workState} />
 		</>
 	);
 };

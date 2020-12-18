@@ -1,5 +1,6 @@
 export type Works = {
 	work: Array<Work>;
+	handleClick: (arg1: number) => void;
 };
 
 export type Work = {
@@ -12,6 +13,7 @@ export type Work = {
 	point: string /**工夫点*/;
 	reflections: string /**反省点*/;
 };
+
 export type Technique = {
 	techniqueName: string;
 	version: string;
