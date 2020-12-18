@@ -115,6 +115,24 @@ table {
   }
 }
 
+#sidebar{
+	width: 10rem;
+	position: fixed;
+	top: 25%;
+	left: 0px;
+	border: 1px solid #000000;
+  border-radius: 0.2rem;
+  text-align: center;
+  hr{
+    margin:0;
+	  color: #F0F0F0;
+  }
+  div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
 .work {
     max-width: 1024px;
     table {
