@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
 
-const slideshow: React.FC = () => {
+const slideshow = (props: { imgs: Array<string> }): JSX.Element => {
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -14,27 +14,13 @@ const slideshow: React.FC = () => {
 	return (
 		<>
 			<Slider {...settings} className="content_big slideShow">
-				<div>
-					<Image src="/img/ancate/ancate_top.png" width={1920} height={1080} />
-				</div>
-				<div>
-					<Image src="/img/ancate/ancate_content.png" width={1920} height={1080} />
-				</div>
-				<div>
-					<Image src="/img/ancate/ancate_edit.png" width={1920} height={1080} />
-				</div>
-				<div>
-					<Image src="/img/ancate/ancate_admin.png" width={1920} height={1080} />
-				</div>
-				<div>
-					<Image src="/img/ancate/ancate_admin_edit.png" width={1920} height={1080} />
-				</div>
-				<div>
-					<Image src="/img/ancate/ancate_userinsert.png" width={1920} height={1080} />
-				</div>
-				<div>
-					<Image src="/img/ancate/ancate_userprofile.png" width={1920} height={1080} />
-				</div>
+				{props.imgs.map((value, key) => {
+					return (
+						<div key={key}>
+							<Image loading="lazy" src={value} width={1920} height={1080} />
+						</div>
+					);
+				})}
 			</Slider>
 		</>
 	);
