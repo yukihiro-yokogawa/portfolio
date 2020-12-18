@@ -1,14 +1,13 @@
 import React from 'react';
-import { forEach } from 'lodash';
+import { SideBars } from '~/type/SideBar';
 
-const sideBar: React.FC = (props) => {
+const sideBar = (props: SideBars): JSX.Element => {
 	return (
 		<>
-			{/* バックエンドAPIから取得予定 */}
 			<nav id="sidebar">
-				<div data-num="1">1 アンケート</div>
-				<hr />
-				<div>2 ロジカルシンキング</div>
+				{props.sideBar.map((value) => {
+					return <div key={value.id}>{value.name}</div>;
+				})}
 			</nav>
 		</>
 	);
