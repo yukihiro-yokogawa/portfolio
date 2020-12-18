@@ -1,6 +1,7 @@
 import React from 'react';
+import { Work as WorkType } from '~/Type/Work';
 
-const Work: React.FC = () => {
+const Work = (props: { work: WorkType }): JSX.Element => {
 	return (
 		<>
 			<div className="content_big work">
@@ -10,31 +11,41 @@ const Work: React.FC = () => {
 							<th scope="col1">Git</th>
 						</tr>
 						<tr>
-							<td scope="col1"></td>
+							<td scope="col1">{props.work.gitUrl}</td>
 						</tr>
 						<tr>
 							<th scope="col1">使用技術</th>
 						</tr>
 						<tr>
-							<td scope="col1"></td>
+							<td scope="col1">
+								{props.work.techniqueArr.map((value, key) => {
+									return <div key={key}>{`${value.techniqueName}${value.version}`}</div>;
+								})}
+							</td>
 						</tr>
 						<tr>
 							<th scope="col1">機能</th>
 						</tr>
 						<tr>
-							<td scope="col1"></td>
+							<td scope="col1">
+								<div>{props.work.feature}</div>
+							</td>
 						</tr>
 						<tr>
-							<th scope="col1">工夫</th>
+							<th scope="col1">工夫点</th>
 						</tr>
 						<tr>
-							<td scope="col1"></td>
+							<td scope="col1">
+								<div>{props.work.point}</div>
+							</td>
 						</tr>
 						<tr>
-							<th scope="col1">反省</th>
+							<th scope="col1">反省点</th>
 						</tr>
 						<tr>
-							<td scope="col1"></td>
+							<td scope="col1">
+								<div>{props.work.reflections}</div>
+							</td>
 						</tr>
 					</tbody>
 				</table>

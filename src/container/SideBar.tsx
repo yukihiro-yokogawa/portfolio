@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import SideBar from '~/component/SideBar';
-import { Works } from '~/type/Work';
+import { Works } from '~/Type/Work';
 
 const sideBar = (props: Works): JSX.Element => {
 	const sideBarNameList = useMemo(() => createSideBar(), []);
@@ -19,7 +19,7 @@ const sideBar = (props: Works): JSX.Element => {
 
 	return (
 		<>
-			<SideBar sideBar={sideBarNameList} />
+			<SideBar sideBar={sideBarNameList} handleClick={(projectId: number) => props.handleClick(projectId)} />
 		</>
 	);
 };
