@@ -116,7 +116,7 @@ table {
 }
 
 #sidebar{
-	width: 10rem;
+	width: 15rem;
 	position: fixed;
 	top: 25%;
 	left: 0px;
@@ -128,8 +128,14 @@ table {
 	  color: #F0F0F0;
   }
   div {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: #516bff;
+      color: #FFF;
+      transition: 0.3s;
+    }
   }
 }
 
