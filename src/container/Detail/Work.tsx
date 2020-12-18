@@ -21,9 +21,9 @@ const work = (): JSX.Element => {
 					version: '11',
 				},
 			],
-			feature: '' /**機能*/,
-			point: '' /**工夫点*/,
-			reflections: '' /**反省点*/,
+			feature: 'アンケートアプリの機能' /**機能*/,
+			point: 'アンケートアプリの工夫点' /**工夫点*/,
+			reflections: 'アンケートアプリの反省点' /**反省点*/,
 		},
 		{
 			projectId: 2,
@@ -40,9 +40,9 @@ const work = (): JSX.Element => {
 					version: '13',
 				},
 			],
-			feature: '' /**機能*/,
-			point: '' /**工夫点*/,
-			reflections: '' /**反省点*/,
+			feature: 'ロジカルシンキングアプリの機能' /**機能*/,
+			point: 'ロジカルシンキングアプリの工夫点' /**工夫点*/,
+			reflections: 'ロジカルシンキングアプリの反省点' /**反省点*/,
 		},
 	]);
 
