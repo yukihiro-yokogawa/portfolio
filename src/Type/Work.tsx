@@ -1,3 +1,7 @@
+export type Works = {
+	work: Array<Work>;
+};
+
 export type Work = {
 	projectId: number;
 	projectName: string;
