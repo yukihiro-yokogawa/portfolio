@@ -1,13 +1,15 @@
 import React from 'react';
 import Work from '~/container/Detail/Work';
-import Slideshow from '~/component/Slideshow';
+import Slideshow from '~/container/Slideshow';
 
 const work: React.FC = () => {
 	return (
-		<div>
-			<Slideshow />
-			<Work />
-		</div>
+		<>
+			<div>
+				<Slideshow />
+				<Work />
+			</div>
+		</>
 	);
 };
 
