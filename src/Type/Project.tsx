@@ -1,34 +1,34 @@
-import { Technique } from '~/Type/Technique';
-import { About } from '~/Type/About';
+import { TechniqueState } from '~/Type/Technique';
+import { AboutState } from '~/Type/About';
 
-export type projects = {
-	project: Array<Project>;
+export type ProjectStates = {
+	project: Array<ProjectState>;
 };
 
-type Project = {
+type ProjectState = {
 	id: number;
 	name: string;
 	startDate: string;
 	endDate: string;
 	addDate: string;
-	projectTechniques: Array<ProjectTechnique>;
-	projectAbouts: Array<ProjectAbout>;
-	projectImages: Array<ProjectImage>;
+	projectTechniques: Array<ProjectTechniqueState>;
+	projectAbouts: Array<ProjectAboutState>;
+	projectImages: Array<ProjectImageState>;
 };
 
-type ProjectTechnique = {
+type ProjectTechniqueState = {
 	id: number;
-	technique: Technique;
+	technique: TechniqueState;
 };
 
-type ProjectAbout = {
+type ProjectAboutState = {
 	id: number;
 	description: string;
 	displayPrder: number;
-	about: About;
+	about: AboutState;
 };
 
-type ProjectImage = {
+type ProjectImageState = {
 	id: number;
 	image: string;
 };

@@ -3,7 +3,7 @@ import Work from '~/component/Detail/Work';
 import Slideshow from '~/component/Slideshow';
 import SideBar from '~/container/SideBar';
 import { filter } from 'lodash';
-import { Work as WorkType } from '~/Type/Work';
+import { WorkState } from '~/Type/Work';
 
 const work = (): JSX.Element => {
 	const [worksState] = useState([
@@ -95,7 +95,7 @@ const work = (): JSX.Element => {
 	const [workState, setWorkState] = useState(worksState[0]);
 
 	const handleClickSideBar = (projectId: number) => {
-		const work: WorkType = filter(worksState, (value) => {
+		const work: WorkState = filter(worksState, (value) => {
 			return value.projectId == projectId;
 		});
 		setWorkState(work[0]);

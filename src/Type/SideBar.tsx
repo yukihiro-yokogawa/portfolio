@@ -1,9 +1,9 @@
-export type SideBars = {
-	sideBar: Array<SideBar>;
+export type SideBarStates = {
+	sideBar: Array<SideBarState>;
 	handleClick: (arg1: number) => void;
 };
 
-type SideBar = {
+type SideBarState = {
 	id: number;
 	name: string;
 };

@@ -1,4 +1,4 @@
-export type About = {
+export type AboutState = {
 	id: number;
 	name: string;
 };

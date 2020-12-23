@@ -1,20 +1,20 @@
-export type Works = {
-	work: Array<Work>;
+export type WorkStates = {
+	work: Array<WorkState>;
 	handleClick: (arg1: number) => void;
 };
 
-export type Work = {
+export type WorkState = {
 	projectId: number;
 	projectName: string;
 	sampleImgPathArr: Array<string>;
 	gitUrl: string;
-	techniqueArr: Array<Technique>;
+	techniqueArr: Array<TechniqueState>;
 	feature: string /**機能*/;
 	point: string /**工夫点*/;
 	reflections: string /**反省点*/;
 };
 
-export type Technique = {
+export type TechniqueState = {
 	techniqueName: string;
 	version: string;
 };
