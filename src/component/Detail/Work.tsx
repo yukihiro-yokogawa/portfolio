@@ -1,7 +1,7 @@
 import React from 'react';
-import { Work as WorkType } from '~/Type/Work';
+import { WorkState } from '~/Type/Work';
 
-const Work = (props: { work: WorkType }): JSX.Element => {
+const Work = (props: { work: WorkState }): JSX.Element => {
 	return (
 		<>
 			<div className="content_big work">

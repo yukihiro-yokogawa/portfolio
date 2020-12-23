@@ -1,7 +1,7 @@
 import React from 'react';
-import { SideBars } from '~/Type/SideBar';
+import { SideBarStates } from '~/Type/SideBar';
 
-const sideBar = (props: SideBars): JSX.Element => {
+const sideBar = (props: SideBarStates): JSX.Element => {
 	return (
 		<>
 			<nav id="sidebar">
