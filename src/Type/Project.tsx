@@ -2,15 +2,16 @@ import { TechniqueState } from '~/Type/Technique';
 import { AboutState } from '~/Type/About';
 
 export type ProjectStates = {
-	project: Array<ProjectState>;
+	projects: Array<ProjectState>;
 };
 
-type ProjectState = {
+export type ProjectState = {
 	id: number;
 	name: string;
 	startDate: string;
 	endDate: string;
 	addDate: string;
+	gitUrl: string;
 	projectTechniques: Array<ProjectTechniqueState>;
 	projectAbouts: Array<ProjectAboutState>;
 	projectImages: Array<ProjectImageState>;
@@ -24,11 +25,11 @@ type ProjectTechniqueState = {
 type ProjectAboutState = {
 	id: number;
 	description: string;
-	displayPrder: number;
+	displayOrder: number;
 	about: AboutState;
 };
 
-type ProjectImageState = {
+export type ProjectImageState = {
 	id: number;
 	image: string;
 };
