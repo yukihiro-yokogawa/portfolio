@@ -1,7 +1,7 @@
 import React from 'react';
-import { WorkState } from '~/Type/Work';
+import { ProjectState } from '~/Type/Project';
 
-const Work = (props: { work: WorkState }): JSX.Element => {
+const Work = (props: { project: ProjectState }): JSX.Element => {
 	return (
 		<>
 			<div className="content_big work">
@@ -11,42 +11,33 @@ const Work = (props: { work: WorkState }): JSX.Element => {
 							<th scope="col1">Git</th>
 						</tr>
 						<tr>
-							<td scope="col1">{props.work.gitUrl}</td>
+							<td scope="col1">{props.project?.gitUrl}</td>
 						</tr>
 						<tr>
 							<th scope="col1">使用技術</th>
 						</tr>
 						<tr>
 							<td scope="col1">
-								{props.work.techniqueArr.map((value, key) => {
-									return <div key={key}>{`${value.techniqueName}${value.version}`}</div>;
+								{props.project?.projectTechniques?.map((value, key) => {
+									return <div key={key}>{`${value.technique.name}${value.technique.version}`}</div>;
 								})}
 							</td>
 						</tr>
-						<tr>
-							<th scope="col1">機能</th>
-						</tr>
-						<tr>
-							<td scope="col1">
-								<div>{props.work.feature}</div>
-							</td>
-						</tr>
-						<tr>
-							<th scope="col1">工夫点</th>
-						</tr>
-						<tr>
-							<td scope="col1">
-								<div>{props.work.point}</div>
-							</td>
-						</tr>
-						<tr>
-							<th scope="col1">反省点</th>
-						</tr>
-						<tr>
-							<td scope="col1">
-								<div>{props.work.reflections}</div>
-							</td>
-						</tr>
+
+						{props.project?.projectAbouts?.map((value, key) => {
+							return (
+								<>
+									<tr key={key}>
+										<th scope="col1">{value.about.name}</th>
+									</tr>
+									<tr>
+										<td scope="col1">
+											<div>{value.description}</div>
+										</td>
+									</tr>
+								</>
+							);
+						})}
 					</tbody>
 				</table>
 			</div>

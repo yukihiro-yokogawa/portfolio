@@ -9,7 +9,8 @@
     ],
     "plugins": [
         "@typescript-eslint",
-        "react"
+        "react",
+        "react-hooks"
     ],
     "parser": "@typescript-eslint/parser",
     "env": {
@@ -27,6 +28,7 @@
         "react/prop-types": "off",
         "react/react-in-jsx-scope": "off",
         "@typescript-eslint/no-explicit-any": "off",
+        "react-hooks/exhaustive-deps": "warn",
         "prettier/prettier": [
             "error",
             {

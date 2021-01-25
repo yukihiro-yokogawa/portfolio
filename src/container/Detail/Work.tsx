@@ -1,112 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Work from '~/component/Detail/Work';
 import Slideshow from '~/component/Slideshow';
 import SideBar from '~/container/SideBar';
 import { filter } from 'lodash';
-import { WorkState } from '~/Type/Work';
+import { ProjectState } from '~/Type/Project';
+import { getProjectsAsync } from '~/ducks/ProjectSlice';
+import { useProjectState } from '~/ducks/selector';
 
 const work = (): JSX.Element => {
-	const [worksState] = useState([
-		{
-			projectId: 1,
-			projectName: 'アンケート',
-			sampleImgPathArr: [
-				'/img/ancate/ancate_top.png',
-				'/img/ancate/ancate_content.png',
-				'/img/ancate/ancate_edit.png',
-				'/img/ancate/ancate_admin.png',
-				'/img/ancate/ancate_admin_edit.png',
-				'/img/ancate/ancate_userinsert.png',
-				'/img/ancate/ancate_userprofile.png',
-			],
-			gitUrl: 'test1',
-			techniqueArr: [
-				{
-					techniqueName: 'Java',
-					version: '11',
-				},
-				{
-					techniqueName: 'Thymeleaf',
-					version: '3',
-				},
-				{
-					techniqueName: 'SpringSecurity',
-					version: '',
-				},
-				{
-					techniqueName: 'PostgreSql',
-					version: '11',
-				},
-				{
-					techniqueName: 'HTML',
-					version: '5',
-				},
-				{
-					techniqueName: 'CSS',
-					version: '3',
-				},
-				{
-					techniqueName: 'JavaScript',
-					version: '',
-				},
-			],
-			feature: 'アンケートアプリの機能' /**機能*/,
-			point: 'アンケートアプリの工夫点' /**工夫点*/,
-			reflections: 'アンケートアプリの反省点' /**反省点*/,
-		},
-		{
-			projectId: 2,
-			projectName: 'ロジカルシンキング',
-			sampleImgPathArr: [
-				'/img/logical_thinking/step1.png',
-				'/img/logical_thinking/step2.png',
-				'/img/logical_thinking/step2 pyramidtree.png',
-				'/img/logical_thinking/step3.png',
-			],
-			gitUrl: 'test2',
-			techniqueArr: [
-				{
-					techniqueName: 'Java',
-					version: '14',
-				},
-				{
-					techniqueName: 'PostgreSql',
-					version: '13',
-				},
-				{
-					techniqueName: 'HTML',
-					version: '5',
-				},
-				{
-					techniqueName: 'CSS',
-					version: '3',
-				},
-				{
-					techniqueName: 'JavaScript',
-					version: '',
-				},
-			],
-			feature: 'ロジカルシンキングアプリの機能' /**機能*/,
-			point: 'ロジカルシンキングアプリの工夫点' /**工夫点*/,
-			reflections: 'ロジカルシンキングアプリの反省点' /**反省点*/,
-		},
-	]);
+	// dispatch関数 アクションクリエイターで実装されるアクションを実行させる.
+	const dispatch = useDispatch();
 
-	const [workState, setWorkState] = useState(worksState[0]);
+	// useEffectでアクションを実行させる関数をdispatchすることで再レンダリングされる.
+	useEffect(() => {
+		dispatch(getProjectsAsync());
+	}, [dispatch]);
+
+	const { projects } = useProjectState();
+	const [projectState, setProjectState] = useState<ProjectState>();
 
 	const handleClickSideBar = (projectId: number) => {
-		const work: WorkState = filter(worksState, (value) => {
-			return value.projectId == projectId;
+		const project: ProjectState = filter(projects, (value) => {
+			return value.id == projectId;
 		});
-		setWorkState(work[0]);
+		setProjectState({
+			...projectState,
+			id: project[0].id,
+			name: project[0].name,
+			startDate: project[0].startDate,
+			endDate: project[0].endDate,
+			addDate: project[0].addDate,
+			gitUrl: project[0].gitUrl,
+			projectTechniques: project[0].projectTechniques,
+			projectAbouts: project[0].projectAbouts,
+			projectImages: project[0].projectImages,
+		});
 	};
 
 	return (
-		<>
-			<SideBar work={worksState} handleClick={(projectId: number) => handleClickSideBar(projectId)} />
-			<Slideshow imgs={workState.sampleImgPathArr} />
-			<Work work={workState} />
-		</>
+		<div>
+			<SideBar projects={projects} sideBar={null} handleClick={(projectId: number) => handleClickSideBar(projectId)} />
+			<Slideshow imgs={projectState?.projectImages} />
+			<Work project={projectState} />
+		</div>
 	);
 };
 

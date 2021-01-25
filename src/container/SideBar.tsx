@@ -1,16 +1,14 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import SideBar from '~/component/SideBar';
-import { Works } from '~/Type/Work';
+import { SideBarStates } from '~/Type/SideBar';
 
-const sideBar = (props: Works): JSX.Element => {
-	const sideBarNameList = useMemo(() => createSideBar(), []);
-
+const sideBar = (props: SideBarStates): JSX.Element => {
 	function createSideBar() {
 		const sideBarWorks = [];
-		props.work.map((work) => {
+		props.projects.map((project) => {
 			const sideBarWork = {
-				id: work.projectId,
-				name: work.projectName,
+				id: project.id,
+				name: project.name,
 			};
 			sideBarWorks.push(sideBarWork);
 		});
@@ -19,7 +17,11 @@ const sideBar = (props: Works): JSX.Element => {
 
 	return (
 		<>
-			<SideBar sideBar={sideBarNameList} handleClick={(projectId: number) => props.handleClick(projectId)} />
+			<SideBar
+				projects={props.projects}
+				sideBar={createSideBar()}
+				handleClick={(projectId: number) => props.handleClick(projectId)}
+			/>
 		</>
 	);
 };
