@@ -1,7 +1,7 @@
 import { Store, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import { configureStore, EnhancedStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import projectSlice, { initialState as projectState } from './ProjectSlice';
+import projectSlice, { initialState as projectState } from './Slice/ProjectSlice';
 
 const rootReducer = combineReducers({
 	portfolio: projectSlice.reducer,

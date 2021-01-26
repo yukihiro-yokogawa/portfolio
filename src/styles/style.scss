@@ -156,6 +156,12 @@ table {
     }
   }
 
+.add_button {
+  	position: 'fixed';
+		right: 12;
+		bottom: 12;
+}
+
 /* ========== sp ========== */
 @media screen and (max-width: 480px) {
   .header-8 {
