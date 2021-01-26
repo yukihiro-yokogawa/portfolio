@@ -1,46 +1,61 @@
 import React from 'react';
 import { ProjectState } from '~/Type/Project';
+import Button from '@material-ui/core/Button';
+import { Box, Container } from '@material-ui/core';
+import { Table, TableBody, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+
+import ContentAddButton from '../ContentAddButton';
 
 const Work = (props: { project: ProjectState }): JSX.Element => {
 	return (
 		<>
-			<div className="content_big work">
-				<table>
-					<tbody>
-						<tr>
-							<th scope="col1">Git</th>
-						</tr>
-						<tr>
-							<td scope="col1">{props.project?.gitUrl}</td>
-						</tr>
-						<tr>
-							<th scope="col1">使用技術</th>
-						</tr>
-						<tr>
-							<td scope="col1">
+			<ContentAddButton linkHref="/Work/create" linkAs="/work/new" />
+			<Container>
+				<Table>
+					<TableBody displayRowCheckbox={false}>
+						<TableRow>
+							<TableHeaderColumn scope="col1">Git</TableHeaderColumn>
+						</TableRow>
+						<TableRow>
+							<TableRowColumn scope="col1">{props.project?.gitUrl}</TableRowColumn>
+						</TableRow>
+						<TableRow>
+							<TableHeaderColumn scope="col1">使用技術</TableHeaderColumn>
+						</TableRow>
+						<TableRow>
+							<TableRowColumn scope="col1">
 								{props.project?.projectTechniques?.map((value, key) => {
 									return <div key={key}>{`${value.technique.name}${value.technique.version}`}</div>;
 								})}
-							</td>
-						</tr>
-
+							</TableRowColumn>
+						</TableRow>
 						{props.project?.projectAbouts?.map((value, key) => {
 							return (
-								<>
-									<tr key={key}>
-										<th scope="col1">{value.about.name}</th>
-									</tr>
-									<tr>
-										<td scope="col1">
-											<div>{value.description}</div>
-										</td>
-									</tr>
-								</>
+								<Box
+									component={() => {
+										return (
+											<>
+												<TableRow>
+													<TableHeaderColumn scope="col1">{value.about.name}</TableHeaderColumn>
+												</TableRow>
+												<TableRow>
+													<TableRowColumn scope="col1">
+														<div>{value.description}</div>
+													</TableRowColumn>
+												</TableRow>
+											</>
+										);
+									}}
+									key={key}
+								></Box>
 							);
 						})}
-					</tbody>
-				</table>
-			</div>
+					</TableBody>
+				</Table>
+				<Button variant="contained" color="primary" size="large">
+					edit
+				</Button>
+			</Container>
 		</>
 	);
 };

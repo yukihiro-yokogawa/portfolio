@@ -1,18 +1,24 @@
 import React from 'react';
 import { SideBarStates } from '~/Type/SideBar';
+import { List, ListItem, ListItemText } from '@material-ui/core';
 
 const sideBar = (props: SideBarStates): JSX.Element => {
 	return (
 		<>
-			<nav id="sidebar">
+			<List id="sidebar" component="nav">
 				{props.sideBar.map((value) => {
 					return (
-						<div key={value.id} onClick={() => props.handleClick(value.id)}>
-							{value.name}
-						</div>
+						<ListItem
+							key={value.id}
+							button
+							selected={props.selectedIndex === value.id}
+							onClick={() => props.handleClick(value.id)}
+						>
+							<ListItemText primary={value.name} />
+						</ListItem>
 					);
 				})}
-			</nav>
+			</List>
 		</>
 	);
 };

@@ -20,6 +20,7 @@ const sideBar = (props: SideBarStates): JSX.Element => {
 			<SideBar
 				projects={props.projects}
 				sideBar={createSideBar()}
+				selectedIndex={props.selectedIndex}
 				handleClick={(projectId: number) => props.handleClick(projectId)}
 			/>
 		</>
