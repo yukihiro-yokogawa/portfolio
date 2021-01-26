@@ -7,6 +7,12 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import createStore from '~/ducks/CreateStore';
 
+/**
+ *
+ *
+ * @param {AppProps} { Component, pageProps }
+ * @return {*}  {JSX.Element}
+ */
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
 	return (
 		<Provider store={createStore()}>
