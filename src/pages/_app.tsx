@@ -6,6 +6,7 @@ import '~/styles/style.scss';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import createStore from '~/ducks/CreateStore';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 /**
  *
@@ -15,10 +16,12 @@ import createStore from '~/ducks/CreateStore';
  */
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
 	return (
-		<Provider store={createStore()}>
-			<Header />
-			<Component {...pageProps}></Component>
-		</Provider>
+		<MuiThemeProvider>
+			<Provider store={createStore()}>
+				<Header />
+				<Component {...pageProps}></Component>
+			</Provider>
+		</MuiThemeProvider>
 	);
 };
 
