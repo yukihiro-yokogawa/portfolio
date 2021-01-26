@@ -1,9 +1,12 @@
-export type SideBars = {
-	sideBar: Array<SideBar>;
+import { ProjectState } from './Project';
+
+export type SideBarStates = {
+	projects: Array<ProjectState>;
+	sideBar: Array<SideBarState>;
 	handleClick: (arg1: number) => void;
 };
 
-type SideBar = {
+type SideBarState = {
 	id: number;
 	name: string;
 };
