@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ProjectStates } from '~/Type/Project';
 
+// デフォルトのstate
 export const initialState: ProjectStates = {
 	projects: [],
 };
