@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Work from '~/component/Detail/Work';
+import Work from '~/component/Work/Work';
 import Slideshow from '~/component/Slideshow';
 import SideBar from '~/container/SideBar';
 import { filter } from 'lodash';

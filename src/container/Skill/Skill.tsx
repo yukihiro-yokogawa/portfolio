@@ -1,5 +1,5 @@
 import React from 'react';
-import Skill from '~/component/Detail/Skill';
+import Skill from '~/component/Skill/Skill';
 
 const skill: React.FC = () => {
 	return (
