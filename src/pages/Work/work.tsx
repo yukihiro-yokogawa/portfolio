@@ -1,5 +1,5 @@
 import React from 'react';
-import Work from '~/container/Detail/Work';
+import Work from '~/container/Work/Work';
 
 const work: React.FC = () => {
 	return (
