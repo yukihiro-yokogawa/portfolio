@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ProjectStates } from '~/Type/Project';
+import { ProjectState, ProjectStates } from '~/Type/Project';
 
 // デフォルトのstate
 export const initialState: ProjectStates = {
@@ -19,10 +19,14 @@ const projectSlice = createSlice({
 		getProjectFailure: (state) => ({
 			...state,
 		}),
+		postProjectRequest: (state, action: PayloadAction<ProjectState>) => ({
+			...state,
+			projects: state.projects.concat(action.payload),
+		}),
 	},
 });
 
-export const { getProjectRequest, getProjectFailure } = projectSlice.actions;
+export const { getProjectRequest, getProjectFailure, postProjectRequest } = projectSlice.actions;
 
 export default projectSlice;
 
@@ -34,4 +38,11 @@ export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Project
 		};
 		dispatch(getProjectRequest(projects));
 	});
+};
+
+export const postProjectAsync = (project: ProjectState) => async (
+	dispatch: (arg0: { payload: ProjectState; type: string }) => void,
+): Promise<void> => {
+	axios.post('/api/project/post', project);
+	dispatch(postProjectRequest(project));
 };
