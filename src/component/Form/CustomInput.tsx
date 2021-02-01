@@ -3,17 +3,32 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert } from '@material-ui/lab';
 import { CustomInputState } from '~/Type/Form';
+import { makeStyles } from '@material-ui/core';
+import { createStyles } from '@material-ui/core';
 
+/**
+ * Material UiのTextFieleコンポーネントをラッピングしたカスタムコンポーネント.
+ *
+ * @param {CustomInputState} props テキストフィールド用のバリデーション等のプロパティ
+ * @return {*}  {JSX.Element} テキストフィールドコンポーネント
+ */
 const CustomInput = (props: CustomInputState): JSX.Element => {
+	const useStyles = makeStyles(() =>
+		createStyles({
+			textField: props.customStyle,
+		}),
+	);
+
+	// react-hook-formのコンポーネント
 	const { register, watch } = useForm();
+	// Errorバリデーション用state
 	const [errors, setError] = useState({
 		requiredError: false,
 		lengthError: false,
 	});
-
+	// カスタムバリデーター(必須, 長さ)
 	const handleChangeTextField = () => {
 		const value = watch(props.label);
-		console.log(value.length);
 		if (props.required && value.length == 0) {
 			setError({
 				...errors,
@@ -35,13 +50,12 @@ const CustomInput = (props: CustomInputState): JSX.Element => {
 
 	return (
 		<TextField
-			id="standard-full-width"
-			type="text"
-			label={`${props.label} ${props.required ? '(必須)' : ''} ${watch(props.label)?.length ? watch(props.label).length : '0'}/${
-				props.length
+			id="outlined-margin-dense"
+			label={`${props.label} ${props.required ? '(必須)' : ''}${
+				props.length != 0 ? ` ${watch(props.label)?.length ? watch(props.label).length : '0'}/${props.length}` : ''
 			}`}
 			style={{ margin: 8 }}
-			placeholder="Placeholder"
+			placeholder={props.placeholder}
 			fullWidth
 			margin="normal"
 			InputLabelProps={{
@@ -55,6 +69,7 @@ const CustomInput = (props: CustomInputState): JSX.Element => {
 			multiline={props.length < 100 || props.url ? false : true}
 			error={errors.requiredError || errors.lengthError ? true : false}
 			onChange={handleChangeTextField}
+			className={useStyles().textField}
 		/>
 	);
 };
