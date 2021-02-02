@@ -1,45 +1,16 @@
-import React, { useEffect, useState } from 'react';
 import CustomInput from '../Form/CustomInput';
 import { Box, Button, Container } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { getAboutsAsync } from '~/ducks/Slice/AboutSlice';
-import { useAboutState } from '~/ducks/selector';
-import { CustomSelectField } from '../Form/CustomSelectField';
-import _ from 'lodash';
+import CustomSelectField from '../Form/CustomSelectField';
+import { WorkCreateState } from '~/Type/Work';
 
 /**
- * Work新規追加フォーム.
+ * Work新規追加フォームのViewコンポーネント.
  *
- * @return {*}  {JSX.Element} Work新規追加フォーム
+ * @param {WorkCreateState} props
+ * @return {*}  {JSX.Element}
  */
-const WorkCreate = (): JSX.Element => {
-	const [techniqueFieldList, setTechniqueList] = useState(['techniqueField-0']);
-
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(getAboutsAsync());
-	}, [dispatch]);
-
-	const { abouts } = useAboutState();
-
-	console.log(abouts);
-
-	const createAboutsArr = () => {
-		const aboutsArr = [];
-		_.forEach(abouts, (about) => {
-			aboutsArr.push(about.name);
-		});
-		return aboutsArr;
-	};
-
-	/**
-	 * 技術新規追加フォーム増加イベント.
-	 */
-	const handleClickAddTechnique = () => {
-		const newTehcniqueField = `techniqueField-${techniqueFieldList.length}`;
-		setTechniqueList([...techniqueFieldList, newTehcniqueField]);
-	};
+const WorkCreate = (props: WorkCreateState): JSX.Element => {
+	const { abouts, techniqueFieldList, aboutFieldList, handleClickAddTechnique, handleClickAddAbout } = props;
 
 	return (
 		<>
@@ -54,7 +25,7 @@ const WorkCreate = (): JSX.Element => {
 						customStyle={null}
 					/>
 					{techniqueFieldList.map((index) => (
-						<Box width={1} display="flex" justifyContent="center" key={index}>
+						<Box width={1} display="flex" key={index}>
 							<CustomInput
 								label="UseTechnique"
 								required={true}
@@ -84,7 +55,18 @@ const WorkCreate = (): JSX.Element => {
 						placeholder="GitのURLを入力してください"
 						customStyle={null}
 					/>
-					<CustomSelectField label="ProjectAbouts" selectValue={createAboutsArr()} customStyle={null} />
+					<CustomSelectField label="ProjectAbouts" selectValue={abouts} customStyle={null} handleClick={handleClickAddAbout} />
+					{aboutFieldList.map((value) => (
+						<CustomInput
+							key={value}
+							label={value}
+							required={true}
+							length={512}
+							url={false}
+							placeholder={`${value}を入力してください`}
+							customStyle={null}
+						/>
+					))}
 					<Button style={{ margin: 8 }} variant="contained" color="primary" size="medium">
 						Submit
 					</Button>

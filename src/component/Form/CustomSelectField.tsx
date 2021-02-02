@@ -1,9 +1,14 @@
 import { Chip, createStyles, Input, InputLabel, makeStyles, MenuItem, Select, Theme, useTheme } from '@material-ui/core';
-import { Container } from 'next/app';
 import React, { useState } from 'react';
 import { CustomSelectFieldState } from '~/Type/Form';
 
-export const CustomSelectField = (props: CustomSelectFieldState): JSX.Element => {
+/**
+ * Material UiのSelect関係コンポーネントをラッピングしたカスタムコンポーネント.
+ *
+ * @param {CustomSelectFieldState} props
+ * @return {*}  {JSX.Element}
+ */
+const CustomSelectField = (props: CustomSelectFieldState): JSX.Element => {
 	const useStyles = makeStyles((theme: Theme) =>
 		createStyles({
 			formControl: {
@@ -47,6 +52,7 @@ export const CustomSelectField = (props: CustomSelectFieldState): JSX.Element =>
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
 		setSelectedValue(event.target.value as string[]);
+		props.handleClick(event.target.value as string[]);
 	};
 
 	return (
@@ -84,3 +90,5 @@ export const CustomSelectField = (props: CustomSelectFieldState): JSX.Element =>
 		</>
 	);
 };
+
+export default CustomSelectField;
