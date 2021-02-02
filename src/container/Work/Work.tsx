@@ -8,6 +8,11 @@ import { ProjectState } from '~/Type/Project';
 import { getProjectsAsync } from '~/ducks/Slice/ProjectSlice';
 import { useProjectState } from '~/ducks/selector';
 
+/**
+ * プロジェクト概要表示のロジックコンポーネント.
+ *
+ * @return {*}  {JSX.Element}
+ */
 const work = (): JSX.Element => {
 	// dispatch関数 アクションクリエイターで実装されるアクションを実行させる.
 	const dispatch = useDispatch();

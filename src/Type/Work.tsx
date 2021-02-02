@@ -18,3 +18,11 @@ export type TechniqueState = {
 	techniqueName: string;
 	version: string;
 };
+
+export type WorkCreateState = {
+	abouts: Array<string>;
+	techniqueFieldList: string[];
+	aboutFieldList: string[];
+	handleClickAddTechnique: () => void;
+	handleClickAddAbout: (values: string[]) => void;
+};

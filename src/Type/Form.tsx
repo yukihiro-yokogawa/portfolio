@@ -11,4 +11,5 @@ export type CustomSelectFieldState = {
 	label: string;
 	selectValue: Array<any>;
 	customStyle: Record<string | number | symbol, any>;
+	handleClick: (values: string[]) => void;
 };
