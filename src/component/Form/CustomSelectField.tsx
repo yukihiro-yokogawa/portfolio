@@ -48,7 +48,7 @@ const CustomSelectField = (props: CustomSelectFieldState): JSX.Element => {
 
 	const theme = useTheme();
 	const classes = useStyles();
-	const [selectedValue, setSelectedValue] = useState<string[]>([]);
+	const [selectedValue, setSelectedValue] = useState<string[]>(props.editSelectValue as string[]);
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
 		setSelectedValue(event.target.value as string[]);
