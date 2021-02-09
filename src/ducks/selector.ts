@@ -1,6 +1,11 @@
 import { useSelector } from 'react-redux';
-import { PortfolioState } from '~/Type/Portfolio';
+import { AboutStates } from '~/Type/About';
+import { ProjectStates } from '~/Type/Project';
 
-export const useProjectState = (): PortfolioState => {
-	return useSelector((state: { portfolio: PortfolioState }) => state.portfolio);
+export const useProjectStates = (): ProjectStates => {
+	return useSelector((state: { projects: ProjectStates }) => state.projects);
+};
+
+export const useAboutState = (): AboutStates => {
+	return useSelector((state: { abouts: AboutStates }) => state.abouts);
 };

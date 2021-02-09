@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Work from '~/component/Detail/Work';
+import Work from '~/component/Work/Work';
 import Slideshow from '~/component/Slideshow';
 import SideBar from '~/container/SideBar';
 import { filter } from 'lodash';
 import { ProjectState } from '~/Type/Project';
-import { getProjectsAsync } from '~/ducks/ProjectSlice';
-import { useProjectState } from '~/ducks/selector';
+import { getProjectsAsync } from '~/ducks/Slice/ProjectSlice';
+import { useProjectStates } from '~/ducks/selector';
 
+/**
+ * プロジェクト概要表示のロジックコンポーネント.
+ *
+ * @return {*}  {JSX.Element}
+ */
 const work = (): JSX.Element => {
 	// dispatch関数 アクションクリエイターで実装されるアクションを実行させる.
 	const dispatch = useDispatch();
@@ -17,8 +22,9 @@ const work = (): JSX.Element => {
 		dispatch(getProjectsAsync());
 	}, [dispatch]);
 
-	const { projects } = useProjectState();
-	const [projectState, setProjectState] = useState<ProjectState>();
+	const { projects } = useProjectStates();
+	const [projectState, setProjectState] = useState<ProjectState>(projects[0]);
+	const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
 	const handleClickSideBar = (projectId: number) => {
 		const project: ProjectState = filter(projects, (value) => {
@@ -36,11 +42,17 @@ const work = (): JSX.Element => {
 			projectAbouts: project[0].projectAbouts,
 			projectImages: project[0].projectImages,
 		});
+		setSelectedIndex(projectId);
 	};
 
 	return (
 		<div>
-			<SideBar projects={projects} sideBar={null} handleClick={(projectId: number) => handleClickSideBar(projectId)} />
+			<SideBar
+				projects={projects}
+				sideBar={null}
+				selectedIndex={selectedIndex}
+				handleClick={(projectId: number) => handleClickSideBar(projectId)}
+			/>
 			<Slideshow imgs={projectState?.projectImages} />
 			<Work project={projectState} />
 		</div>

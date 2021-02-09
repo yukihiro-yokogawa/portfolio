@@ -1,15 +1,18 @@
 import { Store, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import { configureStore, EnhancedStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import projectSlice, { initialState as projectState } from './ProjectSlice';
+import projectSlice, { initialState as projectState } from './Slice/ProjectSlice';
+import aboutSlice, { initialState as aboutState } from './Slice/AboutSlice';
 
 const rootReducer = combineReducers({
-	portfolio: projectSlice.reducer,
+	projects: projectSlice.reducer,
+	abouts: aboutSlice.reducer,
 });
 
 const preloadedState = () => {
 	return {
-		portfolio: projectState,
+		projects: projectState,
+		abouts: aboutState,
 	};
 };
 

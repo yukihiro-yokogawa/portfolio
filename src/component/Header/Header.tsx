@@ -17,17 +17,17 @@ const Header: React.FC = () => {
 								<a>top</a>
 							</li>
 						</Link>
-						<Link href="/profile">
+						<Link href="/Profile/profile" as="/profile">
 							<li className="menu">
 								<a>profile</a>
 							</li>
 						</Link>
-						<Link href="/skill">
+						<Link href="/Skill/skill" as="/skill">
 							<li className="menu">
 								<a>skill</a>
 							</li>
 						</Link>
-						<Link href="/work">
+						<Link href="/Work/work" as="/work">
 							<li className="menu">
 								<a>work</a>
 							</li>

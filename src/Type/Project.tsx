@@ -17,12 +17,12 @@ export type ProjectState = {
 	projectImages: Array<ProjectImageState>;
 };
 
-type ProjectTechniqueState = {
+export type ProjectTechniqueState = {
 	id: number;
 	technique: TechniqueState;
 };
 
-type ProjectAboutState = {
+export type ProjectAboutState = {
 	id: number;
 	description: string;
 	displayOrder: number;
