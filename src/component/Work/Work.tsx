@@ -1,6 +1,5 @@
 import React from 'react';
 import { ProjectState } from '~/Type/Project';
-import Button from '@material-ui/core/Button';
 import { Box, Container } from '@material-ui/core';
 import { Table, TableBody, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
@@ -9,7 +8,7 @@ import ContentAddButton from '../ContentAddButton';
 const Work = (props: { project: ProjectState }): JSX.Element => {
 	return (
 		<>
-			<ContentAddButton linkHref="/Work/create" linkAs="/work/new" />
+			<ContentAddButton linkHref="/Work/create" linkAs="/work/new" query="new" />
 			<Container>
 				<Table>
 					<TableBody displayRowCheckbox={false}>
@@ -52,9 +51,7 @@ const Work = (props: { project: ProjectState }): JSX.Element => {
 						})}
 					</TableBody>
 				</Table>
-				<Button variant="contained" color="primary" size="large">
-					edit
-				</Button>
+				<ContentAddButton linkHref="/Work/create" linkAs="/work/edit" query={props.project.id} />
 			</Container>
 		</>
 	);

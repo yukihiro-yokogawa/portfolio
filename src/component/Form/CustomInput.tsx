@@ -1,10 +1,10 @@
 import TextField from '@material-ui/core/TextField';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Alert } from '@material-ui/lab';
+import React from 'react';
 import { CustomInputState } from '~/Type/Form';
 import { makeStyles } from '@material-ui/core';
 import { createStyles } from '@material-ui/core';
+import { ConnectForm } from './ConnectForm';
+import _ from 'lodash';
 
 /**
  * Material UiのTextFieleコンポーネントをラッピングしたカスタムコンポーネント.
@@ -13,64 +13,42 @@ import { createStyles } from '@material-ui/core';
  * @return {*}  {JSX.Element} テキストフィールドコンポーネント
  */
 const CustomInput = (props: CustomInputState): JSX.Element => {
+	const { label, name, required, length, url, date, value, placeholder, customStyle } = props;
 	const useStyles = makeStyles(() =>
 		createStyles({
-			textField: props.customStyle,
+			textField: customStyle,
 		}),
 	);
 
-	// react-hook-formのコンポーネント
-	const { register, watch } = useForm();
-	// Errorバリデーション用state
-	const [errors, setError] = useState({
-		requiredError: false,
-		lengthError: false,
-	});
-	// カスタムバリデーター(必須, 長さ)
-	const handleChangeTextField = () => {
-		const value = watch(props.label);
-		if (props.required && value.length == 0) {
-			setError({
-				...errors,
-				requiredError: true,
-			});
-		} else if (props.length != 0 && value.length > props.length) {
-			setError({
-				...errors,
-				lengthError: true,
-			});
-		} else {
-			setError({
-				...errors,
-				requiredError: false,
-				lengthError: false,
-			});
-		}
-	};
-
 	return (
-		<TextField
-			id="outlined-margin-dense"
-			label={`${props.label} ${props.required ? '(必須)' : ''}${
-				props.length != 0 ? ` ${watch(props.label)?.length ? watch(props.label).length : '0'}/${props.length}` : ''
-			}`}
-			style={{ margin: 8 }}
-			placeholder={props.placeholder}
-			fullWidth
-			margin="normal"
-			InputLabelProps={{
-				shrink: true,
-			}}
-			name={props.label}
-			inputRef={register}
-			helperText={
-				(errors.requiredError || errors.lengthError) && <Alert severity="error">{props.length}字以内で入力してください。</Alert>
-			}
-			multiline={props.length < 100 || props.url ? false : true}
-			error={errors.requiredError || errors.lengthError ? true : false}
-			onChange={handleChangeTextField}
-			className={useStyles().textField}
-		/>
+		<>
+			<ConnectForm>
+				{({ watch, errors, register }) => (
+					<TextField
+						defaultValue={value}
+						id="outlined-margin-dense"
+						label={`${label} ${required ? '(必須)' : ''}${
+							length != 0 ? ` ${watch(name)?.length ? watch(name).length : '0'}/${props.length}` : ''
+						}`}
+						style={{ margin: 8 }}
+						placeholder={placeholder}
+						fullWidth
+						margin="normal"
+						InputLabelProps={{
+							shrink: true,
+						}}
+						type={date ? 'date' : 'text'}
+						name={name}
+						multiline={length < 100 || url ? false : true}
+						inputRef={register({ required: required, maxLength: length })}
+						error={Boolean(_.get(errors, name))}
+						helperText={_.get(errors, name) && `${label}は${length}文字以内にして下さい。`}
+						className={useStyles().textField}
+						inputProps={length != 0 ? { maxLength: length } : null}
+					/>
+				)}
+			</ConnectForm>
+		</>
 	);
 };
 

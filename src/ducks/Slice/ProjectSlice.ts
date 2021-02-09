@@ -4,7 +4,19 @@ import { ProjectState, ProjectStates } from '~/Type/Project';
 
 // デフォルトのstate
 export const initialState: ProjectStates = {
-	projects: [],
+	projects: [
+		{
+			id: 0,
+			name: '',
+			startDate: '',
+			endDate: '',
+			addDate: '',
+			gitUrl: '',
+			projectTechniques: [],
+			projectAbouts: [],
+			projectImages: [],
+		},
+	],
 };
 
 const projectSlice = createSlice({
@@ -12,7 +24,7 @@ const projectSlice = createSlice({
 	initialState,
 	reducers: {
 		// action
-		getProjectRequest: (state, action: PayloadAction<ProjectStates>) => ({
+		getProjectsRequest: (state, action: PayloadAction<ProjectStates>) => ({
 			...state,
 			projects: action.payload.projects,
 		}),
@@ -26,7 +38,7 @@ const projectSlice = createSlice({
 	},
 });
 
-export const { getProjectRequest, getProjectFailure, postProjectRequest } = projectSlice.actions;
+export const { getProjectsRequest, getProjectFailure, postProjectRequest } = projectSlice.actions;
 
 export default projectSlice;
 
@@ -36,8 +48,23 @@ export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Project
 		const projects: ProjectStates = {
 			projects: response.data,
 		};
-		dispatch(getProjectRequest(projects));
+		dispatch(getProjectsRequest(projects));
 	});
+};
+
+export const getProjectByIdAsync = (id: number) => async (
+	dispatch: (arg0: { payload: ProjectStates; type: string }) => void,
+): Promise<void> => {
+	axios
+		.get(`/api/project/getOne`, {
+			params: {
+				id: id,
+			},
+		})
+		.then((response) => {
+			const projects: ProjectStates = { projects: response.data };
+			dispatch(getProjectsRequest(projects));
+		});
 };
 
 export const postProjectAsync = (project: ProjectState) => async (

@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import _, { filter } from 'lodash';
-import { useDispatch } from 'react-redux';
+import _ from 'lodash';
 import WorkCreate from '~/component/Work/WorkCreate';
-import { useAboutState } from '~/ducks/selector';
-import { getAboutsAsync } from '~/ducks/Slice/AboutSlice';
+import { ProjectAboutState, ProjectState } from '~/Type/Project';
+import { AboutState } from '~/Type/About';
+import { useAboutState, useProjectStates } from '~/ducks/selector';
 
 /**
  * Work新規追加フォームのロジックコンポーネント.
@@ -11,25 +11,18 @@ import { getAboutsAsync } from '~/ducks/Slice/AboutSlice';
  * @return {*}  {JSX.Element}
  */
 const Create = (): JSX.Element => {
+	const project = useProjectStates().projects[0];
+	const abouts = useAboutState().abouts;
+
 	// 使用技術追加のDOM変更用変数.
-	const [techniqueFieldList, setTechniqueList] = useState(['techniqueField-0']);
+	const [techniqueFieldList, setTechniqueFieldList] = useState([0]);
 
 	const [aboutFieldList, setAboutFieldList] = useState([]);
-
-	const dispatch = useDispatch();
-
-	// レンダリング後に実行されるアクション関数.
-	useEffect(() => {
-		dispatch(getAboutsAsync());
-	}, [dispatch]);
-
-	// Storeから取り出した値.
-	const { abouts } = useAboutState();
 
 	// aboutsの値が変更しないならキャッシュから取得.
 	const aboutsArr = useMemo(() => {
 		const createAbouts = [];
-		_.forEach(abouts, (about: { name: any }) => {
+		_.forEach(abouts, (about: AboutState) => {
 			createAbouts.push(about.name);
 		});
 		return createAbouts;
@@ -39,16 +32,40 @@ const Create = (): JSX.Element => {
 	 * 技術新規追加フォーム増加イベント.
 	 */
 	const handleClickAddTechnique = () => {
-		const newTehcniqueField = `techniqueField-${techniqueFieldList.length}`;
-		setTechniqueList([...techniqueFieldList, newTehcniqueField]);
+		const newTehcniqueField = techniqueFieldList.length == 0 ? 0 : _.max(techniqueFieldList) + 1;
+		setTechniqueFieldList([...techniqueFieldList, newTehcniqueField]);
 	};
 
-	const handleClickAddAbout = (values: string[]) => {
-		const newAboutFieldList = [...values];
-		newAboutFieldList.splice(1, 0);
-		console.log(newAboutFieldList);
-		setAboutFieldList(newAboutFieldList);
+	/**
+	 * 技術新規追加フォーム減少イベント
+	 *
+	 * @param {number} key
+	 */
+	const handleClickDeleteTechnique = (key: number) => {
+		const newTechniqueField = _.without(techniqueFieldList, key);
+		setTechniqueFieldList(newTechniqueField);
 	};
+
+	/**
+	 * プロジェクトの特徴を記載するフォームを増やすイベント.
+	 *
+	 * @param {string[]} values
+	 */
+	const handleClickAddAbout = (values: string[]) => {
+		const aboutsName = [];
+		_.forEach(values, (value) => {
+			aboutsName.push(value);
+		});
+		aboutsName.splice(1, 0);
+		setAboutFieldList(aboutsName);
+	};
+
+	/**
+	 * サブミット時のイベント.
+	 *
+	 * @param {*} event
+	 */
+	const handleSubmit = (data: ProjectState) => {};
 
 	return (
 		<>
@@ -57,7 +74,9 @@ const Create = (): JSX.Element => {
 				techniqueFieldList={techniqueFieldList}
 				aboutFieldList={aboutFieldList}
 				handleClickAddTechnique={handleClickAddTechnique}
+				handleClickDeleteTechnique={handleClickDeleteTechnique}
 				handleClickAddAbout={handleClickAddAbout}
+				handleSubmit={handleSubmit}
 			/>
 		</>
 	);

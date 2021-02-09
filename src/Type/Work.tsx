@@ -1,3 +1,6 @@
+import { AboutState, AboutStates } from './About';
+import { ProjectState } from './Project';
+
 export type WorkStates = {
 	work: Array<WorkState>;
 	handleClick: (arg1: number) => void;
@@ -20,9 +23,11 @@ export type TechniqueState = {
 };
 
 export type WorkCreateState = {
-	abouts: Array<string>;
-	techniqueFieldList: string[];
+	abouts: string[];
+	techniqueFieldList: number[];
 	aboutFieldList: string[];
 	handleClickAddTechnique: () => void;
+	handleClickDeleteTechnique: (value: number) => void;
 	handleClickAddAbout: (values: string[]) => void;
+	handleSubmit: (event: unknown) => void;
 };

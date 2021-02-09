@@ -6,7 +6,7 @@ import SideBar from '~/container/SideBar';
 import { filter } from 'lodash';
 import { ProjectState } from '~/Type/Project';
 import { getProjectsAsync } from '~/ducks/Slice/ProjectSlice';
-import { useProjectState } from '~/ducks/selector';
+import { useProjectStates } from '~/ducks/selector';
 
 /**
  * プロジェクト概要表示のロジックコンポーネント.
@@ -22,8 +22,8 @@ const work = (): JSX.Element => {
 		dispatch(getProjectsAsync());
 	}, [dispatch]);
 
-	const { projects } = useProjectState();
-	const [projectState, setProjectState] = useState<ProjectState>();
+	const { projects } = useProjectStates();
+	const [projectState, setProjectState] = useState<ProjectState>(projects[0]);
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
 	const handleClickSideBar = (projectId: number) => {
