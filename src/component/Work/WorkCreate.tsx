@@ -6,6 +6,8 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useProjectStates } from '~/ducks/selector';
 import { Fab } from '@material-ui/core';
+import TechniqueCreateModal from '~/container/Work/TechniqueCreateModal';
+
 /**
  * Work新規追加フォームのViewコンポーネント.
  *
@@ -33,7 +35,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 			<Container style={{ width: '80%', marginTop: 50 }}>
 				<FormProvider {...methods}>
 					<form onSubmit={methods.handleSubmit(props.handleSubmit)}>
-						<input type="hidden" name="id" value={id} ref={methods.register} />
+						<input type="hidden" name="id" value={id != null ? id : '0'} ref={methods.register} />
 						<CustomInput
 							label="ProjectTitle"
 							name="name"
@@ -74,6 +76,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								</Fab>
 							</Box>
 						))}
+						<TechniqueCreateModal />
 						<Button style={{ margin: 8 }} onClick={handleClickAddTechnique} variant="contained" color="primary" size="medium">
 							add
 						</Button>

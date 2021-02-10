@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import _ from 'lodash';
 import WorkCreate from '~/component/Work/WorkCreate';
-import { ProjectAboutState, ProjectState } from '~/Type/Project';
+import { ProjectState } from '~/Type/Project';
 import { AboutState } from '~/Type/About';
-import { useAboutState, useProjectStates } from '~/ducks/selector';
+import { useAboutState } from '~/ducks/selector';
+import { useDispatch } from 'react-redux';
+import { postProjectAsync } from '~/ducks/Slice/ProjectSlice';
 
 /**
  * Work新規追加フォームのロジックコンポーネント.
@@ -11,7 +13,8 @@ import { useAboutState, useProjectStates } from '~/ducks/selector';
  * @return {*}  {JSX.Element}
  */
 const Create = (): JSX.Element => {
-	const project = useProjectStates().projects[0];
+	const dispatch = useDispatch();
+	// const project = useProjectStates().projects[0];
 	const abouts = useAboutState().abouts;
 
 	// 使用技術追加のDOM変更用変数.
@@ -65,7 +68,9 @@ const Create = (): JSX.Element => {
 	 *
 	 * @param {*} event
 	 */
-	const handleSubmit = (data: ProjectState) => {};
+	const handleSubmit = (newProjectData: ProjectState) => {
+		dispatch(postProjectAsync(newProjectData));
+	};
 
 	return (
 		<>
