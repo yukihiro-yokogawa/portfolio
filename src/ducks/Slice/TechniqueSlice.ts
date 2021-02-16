@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { TechniqueState, TechniqueStates } from '~/Type/Technique';
+import _ from 'lodash';
 
 // デフォルトのstate
 export const initialState: TechniqueStates = {
@@ -33,6 +34,15 @@ export const getTechniquesAsync = () => async (dispatch: (arg0: { payload: Techn
 		const techniques: TechniqueStates = {
 			techniques: response.data,
 		};
+		const newTechniques = {};
+		_.forEach(response.data, (technique) => {
+			if (typeof newTechniques[technique.techniqueType.name] === 'undefined') {
+				newTechniques[technique.techniqueType.name] = { [technique.name]: [technique] };
+			} else {
+				console.log('test2');
+				newTechniques[technique.techniqueType.name][technique.name].push(technique);
+			}
+		});
 		dispatch(getTechniqueRequest(techniques));
 	});
 };
@@ -40,6 +50,7 @@ export const getTechniquesAsync = () => async (dispatch: (arg0: { payload: Techn
 export const postTechniqueAsync = (technique: TechniqueState) => async (
 	dispatch: (arg0: { payload: TechniqueState; type: string }) => void,
 ): Promise<void> => {
+	console.log('test');
 	const formData = new FormData();
 	formData.append('technique', new Blob([JSON.stringify(technique)], { type: 'application/json' }));
 	axios.post('/api/technique/post', formData);

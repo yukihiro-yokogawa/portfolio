@@ -7,7 +7,7 @@ import { ConnectForm } from './ConnectForm';
 import _ from 'lodash';
 
 /**
- * Material UiのTextFieleコンポーネントをラッピングしたカスタムコンポーネント.
+ * Material UiのTextFieldコンポーネントをラッピングしたカスタムコンポーネント.
  *
  * @param {CustomInputState} props テキストフィールド用のバリデーション等のプロパティ
  * @return {*}  {JSX.Element} テキストフィールドコンポーネント

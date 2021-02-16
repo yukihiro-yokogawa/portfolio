@@ -1,6 +1,3 @@
-import { AboutState, AboutStates } from './About';
-import { ProjectState } from './Project';
-
 export type WorkStates = {
 	work: Array<WorkState>;
 	handleClick: (arg1: number) => void;

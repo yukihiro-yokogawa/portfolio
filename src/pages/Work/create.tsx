@@ -5,6 +5,7 @@ import { getAboutsAsync } from '~/ducks/Slice/AboutSlice';
 import { useDispatch } from 'react-redux';
 import { getProjectByIdAsync } from '~/ducks/Slice/ProjectSlice';
 import { getTechniquesAsync } from '~/ducks/Slice/TechniqueSlice';
+import { getTechniqueTypeAsync } from '~/ducks/Slice/TechniqueTypeSlice';
 const create: React.FC = () => {
 	const router = useRouter();
 	const projectId = (router.query.projectId as unknown) as number;
@@ -15,6 +16,7 @@ const create: React.FC = () => {
 		dispatch(getProjectByIdAsync(projectId));
 		dispatch(getAboutsAsync());
 		dispatch(getTechniquesAsync());
+		dispatch(getTechniqueTypeAsync());
 	}, [dispatch, projectId]);
 
 	return (
