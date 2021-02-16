@@ -2,7 +2,7 @@ import CustomInput from '../Form/CustomInput';
 import { Box, Button, Container } from '@material-ui/core';
 import CustomSelectField from '../Form/CustomSelectField';
 import { WorkCreateState } from '~/Type/Work';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useProjectStates } from '~/ducks/selector';
 import { Fab } from '@material-ui/core';
@@ -28,6 +28,12 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 		projectAbouts,
 		projectImages,
 	} = useProjectStates().projects[0];
+
+	const [modal, setModal] = useState(false);
+
+	const handleClickModalShow = (show: boolean) => {
+		setModal(show);
+	};
 
 	const methods = useForm();
 	return (
@@ -76,7 +82,15 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								</Fab>
 							</Box>
 						))}
-						<TechniqueCreateModal />
+						<Button
+							style={{ margin: 8 }}
+							variant="contained"
+							color="primary"
+							size="medium"
+							onClick={() => handleClickModalShow(true)}
+						>
+							Create
+						</Button>
 						<Button style={{ margin: 8 }} onClick={handleClickAddTechnique} variant="contained" color="primary" size="medium">
 							add
 						</Button>
@@ -154,6 +168,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 						</Button>
 					</form>
 				</FormProvider>
+				{modal == true ? <TechniqueCreateModal handleClickShowModal={handleClickModalShow} /> : null}
 			</Container>
 		</>
 	);

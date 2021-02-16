@@ -9,7 +9,11 @@ export type TechniqueState = {
 	techniqueType: TechniqueTypeState;
 };
 
-type TechniqueTypeState = {
+export type TechniqueTypeStates = {
+	techniqueTypes: Array<TechniqueTypeState>;
+};
+
+export type TechniqueTypeState = {
 	id: number;
 	name: string;
 	displayOrder: number;

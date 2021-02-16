@@ -1,23 +1,45 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import TechniqueCreateModal from '~/component/Work/TechniqueCreateModal';
+import { useTechniqueTypeState } from '~/ducks/selector';
 import { TechniqueState } from '~/Type/Technique';
+import _ from 'lodash';
+import { postTechniqueAsync } from '~/ducks/Slice/TechniqueSlice';
+import { useDispatch } from 'react-redux';
 
-const techniqueCreateModal = (): JSX.Element => {
+/**
+ * 新規技術登録時のモーダル表示用コンテナコンポーネント.
+ *
+ * @param {{ handleClickShowModal: (isShow: boolean) => void }} props
+ * @return {*}  {JSX.Element}
+ */
+const techniqueCreateModal = (props: { handleClickShowModal: (isShow: boolean) => void }): JSX.Element => {
 	const dispatch = useDispatch();
+	const techniqueTypes = useTechniqueTypeState();
 
-	const [show, setShow] = useState(false);
-	const handleClickShowModal = (show: boolean) => {
-		setShow(show);
-	};
-
+	// 新規技術登録
 	const handleClickSubmit = (data: TechniqueState) => {
-		console.log(data);
+		const techniqueType = _.find(techniqueTypes.techniqueTypes, (values) => {
+			return values.name === data.techniqueType.name;
+		});
+		const technique: TechniqueState = {
+			id: 0,
+			name: data.name,
+			version: data.version,
+			techniqueType: {
+				id: techniqueType.id,
+				name: data.techniqueType.name,
+				displayOrder: techniqueType.displayOrder,
+			},
+		};
+		dispatch(postTechniqueAsync(technique));
 	};
 
 	return (
 		<>
-			<TechniqueCreateModal show={show} handleShowModal={handleClickShowModal} handleSubmit={handleClickSubmit} />
+			<TechniqueCreateModal
+				techniqueTypes={techniqueTypes}
+				handleClickShowModal={props.handleClickShowModal}
+				handleSubmit={handleClickSubmit}
+			/>
 		</>
 	);
 };

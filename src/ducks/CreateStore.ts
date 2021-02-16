@@ -4,11 +4,13 @@ import { configureStore, EnhancedStore, getDefaultMiddleware } from '@reduxjs/to
 import projectSlice, { initialState as projectState } from './Slice/ProjectSlice';
 import aboutSlice, { initialState as aboutState } from './Slice/AboutSlice';
 import techniqueSlice, { initialState as techniqueState } from './Slice/TechniqueSlice';
+import techniqueTypeSlice, { initialState as techniqueTypeState } from './Slice/TechniqueTypeSlice';
 
 const rootReducer = combineReducers({
 	projects: projectSlice.reducer,
 	abouts: aboutSlice.reducer,
 	techniques: techniqueSlice.reducer,
+	techniqueTypes: techniqueTypeSlice.reducer,
 });
 
 const preloadedState = () => {
@@ -16,6 +18,7 @@ const preloadedState = () => {
 		projects: projectState,
 		abouts: aboutState,
 		techniques: techniqueState,
+		techniqueTypes: techniqueTypeState,
 	};
 };
 
