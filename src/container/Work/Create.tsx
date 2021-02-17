@@ -1,11 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import _ from 'lodash';
 import WorkCreate from '~/component/Work/WorkCreate';
 import { ProjectState } from '~/Type/Project';
 import { AboutState } from '~/Type/About';
-import { useAboutState } from '~/ducks/selector';
+import { useAboutState, useTechniqueState } from '~/ducks/selector';
 import { useDispatch } from 'react-redux';
 import { postProjectAsync } from '~/ducks/Slice/ProjectSlice';
+import { AutoCompleteVersionState } from '~/Type/Technique';
 
 /**
  * Work新規追加フォームのロジックコンポーネント.
@@ -16,9 +17,12 @@ const Create = (): JSX.Element => {
 	const dispatch = useDispatch();
 	// const project = useProjectStates().projects[0];
 	const abouts = useAboutState().abouts;
+	const techniques = useTechniqueState().techniques;
 
 	// 使用技術追加のDOM変更用変数.
 	const [techniqueFieldList, setTechniqueFieldList] = useState([0]);
+	// version入力部分のオートコンプリート.
+	const [autoCompleteVersions, setAutoCompleteVersions] = useState([]);
 
 	const [aboutFieldList, setAboutFieldList] = useState([]);
 
@@ -32,45 +36,121 @@ const Create = (): JSX.Element => {
 	}, [abouts]);
 
 	/**
+	 * TechniqueのTextFieldコンポーネントで使用されるAutoComplete配列を生成する関数.
+	 */
+	const autoCompleteTechniques = useMemo(() => {
+		return _(techniques)
+			.map((technique) => {
+				return technique.name;
+			})
+			.uniq()
+			.value();
+	}, [techniques]);
+
+	/**
+	 * TechniqueのTextFieldコンポーネントが変更された際に実行される、VersionのTextFieldコンポーネントで使用するAutoCompleteオブジェクトを生成するイベントハンドラ.
+	 */
+	const handleChangeTechnique = useCallback(
+		(event: React.ChangeEvent<any>, index: number) => {
+			const key = _.findKey(autoCompleteVersions, (autoCompleteVersion) => {
+				return autoCompleteVersion.id == index;
+			});
+			const autoCompleteVersion = _(techniques)
+				.filter((technique) => {
+					return technique.name == event.target.outerText;
+				})
+				.map((technique) => {
+					return technique.version;
+				})
+				.value();
+			if (!key) {
+				const newAutoCompleteVersion: AutoCompleteVersionState = {
+					id: index,
+					autoComplete: autoCompleteVersion,
+				};
+				setAutoCompleteVersions([...autoCompleteVersions, newAutoCompleteVersion]);
+			} else {
+				autoCompleteVersions[key].autoComplete = autoCompleteVersion;
+				setAutoCompleteVersions([...autoCompleteVersions]);
+			}
+		},
+		[techniques, autoCompleteVersions],
+	);
+
+	/**
 	 * 技術新規追加フォーム増加イベント.
 	 */
-	const handleClickAddTechnique = () => {
+	const handleClickAddTechnique = useCallback(() => {
 		const newTehcniqueField = techniqueFieldList.length == 0 ? 0 : _.max(techniqueFieldList) + 1;
 		setTechniqueFieldList([...techniqueFieldList, newTehcniqueField]);
-	};
+	}, [techniqueFieldList]);
 
 	/**
 	 * 技術新規追加フォーム減少イベント
 	 *
 	 * @param {number} key
 	 */
-	const handleClickDeleteTechnique = (key: number) => {
-		const newTechniqueField = _.without(techniqueFieldList, key);
-		setTechniqueFieldList(newTechniqueField);
-	};
+	const handleClickDeleteTechnique = useCallback(
+		(key: number, index: number) => {
+			const newTechniqueField = _.without(techniqueFieldList, key);
+			setTechniqueFieldList(newTechniqueField);
+			const deletedAutoCompleteVersions = _.filter(autoCompleteVersions, (autoCompleteVersion) => {
+				return autoCompleteVersion.id !== index;
+			});
+			// versionのAutoCompleteリストを操作.
+			_.forEach(deletedAutoCompleteVersions, (autoCompleteVersion) => {
+				autoCompleteVersion.id > index ? (autoCompleteVersion.id = autoCompleteVersion.id - 1) : null;
+			});
+			setAutoCompleteVersions([...deletedAutoCompleteVersions]);
+		},
+		[autoCompleteVersions, techniqueFieldList],
+	);
 
 	/**
 	 * プロジェクトの特徴を記載するフォームを増やすイベント.
 	 *
 	 * @param {string[]} values
 	 */
-	const handleClickAddAbout = (values: string[]) => {
+	const handleClickAddAbout = useCallback((values: string[]) => {
 		const aboutsName = [];
 		_.forEach(values, (value) => {
 			aboutsName.push(value);
 		});
 		aboutsName.splice(1, 0);
 		setAboutFieldList(aboutsName);
-	};
+	}, []);
 
 	/**
 	 * サブミット時のイベント.
 	 *
 	 * @param {*} event
 	 */
-	const handleSubmit = (newProjectData: ProjectState) => {
-		dispatch(postProjectAsync(newProjectData));
-	};
+	const handleSubmit = useCallback(
+		(projectDataForm: ProjectState) => {
+			_(projectDataForm.projectAbouts).forEach((projectAbout) => {
+				projectAbout.about.id = _.find(abouts, (about) => {
+					return about.name == projectAbout.about.name;
+				}).id;
+			});
+			_(projectDataForm.projectTechniques).forEach((projectTechnique) => {
+				projectTechnique.technique.id = _.find(techniques, (technique) => {
+					return technique.name === projectTechnique.technique.name;
+				}).id;
+			});
+			_(projectDataForm.projectTechniques).forEach((projectTechnique) => {
+				const techniqueType = _.find(techniques, (technique) => {
+					return technique.name === projectTechnique.technique.name;
+				}).techniqueType;
+				projectTechnique.technique.techniqueType = {
+					id: techniqueType.id,
+					name: techniqueType.name,
+					displayOrder: techniqueType.displayOrder,
+				};
+			});
+			dispatch(postProjectAsync(projectDataForm));
+		},
+		[abouts, dispatch, techniques],
+	);
 
 	return (
 		<>
@@ -78,6 +158,9 @@ const Create = (): JSX.Element => {
 				abouts={aboutsArr}
 				techniqueFieldList={techniqueFieldList}
 				aboutFieldList={aboutFieldList}
+				autoCompleteTechniques={autoCompleteTechniques}
+				autoCompleteVersions={autoCompleteVersions}
+				handleChangeTechnique={handleChangeTechnique}
 				handleClickAddTechnique={handleClickAddTechnique}
 				handleClickDeleteTechnique={handleClickDeleteTechnique}
 				handleClickAddAbout={handleClickAddAbout}

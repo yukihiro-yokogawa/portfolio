@@ -1,3 +1,5 @@
+import { AutoCompleteVersionState } from './Technique';
+
 export type WorkStates = {
 	work: Array<WorkState>;
 	handleClick: (arg1: number) => void;
@@ -23,8 +25,11 @@ export type WorkCreateState = {
 	abouts: string[];
 	techniqueFieldList: number[];
 	aboutFieldList: string[];
+	autoCompleteTechniques: string[];
+	autoCompleteVersions: Array<AutoCompleteVersionState>;
+	handleChangeTechnique: (event: React.ChangeEvent<any>, index: number) => void;
 	handleClickAddTechnique: () => void;
-	handleClickDeleteTechnique: (value: number) => void;
+	handleClickDeleteTechnique: (value: number, index: number) => void;
 	handleClickAddAbout: (values: string[]) => void;
 	handleSubmit: (event: unknown) => void;
 };

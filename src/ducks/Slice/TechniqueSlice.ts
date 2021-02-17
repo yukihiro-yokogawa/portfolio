@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { TechniqueState, TechniqueStates } from '~/Type/Technique';
-import _ from 'lodash';
 
 // デフォルトのstate
 export const initialState: TechniqueStates = {
@@ -34,15 +33,14 @@ export const getTechniquesAsync = () => async (dispatch: (arg0: { payload: Techn
 		const techniques: TechniqueStates = {
 			techniques: response.data,
 		};
-		const newTechniques = {};
-		_.forEach(response.data, (technique) => {
-			if (typeof newTechniques[technique.techniqueType.name] === 'undefined') {
-				newTechniques[technique.techniqueType.name] = { [technique.name]: [technique] };
-			} else {
-				console.log('test2');
-				newTechniques[technique.techniqueType.name][technique.name].push(technique);
-			}
-		});
+		// const newTechniques = {};
+		// _.forEach(response.data, (technique) => {
+		// 	if (typeof newTechniques[technique.techniqueType.name] === 'undefined') {
+		// 		newTechniques[technique.techniqueType.name] = { [technique.name]: [technique] };
+		// 	} else {
+		// 		newTechniques[technique.techniqueType.name][technique.name].push(technique);
+		// 	}
+		// });
 		dispatch(getTechniqueRequest(techniques));
 	});
 };
