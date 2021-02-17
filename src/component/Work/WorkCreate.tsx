@@ -7,6 +7,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useProjectStates } from '~/ducks/selector';
 import { Fab } from '@material-ui/core';
 import TechniqueCreateModal from '~/container/Work/TechniqueCreateModal';
+import CustomAutoComplete from '../Form/CustomAutoComplete';
+import _ from 'lodash';
 
 /**
  * Work新規追加フォームのViewコンポーネント.
@@ -15,7 +17,17 @@ import TechniqueCreateModal from '~/container/Work/TechniqueCreateModal';
  * @return {*}  {JSX.Element}
  */
 const WorkCreate = (props: WorkCreateState): JSX.Element => {
-	const { abouts, techniqueFieldList, aboutFieldList, handleClickAddTechnique, handleClickDeleteTechnique, handleClickAddAbout } = props;
+	const {
+		abouts,
+		techniqueFieldList,
+		aboutFieldList,
+		autoCompleteTechniques,
+		autoCompleteVersions,
+		handleChangeTechnique,
+		handleClickAddTechnique,
+		handleClickDeleteTechnique,
+		handleClickAddAbout,
+	} = props;
 
 	const {
 		id,
@@ -36,6 +48,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 	};
 
 	const methods = useForm();
+
 	return (
 		<>
 			<Container style={{ width: '80%', marginTop: 50 }}>
@@ -55,29 +68,44 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 						/>
 						{techniqueFieldList.map((item, index) => (
 							<Box width={1} display="flex" key={item}>
-								<CustomInput
+								<CustomAutoComplete
+									index={index}
 									label="UseTechnique"
 									name={`projectTechniques[${index}].technique.name`}
 									required={true}
-									length={32}
+									length={0}
 									url={false}
 									date={false}
 									value={projectTechniques[index]?.technique.name}
+									autoComplete={autoCompleteTechniques}
 									placeholder="使用している技術名を入力してください"
-									customStyle={{ width: '70%' }}
+									customStyle={{ width: '60%' }}
+									handleChange={handleChangeTechnique}
 								/>
-								<CustomInput
+								<CustomAutoComplete
+									index={index}
 									label="version"
 									name={`projectTechniques[${index}].technique.version`}
 									required={true}
-									length={16}
+									length={0}
 									url={false}
 									date={false}
 									value={projectTechniques[index]?.technique.version}
+									autoComplete={
+										_.find(autoCompleteVersions, (autoCompleteVersion) => {
+											return autoCompleteVersion?.id == index;
+										})?.autoComplete
+									}
 									placeholder="バージョンを入力してください"
 									customStyle={{ width: '30%' }}
+									handleChange={null}
 								/>
-								<Fab aria-label="Delete" color="secondary" size="small" onClick={() => handleClickDeleteTechnique(item)}>
+								<Fab
+									aria-label="Delete"
+									color="secondary"
+									size="small"
+									onClick={() => handleClickDeleteTechnique(item, index)}
+								>
 									×
 								</Fab>
 							</Box>

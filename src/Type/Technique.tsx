@@ -18,3 +18,8 @@ export type TechniqueTypeState = {
 	name: string;
 	displayOrder: number;
 };
+
+export type AutoCompleteVersionState = {
+	id: number;
+	autoComplete: string[];
+};

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import Work from '~/component/Work/Work';
 import Slideshow from '~/component/Slideshow';
@@ -26,24 +26,27 @@ const work = (): JSX.Element => {
 	const [projectState, setProjectState] = useState<ProjectState>(projects[0]);
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-	const handleClickSideBar = (projectId: number) => {
-		const project: ProjectState = filter(projects, (value) => {
-			return value.id == projectId;
-		});
-		setProjectState({
-			...projectState,
-			id: project[0].id,
-			name: project[0].name,
-			startDate: project[0].startDate,
-			endDate: project[0].endDate,
-			addDate: project[0].addDate,
-			gitUrl: project[0].gitUrl,
-			projectTechniques: project[0].projectTechniques,
-			projectAbouts: project[0].projectAbouts,
-			projectImages: project[0].projectImages,
-		});
-		setSelectedIndex(projectId);
-	};
+	const handleClickSideBar = useCallback(
+		(projectId: number) => {
+			const project = filter(projects, (value) => {
+				return value.id == projectId;
+			});
+			setProjectState({
+				...projectState,
+				id: project[0].id,
+				name: project[0].name,
+				startDate: project[0].startDate,
+				endDate: project[0].endDate,
+				addDate: project[0].addDate,
+				gitUrl: project[0].gitUrl,
+				projectTechniques: project[0].projectTechniques,
+				projectAbouts: project[0].projectAbouts,
+				projectImages: project[0].projectImages,
+			});
+			setSelectedIndex(projectId);
+		},
+		[projectState, projects],
+	);
 
 	return (
 		<div>
