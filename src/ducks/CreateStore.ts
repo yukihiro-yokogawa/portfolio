@@ -5,8 +5,10 @@ import projectSlice, { initialState as projectState } from './Slice/ProjectSlice
 import aboutSlice, { initialState as aboutState } from './Slice/AboutSlice';
 import techniqueSlice, { initialState as techniqueState } from './Slice/TechniqueSlice';
 import techniqueTypeSlice, { initialState as techniqueTypeState } from './Slice/TechniqueTypeSlice';
+import skillSlice, { initialState as skillState } from './Slice/SkillSlice';
 
 const rootReducer = combineReducers({
+	skills: skillSlice.reducer,
 	projects: projectSlice.reducer,
 	abouts: aboutSlice.reducer,
 	techniques: techniqueSlice.reducer,
@@ -15,6 +17,7 @@ const rootReducer = combineReducers({
 
 const preloadedState = () => {
 	return {
+		skills: skillState,
 		projects: projectState,
 		abouts: aboutState,
 		techniques: techniqueState,

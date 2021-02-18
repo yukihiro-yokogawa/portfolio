@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Link from 'next/link';
 import { Button } from '@material-ui/core';
 
-const ContentAddButton = (props: { linkHref: string; linkAs: string; query }): JSX.Element => {
+const ContentAddButton = (props: { linkHref: string; linkAs: string; query: string | number }): JSX.Element => {
 	const useStyles = makeStyles((theme: Theme) =>
 		createStyles({
 			fab: {
