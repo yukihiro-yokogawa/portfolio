@@ -1,7 +1,12 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { AboutStates } from '~/Type/About';
 import { ProjectStates } from '~/Type/Project';
+import { SkillState } from '~/Type/Skill';
 import { TechniqueStates, TechniqueTypeStates } from '~/Type/Technique';
+
+export const useSkillStates = (): Array<SkillState> => {
+	return useSelector((state: Array<SkillState>) => state);
+};
 
 export const useProjectStates = (): ProjectStates => {
 	return useSelector((state: { projects: ProjectStates }) => state.projects, shallowEqual);

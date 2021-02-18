@@ -4,7 +4,7 @@ import ContentAddButton from '../ContentAddButton';
 const Skill: React.FC = () => {
 	return (
 		<>
-			<ContentAddButton linkHref="/Skill/create" linkAs="/skill/new" />
+			<ContentAddButton linkHref="/Skill/create" linkAs="/skill/new" query="new" />
 			<div className="content_wrap">
 				<div className="content_small">
 					<h3>フロントエンド</h3>
