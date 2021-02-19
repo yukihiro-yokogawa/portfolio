@@ -1,10 +1,6 @@
 import { TechniqueState } from '~/Type/Technique';
 import { AboutState } from '~/Type/About';
 
-export type ProjectStates = {
-	projects: Array<ProjectState>;
-};
-
 export type ProjectState = {
 	id: number;
 	name: string;

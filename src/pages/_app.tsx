@@ -16,12 +16,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
  */
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
 	return (
-		<MuiThemeProvider>
-			<Provider store={createStore()}>
-				<Header />
-				<Component {...pageProps}></Component>
-			</Provider>
-		</MuiThemeProvider>
+		<>
+			<MuiThemeProvider>
+				<Provider store={createStore()}>
+					<Header />
+					<Component {...pageProps}></Component>
+				</Provider>
+			</MuiThemeProvider>
+		</>
 	);
 };
 

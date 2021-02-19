@@ -20,9 +20,7 @@ const skillSlice = createSlice({
 	initialState,
 	reducers: {
 		//action
-		getSkillsRequest: (_state, action: PayloadAction<Array<SkillState>>) => ({
-			...action.payload,
-		}),
+		getSkillsRequest: (_state, action: PayloadAction<Array<SkillState>>) => [...action.payload],
 	},
 });
 

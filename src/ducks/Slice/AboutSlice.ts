@@ -1,21 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { AboutStates } from '~/Type/About';
+import { AboutState } from '~/Type/About';
 
 // デフォルトのstate
-export const initialState: AboutStates = {
-	abouts: [],
-};
+export const initialState: Array<AboutState> = [{ id: 0, name: '' }];
 
 const aboutSlice = createSlice({
 	name: 'abouts',
 	initialState,
 	reducers: {
 		//action
-		getAboutRequest: (state, action: PayloadAction<AboutStates>) => ({
-			...state,
-			abouts: action.payload.abouts,
-		}),
+		getAboutRequest: (_state, action: PayloadAction<Array<AboutState>>) => [...action.payload],
 		getAboutFailure: (state) => ({
 			...state,
 		}),
@@ -27,11 +22,8 @@ export default aboutSlice;
 export const { getAboutRequest, getAboutFailure } = aboutSlice.actions;
 
 // action実行関数
-export const getAboutsAsync = () => async (dispatch: (arg0: { payload: AboutStates; type: string }) => void): Promise<void> => {
+export const getAboutsAsync = () => async (dispatch: (arg0: { payload: Array<AboutState>; type: string }) => void): Promise<void> => {
 	axios.get(`/api/about/get`).then((response) => {
-		const abouts: AboutStates = {
-			abouts: response.data,
-		};
-		dispatch(getAboutRequest(abouts));
+		dispatch(getAboutRequest(response.data));
 	});
 };

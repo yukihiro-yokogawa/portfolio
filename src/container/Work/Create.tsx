@@ -3,7 +3,7 @@ import _ from 'lodash';
 import WorkCreate from '~/component/Work/WorkCreate';
 import { ProjectState } from '~/Type/Project';
 import { AboutState } from '~/Type/About';
-import { useAboutState, useTechniqueState } from '~/ducks/selector';
+import { useStoreState } from '~/ducks/selector';
 import { useDispatch } from 'react-redux';
 import { postProjectAsync } from '~/ducks/Slice/ProjectSlice';
 import { AutoCompleteVersionState } from '~/Type/Technique';
@@ -15,9 +15,7 @@ import { AutoCompleteVersionState } from '~/Type/Technique';
  */
 const Create = (): JSX.Element => {
 	const dispatch = useDispatch();
-	// const project = useProjectStates().projects[0];
-	const abouts = useAboutState().abouts;
-	const techniques = useTechniqueState().techniques;
+	const { techniques, abouts } = useStoreState();
 
 	// 使用技術追加のDOM変更用変数.
 	const [techniqueFieldList, setTechniqueFieldList] = useState([0]);

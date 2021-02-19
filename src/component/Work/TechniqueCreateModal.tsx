@@ -1,12 +1,12 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TechniqueState, TechniqueTypeStates } from '~/Type/Technique';
+import { TechniqueState, TechniqueTypeState } from '~/Type/Technique';
 import CustomInput from '../Form/CustomInput';
 import CustomRadioField from '../Form/CustomRadioFIeld';
 
 const TechniqueCreateModal = (props: {
-	techniqueTypes: TechniqueTypeStates;
+	techniqueTypes: Array<TechniqueTypeState>;
 	handleClickShowModal: (isShow: boolean) => void;
 	handleSubmit: (data: TechniqueState) => void;
 }): JSX.Element => {
@@ -20,7 +20,7 @@ const TechniqueCreateModal = (props: {
 
 					<FormProvider {...methods}>
 						<form onSubmit={methods.handleSubmit(handleSubmit)}>
-							<CustomRadioField name="techniqueType.name" label="TechniqueType" values={techniqueTypes} />
+							<CustomRadioField name="techniqueType.name" label="TechniqueType" values={techniqueTypes} customStyle={null} />
 							<CustomInput
 								label="Technique"
 								name={'name'}

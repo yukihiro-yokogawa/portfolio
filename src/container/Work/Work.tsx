@@ -6,7 +6,7 @@ import SideBar from '~/container/SideBar';
 import { filter } from 'lodash';
 import { ProjectState } from '~/Type/Project';
 import { getProjectsAsync } from '~/ducks/Slice/ProjectSlice';
-import { useProjectStates } from '~/ducks/selector';
+import { useStoreState } from '~/ducks/selector';
 
 /**
  * プロジェクト概要表示のロジックコンポーネント.
@@ -22,7 +22,7 @@ const work = (): JSX.Element => {
 		dispatch(getProjectsAsync());
 	}, [dispatch]);
 
-	const { projects } = useProjectStates();
+	const projects = useStoreState().projects;
 	const [projectState, setProjectState] = useState<ProjectState>(projects[0]);
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
 

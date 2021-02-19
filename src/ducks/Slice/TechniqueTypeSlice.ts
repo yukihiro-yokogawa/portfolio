@@ -1,19 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { TechniqueTypeStates } from '~/Type/Technique';
+import { TechniqueTypeState } from '~/Type/Technique';
 
-export const initialState: TechniqueTypeStates = {
-	techniqueTypes: [],
-};
+export const initialState: Array<TechniqueTypeState> = [{ id: 0, name: '', displayOrder: 0 }];
 
 const techniqueTypeSlice = createSlice({
 	name: 'techniqueType',
 	initialState,
 	reducers: {
-		getTechniqueTypeRequest: (state, action: PayloadAction<TechniqueTypeStates>) => ({
-			...state,
-			techniqueTypes: action.payload.techniqueTypes,
-		}),
+		getTechniqueTypeRequest: (_state, action: PayloadAction<Array<TechniqueTypeState>>) => [...action.payload],
 	},
 });
 
@@ -21,11 +16,8 @@ export default techniqueTypeSlice;
 
 export const { getTechniqueTypeRequest } = techniqueTypeSlice.actions;
 
-export const getTechniqueTypeAsync = () => async (dispatch: (arg0: { payload: TechniqueTypeStates }) => void): Promise<void> => {
+export const getTechniqueTypeAsync = () => async (dispatch: (arg0: { payload: Array<TechniqueTypeState> }) => void): Promise<void> => {
 	axios.get(`/api/techniqueType/get`).then((response) => {
-		const techniqueTypes: TechniqueTypeStates = {
-			techniqueTypes: response.data,
-		};
-		dispatch(getTechniqueTypeRequest(techniqueTypes));
+		dispatch(getTechniqueTypeRequest(response.data));
 	});
 };
