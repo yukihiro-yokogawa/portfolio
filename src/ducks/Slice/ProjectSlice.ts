@@ -1,39 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ProjectState, ProjectStates } from '~/Type/Project';
+import { ProjectState } from '~/Type/Project';
 
 // デフォルトのstate
-export const initialState: ProjectStates = {
-	projects: [
-		{
-			id: 0,
-			name: '',
-			startDate: '',
-			endDate: '',
-			addDate: '',
-			gitUrl: '',
-			projectTechniques: [],
-			projectAbouts: [],
-			projectImages: [],
-		},
-	],
-};
+export const initialState: Array<ProjectState> = [
+	{
+		id: 0,
+		name: '',
+		startDate: '',
+		endDate: '',
+		addDate: '',
+		gitUrl: '',
+		projectTechniques: [],
+		projectAbouts: [],
+		projectImages: [],
+	},
+];
 
 const projectSlice = createSlice({
 	name: 'projects',
 	initialState,
 	reducers: {
 		// action
-		getProjectsRequest: (state, action: PayloadAction<ProjectStates>) => ({
-			...state,
-			projects: action.payload.projects,
-		}),
+		getProjectsRequest: (_state, action: PayloadAction<Array<ProjectState>>) => [...action.payload],
 		getProjectFailure: (state) => ({
 			...state,
 		}),
 		postProjectRequest: (state, action: PayloadAction<ProjectState>) => ({
-			...state,
-			projects: state.projects.concat(action.payload),
+			...state.concat(action.payload),
 		}),
 	},
 });
@@ -43,17 +37,14 @@ export const { getProjectsRequest, getProjectFailure, postProjectRequest } = pro
 export default projectSlice;
 
 // action実行関数
-export const getProjectsAsync = () => async (dispatch: (arg0: { payload: ProjectStates; type: string }) => void): Promise<void> => {
+export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void): Promise<void> => {
 	axios.get(`/api/project/get`).then((response) => {
-		const projects: ProjectStates = {
-			projects: response.data,
-		};
-		dispatch(getProjectsRequest(projects));
+		dispatch(getProjectsRequest(response.data));
 	});
 };
 
 export const getProjectByIdAsync = (id: number) => async (
-	dispatch: (arg0: { payload: ProjectStates; type: string }) => void,
+	dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void,
 ): Promise<void> => {
 	axios
 		.get(`/api/project/getOne`, {
@@ -62,8 +53,7 @@ export const getProjectByIdAsync = (id: number) => async (
 			},
 		})
 		.then((response) => {
-			const projects: ProjectStates = { projects: response.data };
-			dispatch(getProjectsRequest(projects));
+			dispatch(getProjectsRequest(response.data));
 		});
 };
 

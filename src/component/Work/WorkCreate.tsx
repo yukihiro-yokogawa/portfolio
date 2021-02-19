@@ -4,7 +4,7 @@ import CustomSelectField from '../Form/CustomSelectField';
 import { WorkCreateState } from '~/Type/Work';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useProjectStates } from '~/ducks/selector';
+import { useStoreState } from '~/ducks/selector';
 import { Fab } from '@material-ui/core';
 import TechniqueCreateModal from '~/container/Work/TechniqueCreateModal';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
@@ -27,19 +27,10 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 		handleClickAddTechnique,
 		handleClickDeleteTechnique,
 		handleClickAddAbout,
+		handleSubmit,
 	} = props;
 
-	const {
-		id,
-		name,
-		startDate,
-		endDate,
-		addDate,
-		gitUrl,
-		projectTechniques,
-		projectAbouts,
-		projectImages,
-	} = useProjectStates().projects[0];
+	const { id, name, startDate, endDate, addDate, gitUrl, projectTechniques, projectAbouts, projectImages } = useStoreState().projects[0];
 
 	const [modal, setModal] = useState(false);
 
@@ -53,7 +44,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 		<>
 			<Container style={{ width: '80%', marginTop: 50 }}>
 				<FormProvider {...methods}>
-					<form onSubmit={methods.handleSubmit(props.handleSubmit)}>
+					<form onSubmit={methods.handleSubmit(handleSubmit)}>
 						<input type="hidden" name="id" value={id != null ? id : '0'} ref={methods.register} />
 						<CustomInput
 							label="ProjectTitle"
@@ -67,7 +58,14 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 							customStyle={null}
 						/>
 						{techniqueFieldList.map((item, index) => (
-							<Box width={1} display="flex" key={item}>
+							<Box
+								alignItems="center"
+								width={1}
+								display="flex"
+								flexWrap="wrap"
+								style={{ justifyContent: 'space-between' }}
+								key={item}
+							>
 								<CustomAutoComplete
 									index={index}
 									label="UseTechnique"
@@ -102,8 +100,9 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								/>
 								<Fab
 									aria-label="Delete"
-									color="secondary"
+									color="primary"
 									size="small"
+									style={{ width: '36px', height: '36px' }}
 									onClick={() => handleClickDeleteTechnique(item, index)}
 								>
 									×
@@ -122,7 +121,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 						<Button style={{ margin: 8 }} onClick={handleClickAddTechnique} variant="contained" color="primary" size="medium">
 							add
 						</Button>
-						<Box width={1} display="flex">
+						<Box alignItems="center" width={1} display="flex" flexWrap="wrap" style={{ justifyContent: 'space-between' }}>
 							<CustomInput
 								label="StartDate"
 								name="startDate"

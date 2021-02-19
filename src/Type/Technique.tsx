@@ -9,10 +9,6 @@ export type TechniqueState = {
 	techniqueType: TechniqueTypeState;
 };
 
-export type TechniqueTypeStates = {
-	techniqueTypes: Array<TechniqueTypeState>;
-};
-
 export type TechniqueTypeState = {
 	id: number;
 	name: string;

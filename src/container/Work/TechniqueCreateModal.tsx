@@ -1,5 +1,5 @@
 import TechniqueCreateModal from '~/component/Work/TechniqueCreateModal';
-import { useTechniqueTypeState } from '~/ducks/selector';
+import { useStoreState } from '~/ducks/selector';
 import { TechniqueState } from '~/Type/Technique';
 import _ from 'lodash';
 import { postTechniqueAsync } from '~/ducks/Slice/TechniqueSlice';
@@ -13,11 +13,11 @@ import { useDispatch } from 'react-redux';
  */
 const techniqueCreateModal = (props: { handleClickShowModal: (isShow: boolean) => void }): JSX.Element => {
 	const dispatch = useDispatch();
-	const techniqueTypes = useTechniqueTypeState();
+	const techniqueTypes = useStoreState().techniqueTypes;
 
 	// 新規技術登録
 	const handleClickSubmit = (data: TechniqueState) => {
-		const techniqueType = _.find(techniqueTypes.techniqueTypes, (values) => {
+		const techniqueType = _.find(techniqueTypes, (values) => {
 			return values.name === data.techniqueType.name;
 		});
 		const technique: TechniqueState = {

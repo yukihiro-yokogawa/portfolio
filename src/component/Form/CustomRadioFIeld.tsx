@@ -2,28 +2,36 @@ import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormHelper
 import React from 'react';
 import { ConnectForm } from './ConnectForm';
 import _ from 'lodash';
-import { TechniqueTypeStates } from '~/Type/Technique';
 
 /**
  * Material UiのFormControl（ラジオボタン）コンポーネントをラッピングしたカスタムコンポーネント.
  *
- * @param {{ name: string; label: string; values: TechniqueTypeStates }} props
+ * @param {{ name: string; label: string; values: Array<TechniqueTypeState> }} props
  * @return {*}  {JSX.Element}
  */
-const CustomRadioField = (props: { name: string; label: string; values: TechniqueTypeStates }): JSX.Element => {
+const CustomRadioField = (props: {
+	name: string;
+	label: string;
+	values: Array<any>;
+	customStyle: Record<string | number | symbol, any>;
+}): JSX.Element => {
 	return (
 		<>
 			<ConnectForm>
 				{({ errors, register }) => (
-					<FormControl style={{ margin: '8px' }} component="fieldset" error={Boolean(_.get(errors, props.name))}>
+					<FormControl
+						style={{ ...props.customStyle, margin: '8px' }}
+						component="fieldset"
+						error={Boolean(_.get(errors, props.name))}
+					>
 						<FormLabel>{props.label}</FormLabel>
-						<RadioGroup row aria-label="techniqueType" name="techniqueType.name">
-							{props.values.techniqueTypes.map((techniqueType, index) => (
+						<RadioGroup row aria-label={props.label} name={props.name}>
+							{props.values.map((value, index) => (
 								<FormControlLabel
 									key={index}
-									value={techniqueType.name}
+									value={value.name}
 									control={<Radio color="primary" />}
-									label={techniqueType.name}
+									label={value.name}
 									labelPlacement="bottom"
 									inputRef={register({ required: true })}
 								/>
