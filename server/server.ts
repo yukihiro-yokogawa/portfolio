@@ -2,10 +2,11 @@ import express from 'express';
 import next from 'next';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+console.log(process.env.NODE_ENV);
 
 app.prepare().then(() => {
 	const server = express();
@@ -13,7 +14,7 @@ app.prepare().then(() => {
 	server.use(
 		'/api',
 		createProxyMiddleware({
-			target: dev ? 'http://localhost:8080' : '',
+			target: dev ? 'http://localhost:8080' : 'https://yoko-portfolio-backend.herokuapp.com/',
 			changeOrigin: true,
 		}),
 	);
@@ -22,7 +23,7 @@ app.prepare().then(() => {
 		return handle(req, res);
 	});
 
-	server.listen(port, (err) => {
+	server.listen(port, (err?: any) => {
 		if (err) throw err;
 		console.log(`> Ready on http://localhost:${port}`);
 	});

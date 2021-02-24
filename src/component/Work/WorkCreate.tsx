@@ -30,7 +30,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 		handleSubmit,
 	} = props;
 
-	const { id, name, startDate, endDate, addDate, gitUrl, projectTechniques, projectAbouts, projectImages } = useStoreState().projects[0];
+	const { id, name, startDate, endDate, addDate, gitUrl, projectTechniques } = useStoreState().projects[0];
 
 	const [modal, setModal] = useState(false);
 
