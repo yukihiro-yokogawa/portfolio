@@ -25,7 +25,6 @@ const skill: React.FC = () => {
 			mySkill['techniques'] = skillsGroupByTechniqueType;
 			mySkills.push(mySkill);
 		});
-		console.log(mySkills);
 		return mySkills;
 	}, [skills, techniqueTypes]);
 

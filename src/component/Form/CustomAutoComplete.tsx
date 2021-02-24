@@ -12,7 +12,7 @@ import { Autocomplete } from '@material-ui/lab';
  * @return {*}  {JSX.Element} テキストフィールドコンポーネント
  */
 const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
-	const { index, label, name, required, length, url, date, value, autoComplete, placeholder, customStyle, handleChange } = props;
+	const { index, label, name, required, length, url, date, autoComplete, placeholder, customStyle, handleChange } = props;
 
 	return (
 		<>

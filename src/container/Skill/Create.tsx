@@ -1,13 +1,11 @@
 import _ from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import SkillCreate from '~/component/Skill/SkillCreate';
 import { useStoreState } from '~/ducks/selector';
 import { SkillState } from '~/Type/Skill';
 import { AutoCompleteVersionState } from '~/Type/Technique';
 
 const Create = (): JSX.Element => {
-	const dispatch = useDispatch();
 	// 使用技術追加のDOM変更用変数.
 	const [techniqueFieldList, setTechniqueFieldList] = useState([0]);
 	// version入力部分のオートコンプリート.

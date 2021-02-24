@@ -38,9 +38,7 @@ export default projectSlice;
 
 // action実行関数
 export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void): Promise<void> => {
-	axios.get(`/api/project/get`).then((response) => {
-		dispatch(getProjectsRequest(response.data));
-	});
+	axios.get(`/api/project/get`).then((response) => dispatch(getProjectsRequest(response.data)));
 };
 
 export const getProjectByIdAsync = (id: number) => async (
