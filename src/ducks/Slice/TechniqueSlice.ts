@@ -11,9 +11,7 @@ const techniqueSlice = createSlice({
 	reducers: {
 		//action
 		getTechniqueRequest: (_state, action: PayloadAction<Array<TechniqueState>>) => [...action.payload],
-		postTechniqueRequest: (state, action: PayloadAction<TechniqueState>) => ({
-			...state.concat(action.payload),
-		}),
+		postTechniqueRequest: (state, action: PayloadAction<TechniqueState>) => [...state.concat(action.payload)],
 	},
 });
 
