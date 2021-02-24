@@ -6,6 +6,7 @@ const port = 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+console.log(process.env.NODE_ENV);
 
 app.prepare().then(() => {
 	const server = express();
@@ -13,7 +14,7 @@ app.prepare().then(() => {
 	server.use(
 		'/api',
 		createProxyMiddleware({
-			target: dev ? 'http://localhost:8080' : '',
+			target: dev ? 'http://localhost:8080' : 'http://localhost:8080',
 			changeOrigin: true,
 		}),
 	);

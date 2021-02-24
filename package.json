@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node src\\server.mjs",
+    "dev": "node api\\server.mjs NODE_ENV=build",
     "build": "next build",
     "start": "next start",
     "export": "next export"
