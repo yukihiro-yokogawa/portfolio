@@ -6,6 +6,7 @@ import aboutSlice, { initialState as aboutState } from './Slice/AboutSlice';
 import techniqueSlice, { initialState as techniqueState } from './Slice/TechniqueSlice';
 import techniqueTypeSlice, { initialState as techniqueTypeState } from './Slice/TechniqueTypeSlice';
 import skillSlice, { initialState as skillState } from './Slice/SkillSlice';
+import networkSlice, { initialState as networkState } from './Slice/NetworkSlice';
 
 const rootReducer = combineReducers({
 	skills: skillSlice.reducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	abouts: aboutSlice.reducer,
 	techniques: techniqueSlice.reducer,
 	techniqueTypes: techniqueTypeSlice.reducer,
+	network: networkSlice.reducer,
 });
 
 const preloadedState = () => {
@@ -22,6 +24,7 @@ const preloadedState = () => {
 		abouts: aboutState,
 		techniques: techniqueState,
 		techniqueTypes: techniqueTypeState,
+		network: networkState,
 	};
 };
 

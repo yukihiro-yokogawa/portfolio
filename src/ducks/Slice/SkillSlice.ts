@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { SkillState } from '~/Type/Skill';
+import { requestFairure } from './NetworkSlice';
 
 export const initialState: Array<SkillState> = [
 	{
@@ -29,8 +30,13 @@ export const { getSkillsRequest } = skillSlice.actions;
 export default skillSlice;
 
 export const getSkillsAsync = () => async (dispatch: (arg0: { payload: Array<SkillState> }) => void): Promise<void> => {
-	axios.get(`/api/skill/get`).then((response) => {
-		console.log(response.data);
-		dispatch(getSkillsRequest(response.data));
-	});
+	axios
+		.get(`/api/skill/get`)
+		.then((response) => {
+			dispatch(getSkillsRequest(response.data));
+		})
+		.catch((err) => {
+			console.log(err);
+			dispatch(requestFairure());
+		});
 };

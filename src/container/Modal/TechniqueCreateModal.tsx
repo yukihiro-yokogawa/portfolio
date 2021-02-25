@@ -1,4 +1,4 @@
-import TechniqueCreateModal from '~/component/Work/TechniqueCreateModal';
+import TechniqueCreateModal from '~/component/Modal/TechniqueCreateModal';
 import { useStoreState } from '~/ducks/selector';
 import { TechniqueState } from '~/Type/Technique';
 import _ from 'lodash';

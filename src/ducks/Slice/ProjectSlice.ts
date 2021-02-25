@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ProjectState } from '~/Type/Project';
+import { requestFairure, requestSuccess } from './NetworkSlice';
 
 // デフォルトのstate
 export const initialState: Array<ProjectState> = [
@@ -38,7 +39,15 @@ export default projectSlice;
 
 // action実行関数
 export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void): Promise<void> => {
-	axios.get(`/api/project/get`).then((response) => dispatch(getProjectsRequest(response.data)));
+	axios
+		.get(`/api/project/get`)
+		.then((response) => {
+			dispatch(getProjectsRequest(response.data));
+		})
+		.catch((err) => {
+			console.log(err);
+			dispatch(requestFairure());
+		});
 };
 
 export const getProjectByIdAsync = (id: number) => async (
@@ -52,6 +61,10 @@ export const getProjectByIdAsync = (id: number) => async (
 		})
 		.then((response) => {
 			dispatch(getProjectsRequest(response.data));
+		})
+		.catch((err) => {
+			console.log(err);
+			dispatch(requestFairure());
 		});
 };
 
@@ -60,6 +73,14 @@ export const postProjectAsync = (project: ProjectState) => async (
 ): Promise<void> => {
 	const formData = new FormData();
 	formData.append('project', new Blob([JSON.stringify(project)], { type: 'application/json' }));
-	axios.post('/api/project/post', formData);
-	dispatch(postProjectRequest(project));
+	axios
+		.post('/api/project/post', formData)
+		.then(() => {
+			dispatch(postProjectRequest(project));
+			dispatch(requestSuccess());
+		})
+		.catch((err) => {
+			console.log(err);
+			dispatch(requestFairure());
+		});
 };

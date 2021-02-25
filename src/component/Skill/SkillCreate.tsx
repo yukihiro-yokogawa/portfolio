@@ -2,7 +2,7 @@ import { Box, Button, Container, Fab } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import TechniqueCreateModal from '~/container/Work/TechniqueCreateModal';
+import TechniqueCreateModal from '~/container/Modal/TechniqueCreateModal';
 import { SkillCreateState } from '~/Type/Skill';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import CustomRadioField from '../Form/CustomRadioFIeld';

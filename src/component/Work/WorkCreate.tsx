@@ -6,10 +6,10 @@ import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useStoreState } from '~/ducks/selector';
 import { Fab } from '@material-ui/core';
-import TechniqueCreateModal from '~/container/Work/TechniqueCreateModal';
+import TechniqueCreateModal from '~/container/Modal/TechniqueCreateModal';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import _ from 'lodash';
-import AboutCreateModal from '~/container/Work/AboutCreateModal';
+import AboutCreateModal from '~/container/Modal/AboutCreateModal';
 
 /**
  * Work新規追加フォームのViewコンポーネント.

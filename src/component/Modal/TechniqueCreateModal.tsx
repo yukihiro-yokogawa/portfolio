@@ -63,4 +63,5 @@ const TechniqueCreateModal = (props: {
 		</>
 	);
 };
+
 export default TechniqueCreateModal;
