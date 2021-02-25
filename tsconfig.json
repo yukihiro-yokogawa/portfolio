@@ -44,7 +44,7 @@
     "src/next-env.d.ts",
     "**/*.ts",
     "**/*.tsx", "src/container/.00...tsx"
-, "src/server.jsr.js", "src/pages/api/index.ts"  ],
+, "src/server.jsr.js", "server/server.ts"  ],
   "exclude": [
     "node_modules"
   ]
