@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import AboutCreateModal from '~/component/Work/AboutCreateModal';
+import AboutCreateModal from '~/component/Modal/AboutCreateModal';
 import { postAboutAsync } from '~/ducks/Slice/AboutSlice';
 import { AboutState } from '~/Type/About';
 
