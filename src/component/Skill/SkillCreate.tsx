@@ -19,9 +19,9 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 		handleSubmit,
 	} = props;
 
-	const [modal, setModal] = useState(false);
+	const [modal, setModal] = useState('');
 
-	const handleClickModalShow = (show: boolean) => {
+	const handleClickShowModal = (show: string) => {
 		setModal(show);
 	};
 
@@ -93,7 +93,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 						variant="contained"
 						color="primary"
 						size="medium"
-						onClick={() => handleClickModalShow(true)}
+						onClick={() => handleClickShowModal('technique')}
 					>
 						Create
 					</Button>
@@ -105,7 +105,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 					</Button>
 				</form>
 			</FormProvider>
-			{modal == true ? <TechniqueCreateModal handleClickShowModal={handleClickModalShow} /> : null}
+			{modal == 'technique' ? <TechniqueCreateModal handleClickTechniqueShowModal={handleClickShowModal} /> : null}
 		</Container>
 	);
 };
