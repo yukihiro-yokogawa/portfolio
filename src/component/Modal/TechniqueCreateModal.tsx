@@ -7,14 +7,14 @@ import CustomRadioField from '../Form/CustomRadioFIeld';
 
 const TechniqueCreateModal = (props: {
 	techniqueTypes: Array<TechniqueTypeState>;
-	handleClickShowModal: (isShow: boolean) => void;
+	handleClickTechniqueShowModal: (show: string) => void;
 	handleSubmit: (data: TechniqueState) => void;
 }): JSX.Element => {
-	const { techniqueTypes, handleClickShowModal, handleSubmit } = props;
+	const { techniqueTypes, handleClickTechniqueShowModal, handleSubmit } = props;
 	const methods = useForm();
 	return (
 		<>
-			<div id="overlay" onClick={() => handleClickShowModal(false)}>
+			<div id="overlay" onClick={() => handleClickTechniqueShowModal('')}>
 				<div id="content" onClick={(e) => e.stopPropagation()}>
 					<p>登録する技術の情報を入力してください</p>
 
@@ -49,7 +49,7 @@ const TechniqueCreateModal = (props: {
 								color="primary"
 								size="medium"
 								type="button"
-								onClick={() => handleClickShowModal(false)}
+								onClick={() => handleClickTechniqueShowModal('')}
 							>
 								close
 							</Button>
@@ -63,4 +63,5 @@ const TechniqueCreateModal = (props: {
 		</>
 	);
 };
+
 export default TechniqueCreateModal;

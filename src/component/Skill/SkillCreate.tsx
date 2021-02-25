@@ -2,7 +2,7 @@ import { Box, Button, Container, Fab } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import TechniqueCreateModal from '~/container/Work/TechniqueCreateModal';
+import TechniqueCreateModal from '~/container/Modal/TechniqueCreateModal';
 import { SkillCreateState } from '~/Type/Skill';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import CustomRadioField from '../Form/CustomRadioFIeld';
@@ -19,9 +19,9 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 		handleSubmit,
 	} = props;
 
-	const [modal, setModal] = useState(false);
+	const [modal, setModal] = useState('');
 
-	const handleClickModalShow = (show: boolean) => {
+	const handleClickShowModal = (show: string) => {
 		setModal(show);
 	};
 
@@ -93,7 +93,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 						variant="contained"
 						color="primary"
 						size="medium"
-						onClick={() => handleClickModalShow(true)}
+						onClick={() => handleClickShowModal('technique')}
 					>
 						Create
 					</Button>
@@ -105,7 +105,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 					</Button>
 				</form>
 			</FormProvider>
-			{modal == true ? <TechniqueCreateModal handleClickShowModal={handleClickModalShow} /> : null}
+			{modal == 'technique' ? <TechniqueCreateModal handleClickTechniqueShowModal={handleClickShowModal} /> : null}
 		</Container>
 	);
 };

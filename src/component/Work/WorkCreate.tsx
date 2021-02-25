@@ -6,9 +6,10 @@ import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useStoreState } from '~/ducks/selector';
 import { Fab } from '@material-ui/core';
-import TechniqueCreateModal from '~/container/Work/TechniqueCreateModal';
+import TechniqueCreateModal from '~/container/Modal/TechniqueCreateModal';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import _ from 'lodash';
+import AboutCreateModal from '~/container/Modal/AboutCreateModal';
 
 /**
  * Work新規追加フォームのViewコンポーネント.
@@ -32,9 +33,9 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 
 	const { id, name, startDate, endDate, addDate, gitUrl, projectTechniques } = useStoreState().projects[0];
 
-	const [modal, setModal] = useState(false);
+	const [modal, setModal] = useState('');
 
-	const handleClickModalShow = (show: boolean) => {
+	const handleClickShowModal = (show: string) => {
 		setModal(show);
 	};
 
@@ -114,9 +115,9 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 							variant="contained"
 							color="primary"
 							size="medium"
-							onClick={() => handleClickModalShow(true)}
+							onClick={() => handleClickShowModal('technique')}
 						>
-							Create
+							Technique Create
 						</Button>
 						<Button style={{ margin: 8 }} onClick={handleClickAddTechnique} variant="contained" color="primary" size="medium">
 							add
@@ -190,12 +191,26 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								/>
 							</Box>
 						))}
+						<Button
+							style={{ margin: 8 }}
+							variant="contained"
+							color="primary"
+							size="medium"
+							onClick={() => handleClickShowModal('about')}
+						>
+							About Create
+						</Button>
+						<br />
 						<Button type="submit" style={{ margin: 8 }} variant="contained" color="primary" size="medium">
 							Submit
 						</Button>
 					</form>
 				</FormProvider>
-				{modal == true ? <TechniqueCreateModal handleClickShowModal={handleClickModalShow} /> : null}
+				{modal == 'technique' ? (
+					<TechniqueCreateModal handleClickTechniqueShowModal={handleClickShowModal} />
+				) : modal == 'about' ? (
+					<AboutCreateModal handleClickAboutShowModal={handleClickShowModal} />
+				) : null}
 			</Container>
 		</>
 	);
