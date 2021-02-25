@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
  * @param {{ handleClickShowModal: (isShow: boolean) => void }} props
  * @return {*}  {JSX.Element}
  */
-const techniqueCreateModal = (props: { handleClickShowModal: (isShow: boolean) => void }): JSX.Element => {
+const techniqueCreateModal = (props: { handleClickTechniqueShowModal: (show: string) => void }): JSX.Element => {
 	const dispatch = useDispatch();
 	const techniqueTypes = useStoreState().techniqueTypes;
 
@@ -37,7 +37,7 @@ const techniqueCreateModal = (props: { handleClickShowModal: (isShow: boolean) =
 		<>
 			<TechniqueCreateModal
 				techniqueTypes={techniqueTypes}
-				handleClickShowModal={props.handleClickShowModal}
+				handleClickTechniqueShowModal={props.handleClickTechniqueShowModal}
 				handleSubmit={handleClickSubmit}
 			/>
 		</>
