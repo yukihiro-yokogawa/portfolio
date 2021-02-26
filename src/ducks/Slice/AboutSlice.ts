@@ -39,10 +39,8 @@ export const getAboutsAsync = () => async (dispatch: (arg0: { payload: Array<Abo
 export const postAboutAsync = (about: AboutState) => async (
 	dispatch: (arg0: { payload: AboutState; type: string }) => void,
 ): Promise<void> => {
-	const formData = new FormData();
-	formData.append('about', new Blob([JSON.stringify(about)], { type: 'application/json' }));
 	axios
-		.post(`/api/about/post`, formData)
+		.post(`/api/about/post`, about)
 		.then(() => {
 			dispatch(postAboutRequest(about));
 			dispatch(requestSuccess());

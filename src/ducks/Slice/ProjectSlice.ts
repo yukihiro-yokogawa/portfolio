@@ -71,10 +71,8 @@ export const getProjectByIdAsync = (id: number) => async (
 export const postProjectAsync = (project: ProjectState) => async (
 	dispatch: (arg0: { payload: ProjectState; type: string }) => void,
 ): Promise<void> => {
-	const formData = new FormData();
-	formData.append('project', new Blob([JSON.stringify(project)], { type: 'application/json' }));
 	axios
-		.post('/api/project/post', formData)
+		.post('/api/project/post', project)
 		.then(() => {
 			dispatch(postProjectRequest(project));
 			dispatch(requestSuccess());
