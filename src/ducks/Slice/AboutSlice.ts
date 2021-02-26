@@ -26,7 +26,7 @@ export const { getAboutRequest, postAboutRequest, getAboutFailure } = aboutSlice
 // action実行関数
 export const getAboutsAsync = () => async (dispatch: (arg0: { payload: Array<AboutState>; type: string }) => void): Promise<void> => {
 	axios
-		.get(`/api/about/get`)
+		.get(`/v1/about/get`, { params: { query: 'GetAbout' } })
 		.then((response) => {
 			dispatch(getAboutRequest(response.data));
 		})
@@ -40,7 +40,7 @@ export const postAboutAsync = (about: AboutState) => async (
 	dispatch: (arg0: { payload: AboutState; type: string }) => void,
 ): Promise<void> => {
 	axios
-		.post(`/api/about/post`, about)
+		.post(`/v1/about/post`, { params: { data: about, query: 'PostAbout' } })
 		.then(() => {
 			dispatch(postAboutRequest(about));
 			dispatch(requestSuccess());

@@ -25,7 +25,7 @@ export const getTechniquesAsync = () => async (
 	dispatch: (arg0: { payload: Array<TechniqueState>; type: string }) => void,
 ): Promise<void> => {
 	axios
-		.get(`/api/technique/get`)
+		.get(`/v1/technique/get`, { params: { query: 'GetTechnique' } })
 		.then((response) => {
 			dispatch(getTechniqueRequest(response.data));
 		})
@@ -39,7 +39,7 @@ export const postTechniqueAsync = (technique: TechniqueState) => async (
 	dispatch: (arg0: { payload: TechniqueState; type: string }) => void,
 ): Promise<void> => {
 	axios
-		.post('/api/technique/post', technique)
+		.post('/v1/technique/post', { params: { data: technique, query: 'PostTechnique' } })
 		.then(() => {
 			dispatch(postTechniqueRequest(technique));
 			dispatch(requestSuccess());

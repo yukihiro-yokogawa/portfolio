@@ -31,7 +31,7 @@ export default skillSlice;
 
 export const getSkillsAsync = () => async (dispatch: (arg0: { payload: Array<SkillState> }) => void): Promise<void> => {
 	axios
-		.get(`/api/skill/get`)
+		.get(`/v1/skill/get`, {params:{query:'GetSkill'}})
 		.then((response) => {
 			dispatch(getSkillsRequest(response.data));
 		})
