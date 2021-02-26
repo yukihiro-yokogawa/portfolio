@@ -38,10 +38,8 @@ export const getTechniquesAsync = () => async (
 export const postTechniqueAsync = (technique: TechniqueState) => async (
 	dispatch: (arg0: { payload: TechniqueState; type: string }) => void,
 ): Promise<void> => {
-	const formData = new FormData();
-	formData.append('technique', new Blob([JSON.stringify(technique)], { type: 'application/json' }));
 	axios
-		.post('/api/technique/post', formData)
+		.post('/api/technique/post', technique)
 		.then(() => {
 			dispatch(postTechniqueRequest(technique));
 			dispatch(requestSuccess());
