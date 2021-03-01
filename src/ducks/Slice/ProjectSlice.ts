@@ -72,7 +72,7 @@ export const postProjectAsync = (project: ProjectState) => async (
 	dispatch: (arg0: { payload: ProjectState; type: string }) => void,
 ): Promise<void> => {
 	axios
-		.post('/api/project/post', project)
+		.post('/api/project/post', { params: { data: project, query: 'PostProject' } })
 		.then(() => {
 			dispatch(postProjectRequest(project));
 			dispatch(requestSuccess());

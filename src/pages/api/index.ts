@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { NowRequest, NowResponse } from '@vercel/node';
 
-const url = 'https://yoko-portfolio-backend.herokuapp.com/';
+const url = 'https://yoko-portfolio-backend.herokuapp.com';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default (request: NowRequest, response: NowResponse) => {
@@ -9,40 +9,85 @@ export default (request: NowRequest, response: NowResponse) => {
 
 	switch (request.query.query) {
 		case 'GetProject':
-			console.log('GetProject');
-			axios.get(`${url}/api/project/get`).then((res) => {
-				response.status(200).send(res.data);
-			});
+			axios
+				.get(`${url}/api/project/get`)
+				.then((res) => {
+					response.status(200).send(res.data);
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
+			break;
+		case 'GetProjectOne':
+			axios
+				.get(`${url}/api/project/getOne`, { params: { id: request.query.id } })
+				.then((res) => {
+					response.status(200).send(res.data);
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
 			break;
 		case 'GetTechnique':
-			console.log('GetTechnique');
-			axios.get(`${url}/api/technique/get`).then((res) => {
-				console.log(res.data);
-				response.status(200).send(res.data);
-			});
+			axios
+				.get(`${url}/api/technique/get`)
+				.then((res) => {
+					response.status(200).send(res.data);
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
 			break;
 		case 'GetTechniqueType':
-			console.log('GetTechniqueType');
-			axios.get(`${url}/api/techniqueType/get`).then((res) => {
-				console.log(res.data);
-				response.status(200).send(res.data);
-			});
+			axios
+				.get(`${url}/api/techniqueType/get`)
+				.then((res) => {
+					response.status(200).send(res.data);
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
 			break;
 		case 'GetSkill':
-			console.log('GetSkill');
-			axios.get(`${url}/api/skill/get`).then((res) => {
-				console.log(res.data);
-				response.status(200).send(res.data);
-			});
+			axios
+				.get(`${url}/api/skill/get`)
+				.then((res) => {
+					response.status(200).send(res.data);
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
 			break;
 		case 'GetAbout':
-			console.log('GetAbout');
-			axios.get(`${url}/api/about/get`).then((res) => {
-				console.log(res.data);
-				response.status(200).send(res.data);
-			});
+			axios
+				.get(`${url}/api/about/get`)
+				.then((res) => {
+					response.status(200).send(res.data);
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
 			break;
 		default:
+			response.status(404);
 			break;
 	}
 
@@ -50,24 +95,46 @@ export default (request: NowRequest, response: NowResponse) => {
 
 	switch (request.body?.params?.query) {
 		case 'PostProject':
-			axios.post(`${url}/api/project/post`, data).then(() => {
-				console.log('PostProject');
-				response.status(200).send('ok');
-			});
+			axios
+				.post(`${url}/api/project/post`, data)
+				.then(() => {
+					response.status(300).send('ok');
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
 			break;
 		case 'PostTechnique':
-			axios.post(`${url}/api/technique/post`, data).then(() => {
-				console.log('PostTechnique');
-				response.status(200).send('ok');
-			});
+			axios
+				.post(`${url}/api/technique/post`, data)
+				.then(() => {
+					response.status(300).send('ok');
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
 			break;
 		case 'PostAbout':
-			axios.post(`${url}/api/about/post`, data).then(() => {
-				console.log('PostProject');
-				response.status(200).send('ok');
-			});
+			axios
+				.post(`${url}/api/about/post`, data)
+				.then(() => {
+					response.status(300).send('ok');
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
 			break;
 		default:
+			response.status(404);
 			break;
 	}
 };
