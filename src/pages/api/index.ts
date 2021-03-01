@@ -8,7 +8,6 @@ server.use(
 		target: 'https://yoko-portfolio-backend.herokuapp.com/',
 		changeOrigin: true,
 	}),
-	express.json(),
 );
 
 export default server;
