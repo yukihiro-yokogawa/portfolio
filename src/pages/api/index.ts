@@ -6,12 +6,12 @@ const url = 'https://yoko-portfolio-backend.herokuapp.com/';
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default (request: NowRequest, response: NowResponse) => {
 	console.log(request);
-	response.status(200).send('hello');
 
 	switch (request.query.query) {
 		case 'GetProject':
 			console.log('GetProject');
 			axios.get(`${url}/api/project/get`).then((res) => {
+				console.log('hello222');
 				console.log(res.data);
 				response.status(200).send(res.data);
 			});
