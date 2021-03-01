@@ -11,15 +11,6 @@ export default (request: NowRequest, response: NowResponse) => {
 		case 'GetProject':
 			console.log('GetProject');
 			axios.get(`${url}/api/project/get`).then((res) => {
-				console.log('hello222');
-				console.log(res.data);
-				response.status(200).send(res.data);
-			});
-			break;
-		case 'PostProject':
-			console.log('PostProject');
-			axios.post(`${url}/api/project/post`).then((res) => {
-				console.log(res.data);
 				response.status(200).send(res.data);
 			});
 			break;
@@ -29,9 +20,6 @@ export default (request: NowRequest, response: NowResponse) => {
 				console.log(res.data);
 				response.status(200).send(res.data);
 			});
-			break;
-		case 'PostTechnique':
-			console.log('PostTechnique');
 			break;
 		case 'GetTechniqueType':
 			console.log('GetTechniqueType');
@@ -54,11 +42,29 @@ export default (request: NowRequest, response: NowResponse) => {
 				response.status(200).send(res.data);
 			});
 			break;
+		default:
+			break;
+	}
+
+	const data = request.body?.params?.data;
+
+	switch (request.body?.params?.query) {
+		case 'PostProject':
+			axios.post(`${url}/api/project/post`, data).then(() => {
+				console.log('PostProject');
+				response.status(200).send('ok');
+			});
+			break;
+		case 'PostTechnique':
+			axios.post(`${url}/api/technique/post`, data).then(() => {
+				console.log('PostTechnique');
+				response.status(200).send('ok');
+			});
+			break;
 		case 'PostAbout':
-			console.log('PostAbout');
-			axios.get(`${url}/api/about/post`).then((res) => {
-				console.log(res.data);
-				response.status(200).send(res.data);
+			axios.post(`${url}/api/about/post`, data).then(() => {
+				console.log('PostProject');
+				response.status(200).send('ok');
 			});
 			break;
 		default:
