@@ -27,14 +27,22 @@ app.prepare().then(() => {
 	// 	});
 	// });
 
+	// server.post('/api/project/post', (req, res) => {
+	// 	axios.post(`http://localhost:8080/api/project/post`, req.body).then((response) => {
+	// 		res.send(response.data);
+	// 	});
+	// });
+
 	// server.get('/api/technique/get', (_req, res) => {
 	// 	axios.get(`http://localhost:8080/api/technique/get`).then((response) => {
 	// 		res.send(response.data);
 	// 	});
 	// });
 
-	// server.get('/api/technique/post', (req) => {
-	// 	axios.post(`http://localhost:8080/api/technique/post`, req.body);
+	// server.post('/api/technique/post', (req, res) => {
+	// 	axios.post(`http://localhost:8080/api/technique/post`, req.body).then((response) => {
+	// 		res.send(response.data);
+	// 	});
 	// });
 
 	// server.get('/api/about/get', (_req, res) => {
@@ -43,8 +51,8 @@ app.prepare().then(() => {
 	// 	});
 	// });
 
-	// server.get('/api/technique/get', (_req, res) => {
-	// 	axios.get(`http://localhost:8080/api/technique/get`).then((response) => {
+	// server.post('/api/about/post', (req, res) => {
+	// 	axios.post(`http://localhost:8080/api/about/post`, req.body).then((response) => {
 	// 		res.send(response.data);
 	// 	});
 	// });
@@ -60,11 +68,6 @@ app.prepare().then(() => {
 	// 		res.send(response.data);
 	// 	});
 	// });
-
-	server.post('/api/technique/post', (req) => {
-		console.log(req.body);
-		console.log('post!');
-	});
 
 	server.all('*', (req, res) => {
 		return handle(req, res);
