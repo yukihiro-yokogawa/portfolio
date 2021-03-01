@@ -19,7 +19,7 @@ export const { getTechniqueTypeRequest } = techniqueTypeSlice.actions;
 
 export const getTechniqueTypeAsync = () => async (dispatch: (arg0: { payload: Array<TechniqueTypeState> }) => void): Promise<void> => {
 	axios
-		.get(`/api/techniqueType/get`)
+		.get(`/v1/techniqueType/get`, { params: { query: 'GetTechniqueType' } })
 		.then((response) => {
 			dispatch(getTechniqueTypeRequest(response.data));
 		})

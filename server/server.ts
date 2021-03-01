@@ -11,7 +11,7 @@ app.prepare().then(() => {
 	const server = express();
 
 	server.use(
-		'/api',
+		'/v1',
 		createProxyMiddleware({
 			target: dev ? 'http://localhost:8080' : 'https://yoko-portfolio-backend.herokuapp.com/',
 			changeOrigin: true,

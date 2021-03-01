@@ -40,7 +40,7 @@ export default projectSlice;
 // action実行関数
 export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void): Promise<void> => {
 	axios
-		.get(`/api/project/get`)
+		.get(`/v1/project/get`, { params: { query: `GetProject` } })
 		.then((response) => {
 			dispatch(getProjectsRequest(response.data));
 		})
@@ -54,7 +54,7 @@ export const getProjectByIdAsync = (id: number) => async (
 	dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void,
 ): Promise<void> => {
 	axios
-		.get(`/api/project/getOne`, {
+		.get(`/v1/project/getOne`, {
 			params: {
 				id: id,
 			},
@@ -72,7 +72,7 @@ export const postProjectAsync = (project: ProjectState) => async (
 	dispatch: (arg0: { payload: ProjectState; type: string }) => void,
 ): Promise<void> => {
 	axios
-		.post('/api/project/post', project)
+		.post('/v1/project/post', project)
 		.then(() => {
 			dispatch(postProjectRequest(project));
 			dispatch(requestSuccess());
