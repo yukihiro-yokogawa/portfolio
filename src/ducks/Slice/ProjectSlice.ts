@@ -56,6 +56,7 @@ export const getProjectByIdAsync = (id: number) => async (
 	axios
 		.get(`/api/project/getOne`, {
 			params: {
+				query: 'GetEditProject',
 				id: id,
 			},
 		})

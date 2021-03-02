@@ -19,7 +19,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.headers);
 				});
 			break;
-		case 'GetProjectOne':
+		case 'GetEditProject':
 			axios
 				.get(`${url}/api/project/getOne`, { params: { id: request.query.id } })
 				.then((res) => {
