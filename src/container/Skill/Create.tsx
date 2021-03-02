@@ -81,7 +81,6 @@ const Create = (): JSX.Element => {
 	};
 
 	const handleSubmit = (skillsDataForm: SkillStates) => {
-		console.log(skillsDataForm);
 		_.forEach(skillsDataForm.skills, (skillData) => {
 			const existSkill = _.find(skills, (skill) => {
 				return skill.technique.name == skillData.technique.name && skill.technique.version == skillData.technique.version;
