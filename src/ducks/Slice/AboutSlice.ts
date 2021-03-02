@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { AboutState } from '~/Type/About';
-import { requestFairure, requestSuccess } from './NetworkSlice';
+import { requestFairure, requestLoading, requestSuccess } from './NetworkSlice';
 
 // デフォルトのstate
 export const initialState: Array<AboutState> = [{ id: 0, name: '' }];
@@ -25,8 +25,9 @@ export const { getAboutRequest, postAboutRequest, getAboutFailure } = aboutSlice
 
 // action実行関数
 export const getAboutsAsync = () => async (dispatch: (arg0: { payload: Array<AboutState>; type: string }) => void): Promise<void> => {
+	dispatch(requestLoading());
 	axios
-		.get(`/api/about/get`, { params: { query: 'GetAbout' } })
+		.get(`/v1/about/get`, { params: { query: 'GetAbout' } })
 		.then((response) => {
 			dispatch(getAboutRequest(response.data));
 		})
@@ -39,8 +40,9 @@ export const getAboutsAsync = () => async (dispatch: (arg0: { payload: Array<Abo
 export const postAboutAsync = (about: AboutState) => async (
 	dispatch: (arg0: { payload: AboutState; type: string }) => void,
 ): Promise<void> => {
+	dispatch(requestLoading());
 	axios
-		.post(`/api/about/post`, { params: { data: about, query: 'PostAbout' } })
+		.post(`/v1/about/post`, { params: { data: about, query: 'PostAbout' } })
 		.then(() => {
 			dispatch(postAboutRequest(about));
 			dispatch(requestSuccess());

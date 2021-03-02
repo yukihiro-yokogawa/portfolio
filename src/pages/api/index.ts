@@ -133,6 +133,19 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.headers);
 				});
 			break;
+		case 'PostSkill':
+			axios
+				.post(`${url}/api/skill/post`, data)
+				.then(() => {
+					response.status(300).send('ok');
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
+			break;
 		default:
 			response.status(404);
 			break;

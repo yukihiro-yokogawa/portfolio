@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ProjectState } from '~/Type/Project';
-import { requestFairure, requestSuccess } from './NetworkSlice';
+import { requestFairure, requestLoading, requestSuccess } from './NetworkSlice';
 
 // デフォルトのstate
 export const initialState: Array<ProjectState> = [
@@ -40,7 +40,7 @@ export default projectSlice;
 // action実行関数
 export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void): Promise<void> => {
 	axios
-		.get(`/api/project/get`, { params: { query: `GetProject` } })
+		.get(`/v1/project/get`, { params: { query: `GetProject` } })
 		.then((response) => {
 			dispatch(getProjectsRequest(response.data));
 		})
@@ -53,8 +53,9 @@ export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Array<P
 export const getProjectByIdAsync = (id: number) => async (
 	dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void,
 ): Promise<void> => {
+	dispatch(requestLoading());
 	axios
-		.get(`/api/project/getOne`, {
+		.get(`/v1/project/getOne`, {
 			params: {
 				id: id,
 			},
@@ -71,8 +72,9 @@ export const getProjectByIdAsync = (id: number) => async (
 export const postProjectAsync = (project: ProjectState) => async (
 	dispatch: (arg0: { payload: ProjectState; type: string }) => void,
 ): Promise<void> => {
+	dispatch(requestLoading());
 	axios
-		.post('/api/project/post', { params: { data: project, query: 'PostProject' } })
+		.post('/v1/project/post', { params: { data: project, query: 'PostProject' } })
 		.then(() => {
 			dispatch(postProjectRequest(project));
 			dispatch(requestSuccess());

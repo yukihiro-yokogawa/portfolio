@@ -1,16 +1,20 @@
 import _ from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import SkillCreate from '~/component/Skill/SkillCreate';
 import { useStoreState } from '~/ducks/selector';
-import { SkillState } from '~/Type/Skill';
-import { AutoCompleteVersionState } from '~/Type/Technique';
+import { requestLoadingAsync } from '~/ducks/Slice/NetworkSlice';
+import { postSkillAsync } from '~/ducks/Slice/SkillSlice';
+import { SkillState, SkillStates } from '~/Type/Skill';
+import { AutoCompleteVersionState, TechniqueState } from '~/Type/Technique';
 
 const Create = (): JSX.Element => {
+	const dispatch = useDispatch();
 	// 使用技術追加のDOM変更用変数.
 	const [techniqueFieldList, setTechniqueFieldList] = useState([0]);
 	// version入力部分のオートコンプリート.
 	const [autoCompleteVersions, setAutoCompleteVersions] = useState([]);
-	const { techniques } = useStoreState();
+	const { skills, techniques } = useStoreState();
 
 	/**
 	 * TechniqueのTextFieldコンポーネントで使用されるAutoComplete配列を生成する関数.
@@ -83,9 +87,32 @@ const Create = (): JSX.Element => {
 		[autoCompleteVersions, techniqueFieldList],
 	);
 
-	const handleSubmit = (data: SkillState) => {
-		console.log(data);
-	};
+	const handleSubmit = useCallback(
+		(skillsDataForm: SkillStates) => {
+			_.forEach(skillsDataForm.skills, (skillData, index) => {
+				const existSkill = _.find(skills, (skill) => {
+					return skill.technique.name == skillData.technique.name && skill.technique.version == skillData.technique.version;
+				});
+				if (typeof existSkill !== 'undefined') {
+					skillData.id = existSkill.id;
+					skillData.technique = existSkill.technique;
+					return;
+				}
+				const technique: TechniqueState = _.find(techniques, (technique) => {
+					return technique.name == skillData.technique.name;
+				});
+				skillData.id = _.last(skills).id + 1 + index;
+				if (typeof technique !== 'undefined') {
+					skillData.technique.id = technique?.id;
+					skillData.technique.techniqueType = technique?.techniqueType;
+				} else {
+					skillData.technique.id = _.last(techniques).id + 1 + index;
+				}
+			});
+			dispatch(postSkillAsync(skillsDataForm));
+		},
+		[dispatch, skills, techniques],
+	);
 
 	return (
 		<>

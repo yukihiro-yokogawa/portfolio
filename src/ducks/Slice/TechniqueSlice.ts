@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { TechniqueState } from '~/Type/Technique';
-import { requestFairure, requestSuccess } from './NetworkSlice';
+import { requestFairure, requestLoading, requestSuccess } from './NetworkSlice';
 
 // デフォルトのstate
 export const initialState: Array<TechniqueState> = [{ id: 0, name: '', version: '', techniqueType: { id: 0, name: '', displayOrder: 0 } }];
@@ -24,8 +24,9 @@ export const { getTechniqueRequest, postTechniqueRequest } = techniqueSlice.acti
 export const getTechniquesAsync = () => async (
 	dispatch: (arg0: { payload: Array<TechniqueState>; type: string }) => void,
 ): Promise<void> => {
+	dispatch(requestLoading());
 	axios
-		.get(`/api/technique/get`, { params: { query: 'GetTechnique' } })
+		.get(`/v1/technique/get`, { params: { query: 'GetTechnique' } })
 		.then((response) => {
 			dispatch(getTechniqueRequest(response.data));
 		})
@@ -38,8 +39,9 @@ export const getTechniquesAsync = () => async (
 export const postTechniqueAsync = (technique: TechniqueState) => async (
 	dispatch: (arg0: { payload: TechniqueState; type: string }) => void,
 ): Promise<void> => {
+	dispatch(requestLoading());
 	axios
-		.post('/api/technique/post', { params: { data: technique, query: 'PostTechnique' } })
+		.post('/v1/technique/post', { params: { data: technique, query: 'PostTechnique' } })
 		.then(() => {
 			dispatch(postTechniqueRequest(technique));
 			dispatch(requestSuccess());

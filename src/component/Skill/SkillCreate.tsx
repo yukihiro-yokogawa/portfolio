@@ -39,7 +39,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 							key={item}
 						>
 							<CustomRadioField
-								name={`skill[${index}].level`}
+								name={`skills[${index}].level`}
 								label="level"
 								values={[{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }]}
 								customStyle={{ width: '100%' }}
@@ -47,7 +47,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 							<CustomAutoComplete
 								index={index}
 								label="UseTechnique"
-								name={`skill[${index}].technique.name`}
+								name={`skills[${index}].technique.name`}
 								required={true}
 								length={0}
 								url={false}
@@ -61,7 +61,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 							<CustomAutoComplete
 								index={index}
 								label="version"
-								name={`skill[${index}].technique.version`}
+								name={`skills[${index}].technique.version`}
 								required={true}
 								length={0}
 								url={false}

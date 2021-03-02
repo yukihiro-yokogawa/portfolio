@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { TechniqueTypeState } from '~/Type/Technique';
-import { requestFairure } from './NetworkSlice';
+import { requestFairure, requestLoading } from './NetworkSlice';
 
 export const initialState: Array<TechniqueTypeState> = [{ id: 0, name: '', displayOrder: 0 }];
 
@@ -18,8 +18,9 @@ export default techniqueTypeSlice;
 export const { getTechniqueTypeRequest } = techniqueTypeSlice.actions;
 
 export const getTechniqueTypeAsync = () => async (dispatch: (arg0: { payload: Array<TechniqueTypeState> }) => void): Promise<void> => {
+	dispatch(requestLoading());
 	axios
-		.get(`/api/techniqueType/get`, { params: { query: 'GetTechniqueType' } })
+		.get(`/v1/techniqueType/get`, { params: { query: 'GetTechniqueType' } })
 		.then((response) => {
 			dispatch(getTechniqueTypeRequest(response.data));
 		})
