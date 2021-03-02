@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import SkillCreate from '~/component/Skill/SkillCreate';
 import { useStoreState } from '~/ducks/selector';
