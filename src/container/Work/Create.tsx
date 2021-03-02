@@ -125,6 +125,7 @@ const Create = (): JSX.Element => {
 	 */
 	const handleSubmit = useCallback(
 		(projectDataForm: ProjectState) => {
+			console.log(projectDataForm);
 			_(projectDataForm.projectAbouts).forEach((projectAbout) => {
 				projectAbout.about.id = _.find(abouts, (about) => {
 					return about.name == projectAbout.about.name;

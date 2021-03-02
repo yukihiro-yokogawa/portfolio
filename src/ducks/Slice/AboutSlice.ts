@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { AboutState } from '~/Type/About';
-import { requestFairure, requestSuccess } from './NetworkSlice';
+import { requestFairure, requestLoading, requestSuccess } from './NetworkSlice';
 
 // デフォルトのstate
 export const initialState: Array<AboutState> = [{ id: 0, name: '' }];
@@ -39,6 +39,7 @@ export const getAboutsAsync = () => async (dispatch: (arg0: { payload: Array<Abo
 export const postAboutAsync = (about: AboutState) => async (
 	dispatch: (arg0: { payload: AboutState; type: string }) => void,
 ): Promise<void> => {
+	dispatch(requestLoading());
 	axios
 		.post(`/v1/about/post`, { params: { data: about, query: 'PostAbout' } })
 		.then(() => {

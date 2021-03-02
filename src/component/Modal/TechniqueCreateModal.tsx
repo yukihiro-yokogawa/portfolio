@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useStoreState } from '~/ducks/selector';
 import { TechniqueState, TechniqueTypeState } from '~/Type/Technique';
 import CustomInput from '../Form/CustomInput';
 import CustomRadioField from '../Form/CustomRadioFIeld';
@@ -53,7 +54,14 @@ const TechniqueCreateModal = (props: {
 							>
 								close
 							</Button>
-							<Button style={{ margin: 8 }} variant="contained" color="primary" size="medium" type="submit">
+							<Button
+								style={{ margin: 8 }}
+								variant="contained"
+								color="primary"
+								size="medium"
+								type="submit"
+								disabled={useStoreState().network.loading}
+							>
 								register
 							</Button>
 						</form>

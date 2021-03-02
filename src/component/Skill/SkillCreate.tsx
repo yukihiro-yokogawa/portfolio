@@ -3,6 +3,7 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import TechniqueCreateModal from '~/container/Modal/TechniqueCreateModal';
+import { useStoreState } from '~/ducks/selector';
 import { SkillCreateState } from '~/Type/Skill';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import CustomRadioField from '../Form/CustomRadioFIeld';
@@ -20,7 +21,6 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 	} = props;
 
 	const [modal, setModal] = useState('');
-
 	const handleClickShowModal = (show: string) => {
 		setModal(show);
 	};
@@ -39,7 +39,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 							key={item}
 						>
 							<CustomRadioField
-								name={`skill[${index}].level`}
+								name={`skills[${index}].level`}
 								label="level"
 								values={[{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }]}
 								customStyle={{ width: '100%' }}
@@ -47,7 +47,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 							<CustomAutoComplete
 								index={index}
 								label="UseTechnique"
-								name={`skill[${index}].technique.name`}
+								name={`skills[${index}].technique.name`}
 								required={true}
 								length={0}
 								url={false}
@@ -61,7 +61,7 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 							<CustomAutoComplete
 								index={index}
 								label="version"
-								name={`skill[${index}].technique.version`}
+								name={`skills[${index}].technique.version`}
 								required={true}
 								length={0}
 								url={false}
@@ -82,7 +82,10 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 								color="primary"
 								size="small"
 								style={{ width: '36px', height: '36px' }}
-								onClick={() => handleClickDeleteTechnique(item, index)}
+								onClick={() => {
+									handleClickDeleteTechnique(item, index);
+									methods.reset();
+								}}
 							>
 								×
 							</Fab>
@@ -100,7 +103,14 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 					<Button style={{ margin: 8 }} onClick={handleClickAddTechnique} variant="contained" color="primary" size="medium">
 						add
 					</Button>
-					<Button type="submit" style={{ margin: 8 }} variant="contained" color="primary" size="medium">
+					<Button
+						type="submit"
+						style={{ margin: 8 }}
+						variant="contained"
+						color="primary"
+						size="medium"
+						disabled={useStoreState().network.loading}
+					>
 						Submit
 					</Button>
 				</form>

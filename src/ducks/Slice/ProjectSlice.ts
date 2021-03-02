@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ProjectState } from '~/Type/Project';
-import { requestFairure, requestSuccess } from './NetworkSlice';
+import { requestFairure, requestLoading, requestSuccess } from './NetworkSlice';
 
 // デフォルトのstate
 export const initialState: Array<ProjectState> = [
@@ -71,8 +71,9 @@ export const getProjectByIdAsync = (id: number) => async (
 export const postProjectAsync = (project: ProjectState) => async (
 	dispatch: (arg0: { payload: ProjectState; type: string }) => void,
 ): Promise<void> => {
+	dispatch(requestLoading());
 	axios
-		.post('/v1/project/post', project)
+		.post('/v1/project/post', { params: { data: project, query: 'PostProject' } })
 		.then(() => {
 			dispatch(postProjectRequest(project));
 			dispatch(requestSuccess());
