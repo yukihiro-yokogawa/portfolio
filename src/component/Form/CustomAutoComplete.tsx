@@ -44,7 +44,10 @@ const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
 									multiline={length < 100 || url ? false : true}
 									inputRef={register({ required: required, maxLength: length })}
 									error={Boolean(_.get(errors, name))}
-									helperText={_.get(errors, name) && `${label}は${length}文字以内にして下さい。`}
+									helperText={
+										_.get(errors, name) &&
+										`${label}${length === 0 ? `を入力してください` : `は${length}文字以内にして下さい`}。`
+									}
 									inputProps={{ ...params.inputProps, maxLength: length != 0 ? length : null }}
 								/>
 							</>

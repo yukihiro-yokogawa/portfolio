@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { SkillState, SkillStates } from '~/Type/Skill';
-import { requestFairure, requestLoading } from './NetworkSlice';
+import { requestFairure, requestLoading, requestSuccess } from './NetworkSlice';
 
 export const initialState: Array<SkillState> = [
 	{
@@ -22,7 +22,7 @@ const skillSlice = createSlice({
 	reducers: {
 		//action
 		getSkillsRequest: (_state, action: PayloadAction<Array<SkillState>>) => [...action.payload],
-		postSkillRequest: (state, action: PayloadAction<SkillStates>) => [...state.concat(action.payload.skills)],
+		postSkillRequest: (_state, action: PayloadAction<SkillStates>) => [...action.payload.skills],
 	},
 });
 
@@ -42,17 +42,17 @@ export const getSkillsAsync = () => async (dispatch: (arg0: { payload: Array<Ski
 		});
 };
 
-export const postSkillAsync = (skills: SkillStates) => async (dispatch: (arg0: { payload: SkillStates }) => void): Promise<void> => {
-	dispatch(postSkillRequest(skills));
+export const postSkillAsync = (data: SkillStates) => async (dispatch: (arg0: { payload: SkillStates }) => void): Promise<void> => {
 	dispatch(requestLoading());
-	// axios
-	// 	.post(`/v1/skill/post`, { params: { data: skills, query: 'PostSkill' } })
-	// 	.then(() => {
-	// 		dispatch(postSkillRequest(skills));
-	//		dispatch(requestSuccess());
-	// 	})
-	// 	.catch((err) => {
-	// 		console.log(err);
-	// 		dispatch(requestFairure());
-	// 	});
+	console.log(data);
+	axios
+		.post(`/v1/skill/post`, { params: { data: data.skills, query: 'PostSkill' } })
+		.then(() => {
+			dispatch(postSkillRequest(data));
+			dispatch(requestSuccess());
+		})
+		.catch((err) => {
+			console.log(err);
+			dispatch(requestFairure());
+		});
 };

@@ -42,7 +42,9 @@ const CustomInput = (props: CustomInputState): JSX.Element => {
 						multiline={length < 100 || url ? false : true}
 						inputRef={register({ required: required, maxLength: length })}
 						error={Boolean(_.get(errors, name))}
-						helperText={_.get(errors, name) && `${label}は${length}文字以内にして下さい。`}
+						helperText={
+							_.get(errors, name) && `${label}${length === 0 ? `を入力してください` : `は${length}文字以内にして下さい`}。`
+						}
 						className={useStyles().textField}
 						inputProps={length != 0 ? { maxLength: length } : null}
 						autoComplete="off"

@@ -104,7 +104,10 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 									color="primary"
 									size="small"
 									style={{ width: '36px', height: '36px' }}
-									onClick={() => handleClickDeleteTechnique(item, index)}
+									onClick={() => {
+										handleClickDeleteTechnique(item, index);
+										methods.reset();
+									}}
 								>
 									×
 								</Fab>

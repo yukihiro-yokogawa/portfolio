@@ -21,7 +21,6 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 	} = props;
 
 	const [modal, setModal] = useState('');
-
 	const handleClickShowModal = (show: string) => {
 		setModal(show);
 	};
@@ -83,7 +82,10 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 								color="primary"
 								size="small"
 								style={{ width: '36px', height: '36px' }}
-								onClick={() => handleClickDeleteTechnique(item, index)}
+								onClick={() => {
+									handleClickDeleteTechnique(item, index);
+									methods.reset();
+								}}
 							>
 								×
 							</Fab>
