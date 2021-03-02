@@ -3,9 +3,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import SkillCreate from '~/component/Skill/SkillCreate';
 import { useStoreState } from '~/ducks/selector';
-import { requestLoadingAsync } from '~/ducks/Slice/NetworkSlice';
 import { postSkillAsync } from '~/ducks/Slice/SkillSlice';
-import { SkillState, SkillStates } from '~/Type/Skill';
+import { SkillStates } from '~/Type/Skill';
 import { AutoCompleteVersionState, TechniqueState } from '~/Type/Technique';
 
 const Create = (): JSX.Element => {
