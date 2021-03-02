@@ -201,7 +201,14 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 							About Create
 						</Button>
 						<br />
-						<Button type="submit" style={{ margin: 8 }} variant="contained" color="primary" size="medium">
+						<Button
+							type="submit"
+							style={{ margin: 8 }}
+							variant="contained"
+							color="primary"
+							size="medium"
+							disabled={useStoreState().network.loading}
+						>
 							Submit
 						</Button>
 					</form>

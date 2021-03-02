@@ -25,7 +25,6 @@ export const { getAboutRequest, postAboutRequest, getAboutFailure } = aboutSlice
 
 // action実行関数
 export const getAboutsAsync = () => async (dispatch: (arg0: { payload: Array<AboutState>; type: string }) => void): Promise<void> => {
-	dispatch(requestLoading());
 	axios
 		.get(`/v1/about/get`, { params: { query: 'GetAbout' } })
 		.then((response) => {

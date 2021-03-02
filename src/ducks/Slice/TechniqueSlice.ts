@@ -24,7 +24,6 @@ export const { getTechniqueRequest, postTechniqueRequest } = techniqueSlice.acti
 export const getTechniquesAsync = () => async (
 	dispatch: (arg0: { payload: Array<TechniqueState>; type: string }) => void,
 ): Promise<void> => {
-	dispatch(requestLoading());
 	axios
 		.get(`/v1/technique/get`, { params: { query: 'GetTechnique' } })
 		.then((response) => {

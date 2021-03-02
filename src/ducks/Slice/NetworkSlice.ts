@@ -15,7 +15,7 @@ const networkSlice = createSlice({
 			return { ...state, success: true, failure: false, loading: false };
 		},
 		requestLoading: (state) => {
-			return { ...state, success: false, failure: false, loading: true };
+			return { ...state, success: null, failure: null, loading: true };
 		},
 		requestFairure: (state) => {
 			return { ...state, success: false, failure: true, loading: false };

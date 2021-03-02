@@ -31,7 +31,6 @@ export const { getSkillsRequest, postSkillRequest } = skillSlice.actions;
 export default skillSlice;
 
 export const getSkillsAsync = () => async (dispatch: (arg0: { payload: Array<SkillState> }) => void): Promise<void> => {
-	dispatch(requestLoading());
 	axios
 		.get(`/v1/skill/get`, { params: { query: 'GetSkill' } })
 		.then((response) => {
@@ -50,6 +49,7 @@ export const postSkillAsync = (skills: SkillStates) => async (dispatch: (arg0: {
 	// 	.post(`/v1/skill/post`, { params: { data: skills, query: 'PostSkill' } })
 	// 	.then(() => {
 	// 		dispatch(postSkillRequest(skills));
+	//		dispatch(requestSuccess());
 	// 	})
 	// 	.catch((err) => {
 	// 		console.log(err);

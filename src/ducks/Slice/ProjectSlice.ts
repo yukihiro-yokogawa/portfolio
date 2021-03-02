@@ -53,7 +53,6 @@ export const getProjectsAsync = () => async (dispatch: (arg0: { payload: Array<P
 export const getProjectByIdAsync = (id: number) => async (
 	dispatch: (arg0: { payload: Array<ProjectState>; type: string }) => void,
 ): Promise<void> => {
-	dispatch(requestLoading());
 	axios
 		.get(`/v1/project/getOne`, {
 			params: {

@@ -3,6 +3,7 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import TechniqueCreateModal from '~/container/Modal/TechniqueCreateModal';
+import { useStoreState } from '~/ducks/selector';
 import { SkillCreateState } from '~/Type/Skill';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import CustomRadioField from '../Form/CustomRadioFIeld';
@@ -100,7 +101,14 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 					<Button style={{ margin: 8 }} onClick={handleClickAddTechnique} variant="contained" color="primary" size="medium">
 						add
 					</Button>
-					<Button type="submit" style={{ margin: 8 }} variant="contained" color="primary" size="medium">
+					<Button
+						type="submit"
+						style={{ margin: 8 }}
+						variant="contained"
+						color="primary"
+						size="medium"
+						disabled={useStoreState().network.loading}
+					>
 						Submit
 					</Button>
 				</form>
