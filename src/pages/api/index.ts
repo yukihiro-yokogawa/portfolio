@@ -96,7 +96,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			axios
 				.post(`${url}/api/project/post`, data)
 				.then(() => {
-					response.status(300).send('ok');
+					response.status(200).send('ok');
 				})
 				.catch((error) => {
 					console.log(error.response.data);
@@ -109,7 +109,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			axios
 				.post(`${url}/api/technique/post`, data)
 				.then(() => {
-					response.status(300).send('ok');
+					response.status(200).send('ok');
 				})
 				.catch((error) => {
 					console.log(error.response.data);
@@ -122,7 +122,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			axios
 				.post(`${url}/api/about/post`, data)
 				.then(() => {
-					response.status(300).send('ok');
+					response.status(200).send('ok');
 				})
 				.catch((error) => {
 					console.log(error.response.data);
@@ -135,7 +135,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			axios
 				.post(`${url}/api/skill/post`, data)
 				.then(() => {
-					response.status(300).send('ok');
+					response.status(200).send('ok');
 				})
 				.catch((error) => {
 					console.log(error.response.data);
