@@ -51,7 +51,7 @@ const Work = (props: { project: ProjectState }): JSX.Element => {
 						})}
 					</TableBody>
 				</Table>
-				<ContentAddButton linkHref="/Work/create" linkAs="/work/edit" query={props.project.id} />
+				<ContentAddButton linkHref="/Work/create" linkAs="/work/edit" query={props.project} />
 			</Container>
 		</>
 	);

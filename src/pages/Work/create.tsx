@@ -1,29 +1,43 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, { createContext, useContext, useEffect } from 'react';
 import Create from '~/container/Work/Create';
 import { getAboutsAsync } from '~/ducks/Slice/AboutSlice';
 import { useDispatch } from 'react-redux';
-import { getProjectByIdAsync } from '~/ducks/Slice/ProjectSlice';
 import { getTechniquesAsync } from '~/ducks/Slice/TechniqueSlice';
 import { getTechniqueTypeAsync } from '~/ducks/Slice/TechniqueTypeSlice';
-const create: React.FC = () => {
-	const router = useRouter();
-	const projectId = (router.query.projectId as unknown) as number;
-	const dispatch = useDispatch();
+import { ProjectState } from '~/Type/Project';
 
+export const ProjectContext = createContext({
+	id: 0,
+	name: '',
+	startDate: '',
+	endDate: '',
+	addDate: '',
+	gitUrl: '',
+	projectTechniques: [],
+	projectAbouts: [],
+	projectImages: [],
+});
+
+const create = (props: { project: ProjectState }): JSX.Element => {
+	const dispatch = useDispatch();
 	// レンダリング後に実行されるアクション関数.
 	useEffect(() => {
-		dispatch(getProjectByIdAsync(projectId));
 		dispatch(getAboutsAsync());
 		dispatch(getTechniquesAsync());
 		dispatch(getTechniqueTypeAsync());
-	}, [dispatch, projectId]);
+	}, [dispatch]);
 
 	return (
-		<div>
-			<Create />
-		</div>
+		<ProjectContext.Provider value={Object.keys(props.project).length != 0 ? props.project : useContext(ProjectContext)}>
+			<div>
+				<Create />
+			</div>
+		</ProjectContext.Provider>
 	);
 };
 
 export default create;
+
+create.getInitialProps = async ({ query }) => {
+	return { project: query };
+};

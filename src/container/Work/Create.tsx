@@ -5,8 +5,8 @@ import { ProjectState } from '~/Type/Project';
 import { AboutState } from '~/Type/About';
 import { useStoreState } from '~/ducks/selector';
 import { useDispatch } from 'react-redux';
-import { postProjectAsync } from '~/ducks/Slice/ProjectSlice';
 import { AutoCompleteVersionState } from '~/Type/Technique';
+import { postProjectAsync } from '~/ducks/Slice/ProjectSlice';
 
 /**
  * Work新規追加フォームのロジックコンポーネント.
@@ -125,7 +125,6 @@ const Create = (): JSX.Element => {
 	 */
 	const handleSubmit = useCallback(
 		(projectDataForm: ProjectState) => {
-			console.log(projectDataForm);
 			_(projectDataForm.projectAbouts).forEach((projectAbout) => {
 				projectAbout.about.id = _.find(abouts, (about) => {
 					return about.name == projectAbout.about.name;

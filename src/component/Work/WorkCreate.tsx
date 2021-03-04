@@ -2,7 +2,7 @@ import CustomInput from '../Form/CustomInput';
 import { Box, Button, Container } from '@material-ui/core';
 import CustomSelectField from '../Form/CustomSelectField';
 import { WorkCreateState } from '~/Type/Work';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useStoreState } from '~/ducks/selector';
 import { Fab } from '@material-ui/core';
@@ -10,6 +10,7 @@ import TechniqueCreateModal from '~/container/Modal/TechniqueCreateModal';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import _ from 'lodash';
 import AboutCreateModal from '~/container/Modal/AboutCreateModal';
+import { ProjectContext } from '~/pages/Work/create';
 
 /**
  * Work新規追加フォームのViewコンポーネント.
@@ -31,12 +32,16 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 		handleSubmit,
 	} = props;
 
-	const { id, name, startDate, endDate, addDate, gitUrl, projectTechniques } = useStoreState().projects[0];
+	const { id, name, startDate, endDate, addDate, gitUrl, projectTechniques } = useContext(ProjectContext);
 
 	const [modal, setModal] = useState('');
 
 	const handleClickShowModal = (show: string) => {
 		setModal(show);
+	};
+
+	const getDateString = (date: Date) => {
+		return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 	};
 
 	const methods = useForm();
@@ -130,10 +135,10 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								label="StartDate"
 								name="startDate"
 								required={false}
-								length={64}
+								length={0}
 								url={false}
 								date={true}
-								value={startDate}
+								value={startDate != '' ? getDateString(new Date(startDate)) : ''}
 								placeholder="プロジェクトの開始日を入力してください"
 								customStyle={{ width: '30%' }}
 							/>
@@ -141,21 +146,21 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								label="AddDate"
 								name="addDate"
 								required={false}
-								length={64}
+								length={0}
 								url={false}
 								date={true}
-								value={addDate}
+								value={addDate != '' ? getDateString(new Date(addDate)) : ''}
 								placeholder="プロジェクトのリリース日を入力してください"
 								customStyle={{ width: '30%' }}
 							/>
 							<CustomInput
 								label="EndDate"
-								name="endate"
+								name="endDate"
 								required={false}
-								length={64}
+								length={0}
 								url={false}
 								date={true}
-								value={endDate}
+								value={endDate != '' ? getDateString(new Date(endDate)) : ''}
 								placeholder="プロジェクトの完了日を入力してください"
 								customStyle={{ width: '30%' }}
 							/>

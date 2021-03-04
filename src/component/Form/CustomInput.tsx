@@ -13,13 +13,12 @@ import _ from 'lodash';
  * @return {*}  {JSX.Element} テキストフィールドコンポーネント
  */
 const CustomInput = (props: CustomInputState): JSX.Element => {
-	const { label, name, required, length, url, date, value, placeholder, customStyle } = props;
+	const { label, name, required, length, url, value, date, placeholder, customStyle } = props;
 	const useStyles = makeStyles(() =>
 		createStyles({
 			textField: customStyle,
 		}),
 	);
-
 	return (
 		<>
 			<ConnectForm>
@@ -46,7 +45,7 @@ const CustomInput = (props: CustomInputState): JSX.Element => {
 							_.get(errors, name) && `${label}${length === 0 ? `を入力してください` : `は${length}文字以内にして下さい`}。`
 						}
 						className={useStyles().textField}
-						inputProps={length != 0 ? { maxLength: length } : null}
+						inputProps={length != 0 ? { maxLength: length } : {}}
 						autoComplete="off"
 					/>
 				)}
