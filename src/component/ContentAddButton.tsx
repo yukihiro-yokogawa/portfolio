@@ -19,7 +19,11 @@ const ContentAddButton = (props: { linkHref: string; linkAs: string; query: any 
 
 	return (
 		<>
-			<Link href={{ pathname: props.linkHref, query: props.query == 'new' ? 0 : props.query }} as={props.linkAs}>
+			{console.log(props.query)}
+			<Link
+				href={{ pathname: props.linkHref, query: props.query == 'new' ? '0' : `project=${JSON.stringify(props.query)}` }}
+				as={props.linkAs}
+			>
 				{props.query == 'new' ? (
 					<Fab aria-label="Add" className={useStyles().fab} color="primary">
 						<AddIcon />

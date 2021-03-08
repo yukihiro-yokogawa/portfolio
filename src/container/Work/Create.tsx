@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import _ from 'lodash';
 import WorkCreate from '~/component/Work/WorkCreate';
 import { ProjectState } from '~/Type/Project';
@@ -7,6 +7,7 @@ import { useStoreState } from '~/ducks/selector';
 import { useDispatch } from 'react-redux';
 import { AutoCompleteVersionState } from '~/Type/Technique';
 import { postProjectAsync } from '~/ducks/Slice/ProjectSlice';
+import { ProjectContext } from '~/pages/Work/create';
 
 /**
  * Work新規追加フォームのロジックコンポーネント.
@@ -17,8 +18,10 @@ const Create = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { techniques, abouts } = useStoreState();
 
+	const { projectTechniques } = useContext(ProjectContext);
+
 	// 使用技術追加のDOM変更用変数.
-	const [techniqueFieldList, setTechniqueFieldList] = useState([0]);
+	const [techniqueFieldList, setTechniqueFieldList] = useState(projectTechniques.length == 0 ? [0] : projectTechniques.map((_, i) => i));
 	// version入力部分のオートコンプリート.
 	const [autoCompleteVersions, setAutoCompleteVersions] = useState([]);
 

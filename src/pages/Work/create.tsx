@@ -4,9 +4,10 @@ import { getAboutsAsync } from '~/ducks/Slice/AboutSlice';
 import { useDispatch } from 'react-redux';
 import { getTechniquesAsync } from '~/ducks/Slice/TechniqueSlice';
 import { getTechniqueTypeAsync } from '~/ducks/Slice/TechniqueTypeSlice';
-import { ProjectState } from '~/Type/Project';
 
-export const ProjectContext = createContext({
+import { ProjectState } from '~/Type/Project';
+/** @type {コンテキスト（ProjectState} */
+export const ProjectContext: React.Context<ProjectState> = createContext({
 	id: 0,
 	name: '',
 	startDate: '',
@@ -39,5 +40,5 @@ const create = (props: { project: ProjectState }): JSX.Element => {
 export default create;
 
 create.getInitialProps = async ({ query }) => {
-	return { project: query };
+	return { project: JSON.parse(query.project) };
 };
