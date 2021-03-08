@@ -17,5 +17,5 @@ export type TechniqueTypeState = {
 
 export type AutoCompleteVersionState = {
 	id: number;
-	autoComplete: string[];
+	autoComplete: Array<{ id: number; name: string; type: string }>;
 };

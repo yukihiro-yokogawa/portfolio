@@ -19,7 +19,7 @@ export type AutoCompleteState = {
 	url: boolean;
 	date: boolean;
 	value: string | Array<string>;
-	autoComplete: string[];
+	autoComplete: Array<{ name: string; type: string }>;
 	placeholder: string;
 	customStyle: Record<string | number | symbol, any>;
 	handleChange: (event: React.ChangeEvent<any>, index: number) => void;

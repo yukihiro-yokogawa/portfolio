@@ -22,8 +22,8 @@ const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
 						freeSolo
 						options={typeof autoComplete === 'undefined' ? [] : autoComplete}
 						style={customStyle}
-						// groupBy={(option) => (typeof option?.groupName === 'undefined' ? null : option?.groupName)}
-						getOptionLabel={(option) => option}
+						groupBy={(option) => option.type}
+						getOptionLabel={(option) => option.name}
 						renderInput={(params) => (
 							<>
 								<TextField
