@@ -10,7 +10,7 @@ export type SkillState = {
 
 export type SkillCreateState = {
 	techniqueFieldList: number[];
-	autoCompleteTechniques: string[];
+	autoCompleteTechniques: Array<{ name: string; type: string }>;
 	autoCompleteVersions: Array<AutoCompleteVersionState>;
 	handleChangeTechnique: (event: React.ChangeEvent<any>, index: number) => void;
 	handleClickAddTechnique: () => void;

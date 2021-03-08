@@ -47,14 +47,12 @@ const Create = (): JSX.Element => {
 	 * TechniqueのTextFieldコンポーネントで使用されるAutoComplete配列を生成する関数.
 	 */
 	const autoCompleteTechniques = useMemo(() => {
-		return _.uniq(
-			_(techniques)
-				.map((technique) => {
-					return { name: technique.name, type: technique.techniqueType.name };
-				})
-				.uniqBy('name')
-				.value(),
-		);
+		return _(techniques)
+			.map((technique) => {
+				return { name: technique.name, type: technique.techniqueType.name };
+			})
+			.uniqBy('name')
+			.value();
 	}, [techniques]);
 
 	/**

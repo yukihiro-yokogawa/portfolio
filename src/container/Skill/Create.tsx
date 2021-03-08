@@ -21,9 +21,9 @@ const Create = (): JSX.Element => {
 	const autoCompleteTechniques = useMemo(() => {
 		return _(techniques)
 			.map((technique) => {
-				return technique.name;
+				return { name: technique.name, type: technique.techniqueType.name };
 			})
-			.uniq()
+			.uniqBy('name')
 			.value();
 	}, [techniques]);
 
@@ -39,7 +39,7 @@ const Create = (): JSX.Element => {
 				return technique.name == event.target.outerText;
 			})
 			.map((technique) => {
-				return technique.version;
+				return { id: technique.id, name: technique.version, type: '' };
 			})
 			.value();
 		if (!key) {
