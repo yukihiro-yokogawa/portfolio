@@ -18,14 +18,21 @@ const Create = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { techniques, abouts } = useStoreState();
 
-	const { projectTechniques } = useContext(ProjectContext);
+	const { projectTechniques, projectAbouts } = useContext(ProjectContext);
 
 	// 使用技術追加のDOM変更用変数.
 	const [techniqueFieldList, setTechniqueFieldList] = useState(projectTechniques.length == 0 ? [0] : projectTechniques.map((_, i) => i));
 	// version入力部分のオートコンプリート.
 	const [autoCompleteVersions, setAutoCompleteVersions] = useState([]);
 
-	const [aboutFieldList, setAboutFieldList] = useState([]);
+	// project詳細のDOM変更用変数.
+	const [aboutFieldList, setAboutFieldList] = useState(
+		projectAbouts.length == 0
+			? []
+			: _.map(projectAbouts, (projectAbout) => {
+					return projectAbout.about.name;
+			  }),
+	);
 
 	// aboutsの値が変更しないならキャッシュから取得.
 	const aboutsArr = useMemo(() => {
