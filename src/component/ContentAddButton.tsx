@@ -20,7 +20,7 @@ const ContentAddButton = (props: { linkHref: string; linkAs: string; query: any 
 	return (
 		<>
 			<Link
-				href={{ pathname: props.linkHref, query: props.query == 'new' ? 'project=new' : `project=${JSON.stringify(props.query)}` }}
+				href={{ pathname: props.linkHref, query: props.query == 'new' ? 'param=new' : `param=${JSON.stringify(props.query)}` }}
 				as={props.linkAs}
 			>
 				{props.query == 'new' ? (

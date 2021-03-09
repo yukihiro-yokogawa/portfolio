@@ -5,7 +5,7 @@ import ContentAddButton from '../ContentAddButton';
 const Skill = (props: { mySkills: Array<any> }): JSX.Element => {
 	return (
 		<>
-			<ContentAddButton linkHref="/Skill/create" linkAs="/skill/new" query="new" />
+			<ContentAddButton linkHref="/Skill/create" linkAs="/skill/edit" query={props.mySkills} />
 			{props.mySkills.map((mySkill, index) =>
 				mySkill.techniques.length !== 0 ? (
 					<Box

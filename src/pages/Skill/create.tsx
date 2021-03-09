@@ -4,7 +4,8 @@ import Create from '~/container/Skill/Create';
 import { getSkillsAsync } from '~/ducks/Slice/SkillSlice';
 import { getTechniquesAsync } from '~/ducks/Slice/TechniqueSlice';
 import { getTechniqueTypeAsync } from '~/ducks/Slice/TechniqueTypeSlice';
-const create: React.FC = () => {
+
+const create = (): JSX.Element => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -21,3 +22,7 @@ const create: React.FC = () => {
 };
 
 export default create;
+
+create.getInitialProps = async ({ query }) => {
+	return { project: query.param == 'new' ? [] : JSON.parse(query.param) };
+};

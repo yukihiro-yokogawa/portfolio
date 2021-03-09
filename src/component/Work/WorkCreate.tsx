@@ -40,8 +40,9 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 		setModal(show);
 	};
 
-	const getDateString = (date: Date) => {
-		return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+	const getDateString = (date: string) => {
+		console.log(date);
+		return date?.match(/^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])/)[0];
 	};
 
 	const methods = useForm();
@@ -138,7 +139,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								length={0}
 								url={false}
 								date={true}
-								value={startDate != '' ? getDateString(new Date(startDate)) : ''}
+								value={startDate != '' && startDate != null ? getDateString(startDate) : ''}
 								placeholder="プロジェクトの開始日を入力してください"
 								customStyle={{ width: '30%' }}
 							/>
@@ -149,7 +150,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								length={0}
 								url={false}
 								date={true}
-								value={addDate != '' ? getDateString(new Date(addDate)) : ''}
+								value={addDate !== '' && addDate !== null ? getDateString(addDate) : ''}
 								placeholder="プロジェクトのリリース日を入力してください"
 								customStyle={{ width: '30%' }}
 							/>
@@ -160,7 +161,7 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 								length={0}
 								url={false}
 								date={true}
-								value={endDate != '' ? getDateString(new Date(endDate)) : ''}
+								value={endDate !== '' && endDate !== null ? getDateString(endDate) : ''}
 								placeholder="プロジェクトの完了日を入力してください"
 								customStyle={{ width: '30%' }}
 							/>
