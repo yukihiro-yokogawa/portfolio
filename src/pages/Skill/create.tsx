@@ -1,11 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Create from '~/container/Skill/Create';
 import { getSkillsAsync } from '~/ducks/Slice/SkillSlice';
 import { getTechniquesAsync } from '~/ducks/Slice/TechniqueSlice';
 import { getTechniqueTypeAsync } from '~/ducks/Slice/TechniqueTypeSlice';
 
-const create = (): JSX.Element => {
+export const SkillsContext: React.Context<Array<any>> = createContext([
+	{
+		techniques: [
+			{
+				name: '',
+				level: null,
+			},
+		],
+		techniqueType: {
+			id: 0,
+			name: '',
+			displayOrder: 0,
+		},
+	},
+]);
+
+const create = (props: { skills: Array<any> }): JSX.Element => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -15,14 +31,16 @@ const create = (): JSX.Element => {
 	}, [dispatch]);
 
 	return (
-		<div>
-			<Create />
-		</div>
+		<SkillsContext.Provider value={props.skills.length != 0 ? props.skills : useContext(SkillsContext)}>
+			<div>
+				<Create />
+			</div>
+		</SkillsContext.Provider>
 	);
 };
 
 export default create;
 
 create.getInitialProps = async ({ query }) => {
-	return { project: query.param == 'new' ? [] : JSON.parse(query.param) };
+	return { skills: query.param == 'new' ? [] : JSON.parse(query.param) };
 };

@@ -1,16 +1,17 @@
 import _ from 'lodash';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import SkillCreate from '~/component/Skill/SkillCreate';
 import { useStoreState } from '~/ducks/selector';
 import { postSkillAsync } from '~/ducks/Slice/SkillSlice';
+import { SkillsContext } from '~/pages/Skill/create';
 import { SkillStates } from '~/Type/Skill';
 import { AutoCompleteVersionState, TechniqueState } from '~/Type/Technique';
 
 const Create = (): JSX.Element => {
 	const dispatch = useDispatch();
 	// 使用技術追加のDOM変更用変数.
-	const [techniqueFieldList, setTechniqueFieldList] = useState([0]);
+	const [techniqueFieldList, setTechniqueFieldList] = useState(useContext(SkillsContext).map((_, i) => i));
 	// version入力部分のオートコンプリート.
 	const [autoCompleteVersions, setAutoCompleteVersions] = useState([]);
 	const { skills, techniques } = useStoreState();

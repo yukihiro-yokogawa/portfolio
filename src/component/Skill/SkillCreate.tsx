@@ -1,9 +1,10 @@
 import { Box, Button, Container, Fab } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import TechniqueCreateModal from '~/container/Modal/TechniqueCreateModal';
 import { useStoreState } from '~/ducks/selector';
+import { SkillsContext } from '~/pages/Skill/create';
 import { SkillCreateState } from '~/Type/Skill';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import CustomRadioField from '../Form/CustomRadioFIeld';
@@ -24,6 +25,13 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 	const handleClickShowModal = (show: string) => {
 		setModal(show);
 	};
+
+	const skills = _(useContext(SkillsContext))
+		.map((skill) => {
+			return skill.techniques;
+		})
+		.flatten()
+		.value();
 
 	return (
 		<Container style={{ width: '80%', marginTop: 50 }}>
@@ -47,12 +55,12 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 							<CustomAutoComplete
 								index={index}
 								label="UseTechnique"
-								name={`skills[${index}].technique.name`}
+								name={`skills[${index}].name`}
 								required={true}
 								length={0}
 								url={false}
 								date={false}
-								value={null}
+								value={skills[index]?.name}
 								autoComplete={autoCompleteTechniques}
 								placeholder="使用している技術名を入力してください"
 								customStyle={{ width: '60%' }}

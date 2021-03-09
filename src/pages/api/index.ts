@@ -8,7 +8,7 @@ export default (request: NowRequest, response: NowResponse) => {
 	switch (request.query.query) {
 		case 'GetProject':
 			axios
-				.get(`${url}/api/project/get`)
+				.get(`${url}/api/project/get`, { timeout: 30000 })
 				.then((res) => {
 					response.status(200).send(res.data);
 				})
@@ -21,7 +21,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			break;
 		case 'GetEditProject':
 			axios
-				.get(`${url}/api/project/getOne`, { params: { id: request.query.id } })
+				.get(`${url}/api/project/getOne`, { params: { id: request.query.id }, timeout: 30000 })
 				.then((res) => {
 					response.status(200).send(res.data);
 				})
@@ -34,7 +34,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			break;
 		case 'GetTechnique':
 			axios
-				.get(`${url}/api/technique/get`)
+				.get(`${url}/api/technique/get`, { timeout: 30000 })
 				.then((res) => {
 					response.status(200).send(res.data);
 				})
@@ -47,7 +47,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			break;
 		case 'GetTechniqueType':
 			axios
-				.get(`${url}/api/techniqueType/get`)
+				.get(`${url}/api/techniqueType/get`, { timeout: 30000 })
 				.then((res) => {
 					response.status(200).send(res.data);
 				})
@@ -60,7 +60,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			break;
 		case 'GetSkill':
 			axios
-				.get(`${url}/api/skill/get`)
+				.get(`${url}/api/skill/get`, { timeout: 30000 })
 				.then((res) => {
 					response.status(200).send(res.data);
 				})
@@ -73,7 +73,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			break;
 		case 'GetAbout':
 			axios
-				.get(`${url}/api/about/get`)
+				.get(`${url}/api/about/get`, { timeout: 30000 })
 				.then((res) => {
 					response.status(200).send(res.data);
 				})
@@ -94,7 +94,7 @@ export default (request: NowRequest, response: NowResponse) => {
 	switch (request.body?.params?.query) {
 		case 'PostProject':
 			axios
-				.post(`${url}/api/project/post`, data)
+				.post(`${url}/api/project/post`, data, { timeout: 30000 })
 				.then(() => {
 					response.status(200).send('ok');
 				})
@@ -107,7 +107,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			break;
 		case 'PostTechnique':
 			axios
-				.post(`${url}/api/technique/post`, data)
+				.post(`${url}/api/technique/post`, data, { timeout: 30000 })
 				.then(() => {
 					response.status(200).send('ok');
 				})
@@ -120,7 +120,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			break;
 		case 'PostAbout':
 			axios
-				.post(`${url}/api/about/post`, data)
+				.post(`${url}/api/about/post`, data, { timeout: 30000 })
 				.then(() => {
 					response.status(200).send('ok');
 				})
@@ -133,7 +133,7 @@ export default (request: NowRequest, response: NowResponse) => {
 			break;
 		case 'PostSkill':
 			axios
-				.post(`${url}/api/skill/post`, data)
+				.post(`${url}/api/skill/post`, data, { timeout: 30000 })
 				.then(() => {
 					response.status(200).send('ok');
 				})
