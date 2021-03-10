@@ -13,6 +13,30 @@ html {
   box-sizing: border-box;
 }
 
+/* ========== news ========== */
+dl .news{
+ width:500px;
+  dt{
+  border-bottom:1px solid #ccc;
+    float:left;
+    padding:10px 5px;
+  }
+  dd{
+  border-bottom:1px solid #ccc;
+    margin-left:100px;
+    padding:10px 5px;
+  }
+}
+
+a{
+  background-color:red;
+  border-radius:5px;
+  color:#fff;
+  margin:0 20px;
+  padding:5px 15px;
+  text-decoration:none;
+}
+
 /* ========== header ========== */
 .box-logo {
   display: flex;
