@@ -9,7 +9,7 @@ import { SkillCreateState } from '~/Type/Skill';
 import CustomAutoComplete from '../Form/CustomAutoComplete';
 import CustomRadioField from '../Form/CustomRadioFIeld';
 
-const SkillCreate = (props: SkillCreateState): JSX.Element => {
+const create = (props: SkillCreateState): JSX.Element => {
 	const methods = useForm();
 	const {
 		techniqueFieldList,
@@ -128,4 +128,4 @@ const SkillCreate = (props: SkillCreateState): JSX.Element => {
 	);
 };
 
-export default SkillCreate;
+export default create;

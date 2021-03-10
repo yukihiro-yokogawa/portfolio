@@ -1,7 +1,8 @@
 import React from 'react';
+import News from '~/container/News/News';
 
-const Home: React.FC = () => {
-	return <div></div>;
+const news: React.FC = () => {
+	return <News />;
 };
 
-export default Home;
+export default news;

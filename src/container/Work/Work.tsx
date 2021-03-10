@@ -17,14 +17,18 @@ const work = (): JSX.Element => {
 	// dispatch関数 アクションクリエイターで実装されるアクションを実行させる.
 	const dispatch = useDispatch();
 
+	const projects = useStoreState().projects;
+	const [projectState, setProjectState] = useState<ProjectState>();
+	const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
 	// useEffectでアクションを実行させる関数をdispatchすることで再レンダリングされる.
 	useEffect(() => {
 		dispatch(getProjectsAsync());
 	}, [dispatch]);
 
-	const projects = useStoreState().projects;
-	const [projectState, setProjectState] = useState<ProjectState>(projects[0]);
-	const [selectedIndex, setSelectedIndex] = useState<number>(0);
+	useEffect(() => {
+		setProjectState({ ...projects[0] });
+	}, [projects]);
 
 	const handleClickSideBar = useCallback(
 		(projectId: number) => {

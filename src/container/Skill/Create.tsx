@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import { useMemo, useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import SkillCreate from '~/component/Skill/SkillCreate';
+import Create from '~/component/Skill/Create';
 import { useStoreState } from '~/ducks/selector';
 import { postSkillAsync } from '~/ducks/Slice/SkillSlice';
 import { SkillsContext } from '~/pages/Skill/create';
 import { SkillStates } from '~/Type/Skill';
 import { AutoCompleteVersionState, TechniqueState } from '~/Type/Technique';
 
-const Create = (): JSX.Element => {
+const create = (): JSX.Element => {
 	const dispatch = useDispatch();
 	// 使用技術追加のDOM変更用変数.
 	const [techniqueFieldList, setTechniqueFieldList] = useState(useContext(SkillsContext).map((_, i) => i));
@@ -104,7 +104,7 @@ const Create = (): JSX.Element => {
 
 	return (
 		<>
-			<SkillCreate
+			<Create
 				techniqueFieldList={techniqueFieldList}
 				autoCompleteTechniques={autoCompleteTechniques}
 				autoCompleteVersions={autoCompleteVersions}
@@ -117,4 +117,4 @@ const Create = (): JSX.Element => {
 	);
 };
 
-export default Create;
+export default create;

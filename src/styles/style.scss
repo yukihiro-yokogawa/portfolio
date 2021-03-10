@@ -14,8 +14,12 @@ html {
 }
 
 /* ========== news ========== */
-dl .news{
- width:500px;
+dl {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4rem;
+  width:80rem;
+  text-align: center;
   dt{
   border-bottom:1px solid #ccc;
     float:left;
@@ -26,16 +30,25 @@ dl .news{
     margin-left:100px;
     padding:10px 5px;
   }
+  div{
+    background-color:red;
+    border-radius:5px;
+    color:#fff;
+    margin:0 20px;
+    padding:5px 15px;
+    text-decoration:none;
+  }
+  label{
+    background-color:red;
+    border-radius:5px;
+    color:#fff;
+    margin:0 20px;
+    padding:5px 15px;
+    text-decoration:none;
+  }
 }
 
-a{
-  background-color:red;
-  border-radius:5px;
-  color:#fff;
-  margin:0 20px;
-  padding:5px 15px;
-  text-decoration:none;
-}
+
 
 /* ========== header ========== */
 .box-logo {

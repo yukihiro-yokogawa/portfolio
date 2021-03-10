@@ -3,7 +3,7 @@ import SideBar from '~/component/SideBar';
 import { SideBarStates } from '~/Type/SideBar';
 
 const sideBar = (props: SideBarStates): JSX.Element => {
-	function createSideBar() {
+	const createSideBar = () => {
 		const sideBarWorks = [];
 		props.projects.map((project) => {
 			const sideBarWork = {
@@ -13,7 +13,7 @@ const sideBar = (props: SideBarStates): JSX.Element => {
 			sideBarWorks.push(sideBarWork);
 		});
 		return sideBarWorks;
-	}
+	};
 
 	return (
 		<>

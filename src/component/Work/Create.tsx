@@ -18,7 +18,7 @@ import { ProjectContext } from '~/pages/Work/create';
  * @param {WorkCreateState} props
  * @return {*}  {JSX.Element}
  */
-const WorkCreate = (props: WorkCreateState): JSX.Element => {
+const create = (props: WorkCreateState): JSX.Element => {
 	const {
 		abouts,
 		techniqueFieldList,
@@ -231,4 +231,4 @@ const WorkCreate = (props: WorkCreateState): JSX.Element => {
 	);
 };
 
-export default WorkCreate;
+export default create;

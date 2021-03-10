@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import _ from 'lodash';
-import WorkCreate from '~/component/Work/WorkCreate';
+import Create from '~/component/Work/Create';
 import { ProjectState } from '~/Type/Project';
 import { AboutState } from '~/Type/About';
 import { useStoreState } from '~/ducks/selector';
@@ -14,7 +14,7 @@ import { ProjectContext } from '~/pages/Work/create';
  *
  * @return {*}  {JSX.Element}
  */
-const Create = (): JSX.Element => {
+const create = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { techniques, abouts } = useStoreState();
 
@@ -162,7 +162,7 @@ const Create = (): JSX.Element => {
 
 	return (
 		<>
-			<WorkCreate
+			<Create
 				abouts={aboutsArr}
 				techniqueFieldList={techniqueFieldList}
 				aboutFieldList={aboutFieldList}
@@ -178,4 +178,4 @@ const Create = (): JSX.Element => {
 	);
 };
 
-export default Create;
+export default create;
