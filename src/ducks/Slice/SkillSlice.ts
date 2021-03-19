@@ -7,6 +7,7 @@ export const initialState: Array<SkillState> = [
 	{
 		id: 0,
 		level: 0,
+		deleted: false,
 		technique: {
 			id: 0,
 			name: '',

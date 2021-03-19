@@ -46,6 +46,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 							style={{ marginTop: '10px', justifyContent: ' space-between' }}
 							key={item}
 						>
+							<input type="hidden" name={`skills[${index}].deleted`} value="boolean" ref={methods.register} />
 							<CustomRadioField
 								name={`skills[${index}].level`}
 								label="level"
@@ -55,7 +56,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 							<CustomAutoComplete
 								index={index}
 								label="UseTechnique"
-								name={`skills[${index}].name`}
+								name={`skills[${index}].technique.name`}
 								required={true}
 								length={0}
 								url={false}
@@ -84,7 +85,6 @@ const create = (props: SkillCreateState): JSX.Element => {
 								customStyle={{ width: '30%' }}
 								handleChange={null}
 							/>
-
 							<Fab
 								aria-label="Delete"
 								color="primary"

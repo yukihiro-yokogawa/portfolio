@@ -5,6 +5,7 @@ export type SkillStates = { skills: Array<SkillState> };
 export type SkillState = {
 	id: number;
 	level: number;
+	deleted: boolean;
 	technique: TechniqueState;
 };
 

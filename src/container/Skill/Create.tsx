@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { Z_PARTIAL_FLUSH } from 'node:zlib';
 import { useMemo, useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import Create from '~/component/Skill/Create';
@@ -82,10 +83,12 @@ const create = (): JSX.Element => {
 	};
 
 	const handleSubmit = (skillsDataForm: SkillStates) => {
+		let oldSkills = skills;
 		_.forEach(skillsDataForm.skills, (skillData) => {
 			const existSkill = _.find(skills, (skill) => {
 				return skill.technique.name == skillData.technique.name && skill.technique.version == skillData.technique.version;
 			});
+			oldSkills = _.without(oldSkills, existSkill);
 			if (typeof existSkill !== 'undefined') {
 				skillData.id = existSkill.id;
 				skillData.technique = existSkill.technique;
@@ -99,7 +102,13 @@ const create = (): JSX.Element => {
 				skillData.technique.techniqueType = technique?.techniqueType;
 			}
 		});
-		dispatch(postSkillAsync(skillsDataForm));
+		_.forEach(oldSkills, (oldSkill) => {
+			console.log(oldSkill.deleted);
+			oldSkill['deleted'] = true;
+			skillsDataForm.skills.push(oldSkill);
+		});
+		console.log(skillsDataForm);
+		// dispatch(postSkillAsync(skillsDataForm));
 	};
 
 	return (
