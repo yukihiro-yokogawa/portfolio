@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { Z_PARTIAL_FLUSH } from 'node:zlib';
 import { useMemo, useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import Create from '~/component/Skill/Create';
@@ -103,12 +102,10 @@ const create = (): JSX.Element => {
 			}
 		});
 		_.forEach(oldSkills, (oldSkill) => {
-			console.log(oldSkill.deleted);
 			oldSkill['deleted'] = true;
 			skillsDataForm.skills.push(oldSkill);
 		});
-		console.log(skillsDataForm);
-		// dispatch(postSkillAsync(skillsDataForm));
+		dispatch(postSkillAsync(skillsDataForm));
 	};
 
 	return (
