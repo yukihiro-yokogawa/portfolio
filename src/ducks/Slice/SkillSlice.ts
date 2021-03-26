@@ -43,6 +43,18 @@ export const getSkillsAsync = () => async (dispatch: (arg0: { payload: Array<Ski
 		});
 };
 
+export const getSkillsByDeletedAsync = () => async (dispatch: (arg0: { payload: Array<SkillState> }) => void): Promise<void> => {
+	axios
+		.get(`/api/skill/getDeleted`, { params: { query: 'GetSkillDeleted' } })
+		.then((response) => {
+			dispatch(getSkillsRequest(response.data));
+		})
+		.catch((err) => {
+			console.log(err);
+			dispatch(requestFairure());
+		});
+};
+
 export const postSkillAsync = (data: SkillStates) => async (dispatch: (arg0: { payload: SkillStates }) => void): Promise<void> => {
 	dispatch(requestLoading());
 	axios

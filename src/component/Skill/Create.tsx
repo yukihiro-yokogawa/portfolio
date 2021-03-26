@@ -46,7 +46,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 							style={{ marginTop: '10px', justifyContent: ' space-between' }}
 							key={item}
 						>
-							<input type="hidden" name={`skills[${index}].deleted`} value="boolean" ref={methods.register} />
+							<input type="hidden" name={`skills[${index}].deleted`} value={'false'} ref={methods.register} />
 							<CustomRadioField
 								name={`skills[${index}].level`}
 								label="level"

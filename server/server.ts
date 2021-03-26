@@ -66,7 +66,14 @@ app.prepare().then(() => {
 		});
 	});
 
+	server.get('/api/skill/getDeleted', (_req, res) => {
+		axios.get(`http://localhost:8080/api/skill/getDeleted`).then((response) => {
+			res.send(response.data);
+		});
+	});
+
 	server.post('/api/skill/post', (req, res) => {
+		console.log(req.body.params.data);
 		axios.post(`http://localhost:8080/api/skill/post`, req.body.params.data).then((response) => {
 			res.send(response.data);
 		});

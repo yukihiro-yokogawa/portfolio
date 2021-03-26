@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Skill from '~/container/Skill/Skill';
-import { getSkillsAsync } from '~/ducks/Slice/SkillSlice';
+import { getSkillsByDeletedAsync } from '~/ducks/Slice/SkillSlice';
 import { getTechniqueTypeAsync } from '~/ducks/Slice/TechniqueTypeSlice';
 
 const skill: React.FC = () => {
@@ -9,7 +9,7 @@ const skill: React.FC = () => {
 
 	useEffect(() => {
 		dispatch(getTechniqueTypeAsync());
-		dispatch(getSkillsAsync());
+		dispatch(getSkillsByDeletedAsync());
 	}, [dispatch]);
 
 	return (

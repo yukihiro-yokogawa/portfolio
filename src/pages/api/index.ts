@@ -71,6 +71,19 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.headers);
 				});
 			break;
+		case 'GetSkillDeleted':
+			axios
+				.get(`${url}/api/skill/getDeleted`, { timeout: 30000 })
+				.then((res) => {
+					response.status(200).send(res.data);
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+				});
+			break;
 		case 'GetAbout':
 			axios
 				.get(`${url}/api/about/get`, { timeout: 30000 })

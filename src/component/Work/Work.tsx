@@ -8,7 +8,7 @@ import ContentAddButton from '../ContentAddButton';
 const Work = (props: { project: ProjectState }): JSX.Element => {
 	return (
 		<>
-			<ContentAddButton linkHref="/Work/create" linkAs="/work/new" query="new" />
+			<ContentAddButton linkHref="/Work/create" linkAs="/work/new" query={null} type="new" />
 			<Container>
 				<Table>
 					<TableBody displayRowCheckbox={false}>
@@ -51,7 +51,7 @@ const Work = (props: { project: ProjectState }): JSX.Element => {
 						})}
 					</TableBody>
 				</Table>
-				<ContentAddButton linkHref="/Work/create" linkAs="/work/edit" query={props.project} />
+				<ContentAddButton linkHref="/Work/create" linkAs="/work/edit" query={props.project} type="edit" />
 			</Container>
 		</>
 	);

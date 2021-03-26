@@ -84,6 +84,7 @@ const create = (): JSX.Element => {
 	const handleSubmit = (skillsDataForm: SkillStates) => {
 		let oldSkills = skills;
 		_.forEach(skillsDataForm.skills, (skillData) => {
+			skillData.deleted = false;
 			const existSkill = _.find(skills, (skill) => {
 				return skill.technique.name == skillData.technique.name && skill.technique.version == skillData.technique.version;
 			});
@@ -102,9 +103,9 @@ const create = (): JSX.Element => {
 			}
 		});
 		_.forEach(oldSkills, (oldSkill) => {
-			oldSkill['deleted'] = true;
-			skillsDataForm.skills.push(oldSkill);
+			skillsDataForm.skills.push({ ...oldSkill, deleted: true });
 		});
+
 		dispatch(postSkillAsync(skillsDataForm));
 	};
 

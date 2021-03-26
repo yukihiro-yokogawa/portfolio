@@ -4,6 +4,7 @@ import Create from '~/container/Skill/Create';
 import { getSkillsAsync } from '~/ducks/Slice/SkillSlice';
 import { getTechniquesAsync } from '~/ducks/Slice/TechniqueSlice';
 import { getTechniqueTypeAsync } from '~/ducks/Slice/TechniqueTypeSlice';
+import _ from 'lodash';
 
 export const SkillsContext: React.Context<Array<any>> = createContext([
 	{
@@ -42,5 +43,14 @@ const create = (props: { skills: Array<any> }): JSX.Element => {
 export default create;
 
 create.getInitialProps = async ({ query }) => {
+	const skills = _(JSON.parse(query.param))
+		.filter((skill) => {
+			return skill.techniques.length != 0;
+		})
+		.map((skill) => {
+			return skill.techniques;
+		})
+		.value();
+	console.log(_.flattenDeep(skills));
 	return { skills: query.param == 'new' ? [] : JSON.parse(query.param) };
 };
