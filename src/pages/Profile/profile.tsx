@@ -1,7 +1,12 @@
 import React from 'react';
+import Profile from '~/container/Profile/Profile';
 
-const Profile: React.FC = () => {
-	return <div className="content box">Profile</div>;
+const profile: React.FC = () => {
+	return (
+		<div>
+			<Profile />
+		</div>
+	);
 };
 
-export default Profile;
+export default profile;
