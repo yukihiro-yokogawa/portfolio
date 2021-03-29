@@ -29,7 +29,7 @@ const create = (props: { project: ProjectState }): JSX.Element => {
 	}, [dispatch]);
 
 	return (
-		<ProjectContext.Provider value={Object.keys(props.project).length != 0 ? props.project : useContext(ProjectContext)}>
+		<ProjectContext.Provider value={props.project != null ? props.project : useContext(ProjectContext)}>
 			<div>
 				<Create />
 			</div>
@@ -40,5 +40,6 @@ const create = (props: { project: ProjectState }): JSX.Element => {
 export default create;
 
 create.getInitialProps = async ({ query }) => {
+	console.log(JSON.parse(query.param));
 	return { project: query.param == 'new' ? [] : JSON.parse(query.param) };
 };

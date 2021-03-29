@@ -10,7 +10,6 @@ import CustomAutoComplete from '../Form/CustomAutoComplete';
 import CustomRadioField from '../Form/CustomRadioFIeld';
 
 const create = (props: SkillCreateState): JSX.Element => {
-	const methods = useForm();
 	const {
 		techniqueFieldList,
 		autoCompleteTechniques,
@@ -26,13 +25,9 @@ const create = (props: SkillCreateState): JSX.Element => {
 		setModal(show);
 	};
 
-	const skills = _(useContext(SkillsContext))
-		.map((skill) => {
-			return skill.techniques;
-		})
-		.flatten()
-		.value();
+	const skills = useContext(SkillsContext);
 
+	const methods = useForm(...skills);
 	return (
 		<Container style={{ width: '80%', marginTop: 50 }}>
 			<FormProvider {...methods}>
@@ -50,6 +45,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 							<CustomRadioField
 								name={`skills[${index}].level`}
 								label="level"
+								defaultValue={skills[index]?.level}
 								values={[{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }]}
 								customStyle={{ width: '100%' }}
 							/>
@@ -61,7 +57,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 								length={0}
 								url={false}
 								date={false}
-								value={skills[index]?.name}
+								value={skills[index]?.technique.name}
 								autoComplete={autoCompleteTechniques}
 								placeholder="使用している技術名を入力してください"
 								customStyle={{ width: '60%' }}
@@ -75,7 +71,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 								length={0}
 								url={false}
 								date={false}
-								value={null}
+								value={skills[index]?.technique.version}
 								autoComplete={
 									_.find(autoCompleteVersions, (autoCompleteVersion) => {
 										return autoCompleteVersion?.id == index;

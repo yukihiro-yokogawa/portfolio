@@ -18,11 +18,11 @@ export type AutoCompleteState = {
 	length: number;
 	url: boolean;
 	date: boolean;
-	value: string | Array<string>;
+	value: string;
 	autoComplete: Array<{ name: string; type: string }>;
 	placeholder: string;
 	customStyle: Record<string | number | symbol, any>;
-	handleChange: (event: React.ChangeEvent<any>, index: number) => void;
+	handleChange: (value: string, index: number) => void;
 };
 
 export type CustomSelectFieldState = {

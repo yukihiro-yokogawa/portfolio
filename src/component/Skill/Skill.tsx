@@ -25,12 +25,12 @@ const Skill = (props: { mySkills: Array<any> }): JSX.Element => {
 											<th scope="col1">スキル</th>
 										</tr>
 									</thead>
-									{mySkill.techniques.map((technique, index2) => (
+									{mySkill.techniques.map((value, index2) => (
 										<tbody key={`${index}_${index2}`}>
 											<tr>
-												<td>{technique.name}</td>
+												<td>{`${value.technique.name} ${value.technique.version}`}</td>
 												<td>
-													<p className={`rate rate${technique.level}`}></p>
+													<p className={`rate rate${value.level}`}></p>
 												</td>
 											</tr>
 										</tbody>

@@ -2,7 +2,7 @@ import CustomInput from '../Form/CustomInput';
 import { Box, Button, Container } from '@material-ui/core';
 import CustomSelectField from '../Form/CustomSelectField';
 import { WorkCreateState } from '~/Type/Work';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useStoreState } from '~/ducks/selector';
 import { Fab } from '@material-ui/core';
@@ -32,7 +32,7 @@ const create = (props: WorkCreateState): JSX.Element => {
 		handleSubmit,
 	} = props;
 
-	const { id, name, startDate, endDate, addDate, gitUrl, projectTechniques } = useContext(ProjectContext);
+	const { id, name, startDate, endDate, addDate, gitUrl, projectAbouts, projectTechniques } = useContext(ProjectContext);
 
 	const [modal, setModal] = useState('');
 
@@ -45,6 +45,11 @@ const create = (props: WorkCreateState): JSX.Element => {
 	};
 
 	const methods = useForm();
+	const { setValue } = methods;
+
+	useEffect(() => {
+		setValue('projectAbouts', projectAbouts);
+	}, [setValue, projectAbouts]);
 
 	return (
 		<>

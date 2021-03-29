@@ -31,13 +31,14 @@ const create = (): JSX.Element => {
 	/**
 	 * TechniqueのTextFieldコンポーネントが変更された際に実行される、VersionのTextFieldコンポーネントで使用するAutoCompleteオブジェクトを生成するイベントハンドラ.
 	 */
-	const handleChangeTechnique = (event: React.ChangeEvent<any>, index: number) => {
+	const handleChangeTechnique = (value: string, index: number) => {
+		console.log(techniques);
 		const key = _.findKey(autoCompleteVersions, (autoCompleteVersion) => {
 			return autoCompleteVersion.id == index;
 		});
 		const autoCompleteVersion = _(techniques)
 			.filter((technique) => {
-				return technique.name == event.target.outerText;
+				return technique.name == value;
 			})
 			.map((technique) => {
 				return { id: technique.id, name: technique.version, type: '' };
@@ -105,7 +106,6 @@ const create = (): JSX.Element => {
 		_.forEach(oldSkills, (oldSkill) => {
 			skillsDataForm.skills.push({ ...oldSkill, deleted: true });
 		});
-
 		dispatch(postSkillAsync(skillsDataForm));
 	};
 

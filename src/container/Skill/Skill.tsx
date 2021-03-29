@@ -16,8 +16,12 @@ const skill: React.FC = () => {
 				})
 				.map((skill) => {
 					return {
-						name: `${skill.technique.name}${skill.technique.version === '' ? '' : ` ${skill.technique.version}`}`,
 						level: skill.level,
+						deleted: false,
+						technique: {
+							name: `${skill.technique.name}`,
+							version: `${skill.technique.version === '' ? '' : ` ${skill.technique.version}`}`,
+						},
 					};
 				})
 				.value();

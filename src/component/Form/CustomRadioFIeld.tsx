@@ -12,21 +12,20 @@ import _ from 'lodash';
 const CustomRadioField = (props: {
 	name: string;
 	label: string;
+	defaultValue: number;
 	values: Array<any>;
 	customStyle: Record<string | number | symbol, any>;
 }): JSX.Element => {
+	const { name, label, defaultValue, values, customStyle } = props;
+
 	return (
 		<>
 			<ConnectForm>
 				{({ errors, register }) => (
-					<FormControl
-						style={{ ...props.customStyle, margin: '8px' }}
-						component="fieldset"
-						error={Boolean(_.get(errors, props.name))}
-					>
-						<FormLabel>{props.label}</FormLabel>
-						<RadioGroup row aria-label={props.label} name={props.name}>
-							{props.values.map((value, index) => (
+					<FormControl style={{ ...customStyle, margin: '8px' }} component="fieldset" error={Boolean(_.get(errors, name))}>
+						<FormLabel>{label}</FormLabel>
+						<RadioGroup row aria-label={label} name={name} defaultValue={String(defaultValue)}>
+							{values.map((value, index) => (
 								<FormControlLabel
 									key={index}
 									value={value.name}
@@ -37,7 +36,7 @@ const CustomRadioField = (props: {
 								/>
 							))}
 						</RadioGroup>
-						{_.get(errors, props.name) ? <FormHelperText>選択してください</FormHelperText> : null}
+						{_.get(errors, name) ? <FormHelperText>選択してください</FormHelperText> : null}
 					</FormControl>
 				)}
 			</ConnectForm>

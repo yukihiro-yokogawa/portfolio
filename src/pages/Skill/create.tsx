@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Create from '~/container/Skill/Create';
-import { getSkillsAsync } from '~/ducks/Slice/SkillSlice';
+import { getSkillsAsync, getSkillsByDeletedAsync } from '~/ducks/Slice/SkillSlice';
 import { getTechniquesAsync } from '~/ducks/Slice/TechniqueSlice';
 import { getTechniqueTypeAsync } from '~/ducks/Slice/TechniqueTypeSlice';
 import _ from 'lodash';
@@ -29,6 +29,7 @@ const create = (props: { skills: Array<any> }): JSX.Element => {
 		dispatch(getTechniquesAsync());
 		dispatch(getTechniqueTypeAsync());
 		dispatch(getSkillsAsync());
+		dispatch(getSkillsByDeletedAsync());
 	}, [dispatch]);
 
 	return (
@@ -50,7 +51,7 @@ create.getInitialProps = async ({ query }) => {
 		.map((skill) => {
 			return skill.techniques;
 		})
+		.flattenDeep()
 		.value();
-	console.log(_.flattenDeep(skills));
-	return { skills: query.param == 'new' ? [] : JSON.parse(query.param) };
+	return { skills: query.param == 'new' ? [] : skills };
 };
