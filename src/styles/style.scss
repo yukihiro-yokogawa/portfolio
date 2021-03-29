@@ -13,42 +13,46 @@ html {
   box-sizing: border-box;
 }
 
+.title {
+  padding: 0.5em; /*文字周りの余白*/
+  color: #010101; /*文字色*/
+  border-bottom: solid 3px #c8d5fb; /*下線*/
+}
+
 /* ========== news ========== */
 dl {
   margin-left: auto;
   margin-right: auto;
   margin-top: 4rem;
-  width:80rem;
+  width: 80rem;
   text-align: center;
-  dt{
-  border-bottom:1px solid #ccc;
-    float:left;
-    padding:10px 5px;
+  dt {
+    border-bottom: 1px solid #ccc;
+    float: left;
+    padding: 10px 5px;
   }
-  dd{
-  border-bottom:1px solid #ccc;
-    margin-left:100px;
-    padding:10px 5px;
+  dd {
+    border-bottom: 1px solid #ccc;
+    margin-left: 100px;
+    padding: 10px 5px;
   }
-  div{
-    background-color:red;
-    border-radius:5px;
-    color:#fff;
-    margin:0 20px;
-    padding:5px 15px;
-    text-decoration:none;
+  div {
+    background-color: red;
+    border-radius: 5px;
+    color: #fff;
+    margin: 0 20px;
+    padding: 5px 15px;
+    text-decoration: none;
   }
-  label{
-    background-color:red;
-    border-radius:5px;
-    color:#fff;
-    margin:0 20px;
-    padding:5px 15px;
-    text-decoration:none;
+  label {
+    background-color: red;
+    border-radius: 5px;
+    color: #fff;
+    margin: 0 20px;
+    padding: 5px 15px;
+    text-decoration: none;
   }
 }
-
-
 
 /* ========== header ========== */
 .box-logo {
@@ -95,7 +99,7 @@ dl {
   left: 0;
   width: 1px;
   height: 50%;
-  content: '';
+  content: "";
   background: #3a3a3a;
 }
 
@@ -145,31 +149,69 @@ dl {
 }
 
 .borderless_table {
-  margin: auto
+  margin: auto;
 }
 
 table {
   tbody {
     td {
       p {
-          display: table-cell;
-          vertical-align: middle;
+        display: table-cell;
+        vertical-align: middle;
       }
     }
   }
 }
+.timeline {
+  padding-right: auto;
+  padding-left: auto;
+  list-style: none;
+}
+.timeline > li {
+  margin-bottom: 60px;
+}
 
-#sidebar{
-	width: 15rem;
-	position: fixed;
-	top: 25%;
-	left: 0px;
-	border: 1px solid #000000;
+/* for Desktop */
+@media (min-width: 640px) {
+  .timeline > li {
+    overflow: hidden;
+    margin: 0;
+    position: relative;
+  }
+  .timeline-date {
+    width: 110px;
+    float: left;
+    margin-top: 20px;
+  }
+  .timeline-content {
+    width: 75%;
+    float: left;
+    border-left: 3px #e5e5d1 solid;
+    padding-left: 30px;
+  }
+  .timeline-content:before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background: #6fc173;
+    position: absolute;
+    left: 106px;
+    top: 24px;
+    border-radius: 100%;
+  }
+}
+
+#sidebar {
+  width: 15rem;
+  position: fixed;
+  top: 25%;
+  left: 0px;
+  border: 1px solid #000000;
   border-radius: 0.2rem;
   text-align: center;
-  hr{
-    margin:0;
-	  color: #F0F0F0;
+  hr {
+    margin: 0;
+    color: #f0f0f0;
   }
   div {
     padding-top: 10px;
@@ -177,33 +219,33 @@ table {
     cursor: pointer;
     &:hover {
       background-color: #516bff;
-      color: #FFF;
+      color: #fff;
       transition: 0.3s;
     }
   }
 }
 
 .work {
+  max-width: 1024px;
+  table {
+    margin: auto;
     max-width: 1024px;
-    table {
-      margin: auto;
-      max-width: 1024px;
-      width: 100%;
-      tbody {
-        tr {
-          th {
-            text-align: center;
-            background-color: #cccccc;
-          }
+    width: 100%;
+    tbody {
+      tr {
+        th {
+          text-align: center;
+          background-color: #cccccc;
         }
       }
     }
   }
+}
 
 .add_button {
-  	position: 'fixed';
-		right: 12;
-		bottom: 12;
+  position: "fixed";
+  right: 12;
+  bottom: 12;
 }
 
 .form_container {
@@ -216,23 +258,23 @@ table {
   }
 }
 
-#overlay{
-/*　画面全体を覆う設定　*/
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-color:rgba(0,0,0,0.5);
+#overlay {
+  /*　画面全体を覆う設定　*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
   /*　画面の中央に要素を表示させる設定　*/
   display: flex;
   align-items: center;
   justify-content: center;
-  #content{
-    width:50%;
+  #content {
+    width: 50%;
     padding: 1em;
-    background:#fff;
+    background: #fff;
   }
 }
 
@@ -264,75 +306,86 @@ table {
 }
 
 //レート評価 変数
-$starFull: 16px;//星1個の幅
-$starHalf: $starFull / 2;//星半分（0.5）の幅
+$starFull: 16px; //星1個の幅
+$starHalf: $starFull / 2; //星半分（0.5）の幅
 
-$rate1: $starFull;//星1
-$rate1_5: $starFull + $starHalf;//星1.5
-$rate2: $starFull * 2;//星2
-$rate2_5: ($starFull * 2) + $starHalf;//星2.5
-$rate3: $starFull * 3;//星3
-$rate3_5: ($starFull * 3) + $starHalf;//星3.5
-$rate4: $starFull * 4;//星4
-$rate4_5: ($starFull * 4) + $starHalf;//星4.5
-$rate5 :$starFull * 5;//星5
+$rate1: $starFull; //星1
+$rate1_5: $starFull + $starHalf; //星1.5
+$rate2: $starFull * 2; //星2
+$rate2_5: ($starFull * 2) + $starHalf; //星2.5
+$rate3: $starFull * 3; //星3
+$rate3_5: ($starFull * 3) + $starHalf; //星3.5
+$rate4: $starFull * 4; //星4
+$rate4_5: ($starFull * 4) + $starHalf; //星4.5
+$rate5: $starFull * 5; //星5
 
-.rate{
+.rate {
   position: relative;
   display: inline-block;
   width: $starFull * 5;
   height: $starFull;
   font-size: $starFull;
-  &:before,&:after{
+  &:before,
+  &:after {
     position: absolute;
     top: 0;
     left: 0;
-    content: '★★★★★';
+    content: "★★★★★";
     display: inline-block;
     height: $starFull;
     line-height: $starFull;
   }
-  &:before{
-  color: rgb(197, 197, 197);
+  &:before {
+    color: rgb(197, 197, 197);
   }
-  &:after{
-  color: #414141;
-  overflow: hidden;
-  white-space: nowrap;//これがないと改行されて星の半分（0.5）が表現できなくなる
+  &:after {
+    color: #414141;
+    overflow: hidden;
+    white-space: nowrap; //これがないと改行されて星の半分（0.5）が表現できなくなる
   }
 }
-.rate0:after{//星0
+.rate0:after {
+  //星0
   width: 0;
 }
-.rate1:after{//星1
+.rate1:after {
+  //星1
   width: $rate1;
 }
-.rate1_5:after{//星1.5
+.rate1_5:after {
+  //星1.5
   width: $rate1_5;
 }
-.rate2:after{//星2
+.rate2:after {
+  //星2
   width: $rate2;
 }
-.rate2_5:after{//星2.5
+.rate2_5:after {
+  //星2.5
   width: $rate2_5;
 }
-.rate3:after{//星3
+.rate3:after {
+  //星3
   width: $rate3;
 }
-.rate3_5:after{//星3.5
+.rate3_5:after {
+  //星3.5
   width: $rate3_5;
 }
-.rate4:after{//星4
+.rate4:after {
+  //星4
   width: $rate4;
 }
-.rate4_5:after{//星4.5
+.rate4_5:after {
+  //星4.5
   width: $rate4_5;
 }
-.rate5:after{//星5
+.rate5:after {
+  //星5
   width: $rate5;
 }
 
-.wrap{
+.wrap {
   width: 80%;
   max-width: 512px;
   margin: 0 auto;
