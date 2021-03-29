@@ -27,7 +27,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 
 	const skills = useContext(SkillsContext);
 
-	const methods = useForm(...skills);
+	const methods = useForm();
 	return (
 		<Container style={{ width: '80%', marginTop: 50 }}>
 			<FormProvider {...methods}>

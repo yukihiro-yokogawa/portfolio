@@ -1,12 +1,17 @@
 import React from 'react';
-import ProfileCreate from '~/component/Profile/ProfileCreate';
+import Create from '~/component/Profile/Create';
+import { ProfileState } from '~/Type/Profile';
 
-const Create = (): JSX.Element => {
+const create = (): JSX.Element => {
+	const handleSubmit = (profileDataForm: ProfileState) => {
+		console.log(profileDataForm);
+	};
+
 	return (
 		<>
-			<ProfileCreate />
+			<Create handleSubmit={handleSubmit} />
 		</>
 	);
 };
 
-export default Create;
+export default create;
