@@ -1,11 +1,13 @@
-export type ProfileState = {
+export type MyProfileState = {
 	id: number;
 	title: string;
 	description: string;
-	profileInformation: ProfileContentState;
+	date: string;
+	deleted: boolean;
+	profileInformation: ProfileState;
 };
 
-export type ProfileContentState = {
+export type ProfileState = {
 	id: number;
 	name: string;
 	displayOrder: number;
