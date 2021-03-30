@@ -4,7 +4,7 @@ export type MyProfileState = {
 	description: string;
 	date: string;
 	deleted: boolean;
-	profileInformation: ProfileState;
+	profile: ProfileState;
 };
 
 export type ProfileState = {
