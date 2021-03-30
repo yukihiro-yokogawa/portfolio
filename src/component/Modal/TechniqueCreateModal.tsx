@@ -21,7 +21,13 @@ const TechniqueCreateModal = (props: {
 
 					<FormProvider {...methods}>
 						<form onSubmit={methods.handleSubmit(handleSubmit)}>
-							<CustomRadioField name="techniqueType.name" label="TechniqueType" values={techniqueTypes} customStyle={null} />
+							<CustomRadioField
+								name="techniqueType.name"
+								label="TechniqueType"
+								defaultValue={null}
+								values={techniqueTypes}
+								customStyle={null}
+							/>
 							<CustomInput
 								label="Technique"
 								name={'name'}
