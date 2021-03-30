@@ -53,8 +53,8 @@ const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
 									/>
 								</>
 							)}
-							onChange={(_e, v: any) => {
-								handleChange === null ? null : handleChange(v.name, index);
+							onChange={(event) => {
+								handleChange === null ? null : handleChange(event, index);
 							}}
 						/>
 					</>

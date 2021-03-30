@@ -27,7 +27,7 @@ export type WorkCreateState = {
 	aboutFieldList: string[];
 	autoCompleteTechniques: { name: string; type: string }[];
 	autoCompleteVersions: Array<AutoCompleteVersionState>;
-	handleChangeTechnique: (value: string, index: number) => void;
+	handleChangeTechnique: (event: React.ChangeEvent<any>, index: number) => void;
 	handleClickAddTechnique: () => void;
 	handleClickDeleteTechnique: (value: number, index: number) => void;
 	handleClickAddAbout: (values: string[]) => void;

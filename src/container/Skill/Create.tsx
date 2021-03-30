@@ -31,14 +31,14 @@ const create = (): JSX.Element => {
 	/**
 	 * TechniqueのTextFieldコンポーネントが変更された際に実行される、VersionのTextFieldコンポーネントで使用するAutoCompleteオブジェクトを生成するイベントハンドラ.
 	 */
-	const handleChangeTechnique = (value: string, index: number) => {
+	const handleChangeTechnique = (event: React.ChangeEvent<any>, index: number) => {
 		console.log(techniques);
 		const key = _.findKey(autoCompleteVersions, (autoCompleteVersion) => {
 			return autoCompleteVersion.id == index;
 		});
 		const autoCompleteVersion = _(techniques)
 			.filter((technique) => {
-				return technique.name == value;
+				return technique.name == event.target.outerText;
 			})
 			.map((technique) => {
 				return { id: technique.id, name: technique.version, type: '' };

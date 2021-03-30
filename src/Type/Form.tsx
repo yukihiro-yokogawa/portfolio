@@ -22,7 +22,7 @@ export type AutoCompleteState = {
 	autoComplete: Array<{ name: string; type: string }>;
 	placeholder: string;
 	customStyle: Record<string | number | symbol, any>;
-	handleChange: (value: string, index: number) => void;
+	handleChange: (event: React.ChangeEvent<any>, index: number) => void;
 };
 
 export type CustomSelectFieldState = {
