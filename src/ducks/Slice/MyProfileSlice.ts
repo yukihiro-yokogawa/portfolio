@@ -23,7 +23,7 @@ export const getMyProfileAsync = () => async (
 	dispatch: (arg0: { payload: Array<MyProfileState>; type: string }) => void,
 ): Promise<void> => {
 	axios
-		.get(`/api/MyProfile/get`, { params: { query: 'GetMyProfile' } })
+		.get(`/api/my_profile/get`, { params: { query: 'GetMyProfile' } })
 		.then((response) => {
 			dispatch(getMyProfileRequest(response.data));
 		})

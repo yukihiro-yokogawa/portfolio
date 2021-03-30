@@ -13,11 +13,11 @@ const profileSlice = createSlice({
 	},
 });
 
-export default profileSlice;
-
 export const { getProfileRequest } = profileSlice.actions;
 
-export const getProfileAsync = () => async (dispatch: (arg0: { payload: Array<ProfileState>; type: string }) => void): Promise<void> => {
+export default profileSlice;
+
+export const getProfilesAsync = () => async (dispatch: (arg0: { payload: Array<ProfileState> }) => void): Promise<void> => {
 	axios
 		.get(`/api/profile/get`, { params: { query: 'GetProfile' } })
 		.then((response) => {

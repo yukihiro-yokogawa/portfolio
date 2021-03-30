@@ -12,6 +12,18 @@ app.prepare().then(() => {
 
 	server.use(express.json());
 
+	server.get('/api/profile/get', (_req, res) => {
+		axios.get(`http://localhost:8080/api/profile/get`).then((response) => {
+			res.send(response.data);
+		});
+	});
+
+	server.get('/api/my_profile/get', (_req, res) => {
+		axios.get(`http://localhost:8080/api/my_profile/get`).then((response) => {
+			res.send(response.data);
+		});
+	});
+
 	server.get('/api/project/get', (_req, res) => {
 		axios.get(`http://localhost:8080/api/project/get`).then((response) => {
 			res.send(response.data);
