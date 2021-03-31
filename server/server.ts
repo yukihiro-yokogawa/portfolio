@@ -20,7 +20,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -32,7 +32,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -44,7 +44,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -56,7 +56,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -68,7 +68,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -80,7 +80,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -92,7 +92,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -104,7 +104,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -116,7 +116,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -128,7 +128,7 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
@@ -140,20 +140,32 @@ app.prepare().then(() => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(err.statusCode).send(err.statusCode);
+				res.status(err.statusCode).send(err);
 			});
 	});
 
 	server.get('/api/skill/getDeleted', (_req, res) => {
-		axios.get(`http://localhost:8080/api/skill/getDeleted`).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/skill/getDeleted`)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err);
+			});
 	});
 
 	server.post('/api/skill/post', (req, res) => {
-		axios.post(`http://localhost:8080/api/skill/post`, req.body.params.data).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.post(`http://localhost:8080/api/skill/post`, req.body.params.data)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err);
+			});
 	});
 
 	server.all('*', (req, res) => {

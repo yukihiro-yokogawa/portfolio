@@ -17,6 +17,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'GetEditProject':
@@ -30,6 +31,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'GetTechnique':
@@ -43,6 +45,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'GetTechniqueType':
@@ -56,6 +59,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'GetSkill':
@@ -69,6 +73,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'GetSkillDeleted':
@@ -82,6 +87,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'GetAbout':
@@ -95,6 +101,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		default:
@@ -116,6 +123,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'PostTechnique':
@@ -129,6 +137,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'PostAbout':
@@ -142,6 +151,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		case 'PostSkill':
@@ -155,6 +165,7 @@ export default (request: NowRequest, response: NowResponse) => {
 					console.log(error.response.status);
 					console.log(error.response.statusText);
 					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
 				});
 			break;
 		default:
