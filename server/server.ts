@@ -36,6 +36,18 @@ app.prepare().then(() => {
 			});
 	});
 
+	server.post('/api.my_profile/post', (req, res) => {
+		axios
+			.post(`http://localhost:8080/api/my_profile/post`, req.body.params.data)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err);
+			});
+	});
+
 	server.get('/api/project/get', (_req, res) => {
 		axios
 			.get(`http://localhost:8080/api/project/get`)
