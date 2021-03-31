@@ -13,69 +13,135 @@ app.prepare().then(() => {
 	server.use(express.json());
 
 	server.get('/api/profile/get', (_req, res) => {
-		axios.get(`http://localhost:8080/api/profile/get`).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/profile/get`)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.get('/api/my_profile/get', (_req, res) => {
-		axios.get(`http://localhost:8080/api/my_profile/get`).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/my_profile/get`)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.get('/api/project/get', (_req, res) => {
-		axios.get(`http://localhost:8080/api/project/get`).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/project/get`)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.get('/api/project/getOne', (req, res) => {
-		axios.get(`http://localhost:8080/api/project/getOne`, { params: { id: req.query.id } }).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/project/getOne`, { params: { id: req.query.id } })
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.post('/api/project/post', (req, res) => {
-		axios.post(`http://localhost:8080/api/project/post`, req.body.params.data).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.post(`http://localhost:8080/api/project/post`, req.body.params.data)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.get('/api/technique/get', (_req, res) => {
-		axios.get(`http://localhost:8080/api/technique/get`).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/technique/get`)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.post('/api/technique/post', (req, res) => {
-		axios.post(`http://localhost:8080/api/technique/post`, req.body.params.data).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.post(`http://localhost:8080/api/technique/post`, req.body.params.data)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.get('/api/about/get', (_req, res) => {
-		axios.get(`http://localhost:8080/api/about/get`).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/about/get`)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.post('/api/about/post', (req, res) => {
-		axios.post(`http://localhost:8080/api/about/post`, req.body.params.data).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.post(`http://localhost:8080/api/about/post`, req.body.params.data)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.get('/api/techniqueType/get', (_req, res) => {
-		axios.get(`http://localhost:8080/api/techniqueType/get`).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/techniqueType/get`)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.get('/api/skill/get', (_req, res) => {
-		axios.get(`http://localhost:8080/api/skill/get`).then((response) => {
-			res.send(response.data);
-		});
+		axios
+			.get(`http://localhost:8080/api/skill/get`)
+			.then((response) => {
+				res.send(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(err.statusCode).send(err.statusCode);
+			});
 	});
 
 	server.get('/api/skill/getDeleted', (_req, res) => {
@@ -85,7 +151,6 @@ app.prepare().then(() => {
 	});
 
 	server.post('/api/skill/post', (req, res) => {
-		console.log(req.body.params.data);
 		axios.post(`http://localhost:8080/api/skill/post`, req.body.params.data).then((response) => {
 			res.send(response.data);
 		});
