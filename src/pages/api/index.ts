@@ -5,104 +5,63 @@ const url = 'https://yoko-portfolio-backend.herokuapp.com';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default (request: NowRequest, response: NowResponse) => {
+	const getRequest = (query: string, queryParameter: any) => {
+		axios
+			.get(`${url}${query}`, { params: queryParameter, timeout: 30000 })
+			.then((res) => {
+				response.status(200).send(res.data);
+			})
+			.catch((error) => {
+				console.log(error.response.data);
+				console.log(error.response.status);
+				console.log(error.response.statusText);
+				console.log(error.response.headers);
+				response.status(error.statusCode).send(error);
+			});
+	};
+
+	const postRequest = (query: string, data: any) => {
+		axios
+			.post(`${url}${query}`, data, { timeout: 30000 })
+			.then(() => {
+				response.status(200).send('ok');
+			})
+			.catch((error) => {
+				console.log(error.response.data);
+				console.log(error.response.status);
+				console.log(error.response.statusText);
+				console.log(error.response.headers);
+				response.status(error.statusCode).send(error);
+			});
+	};
+
 	switch (request.query.query) {
+		case 'GetProfile':
+			getRequest('/api/profile/get', null);
+			break;
+		case 'GetMyProfile':
+			getRequest('/api/my_profile/get', null);
+			break;
 		case 'GetProject':
-			axios
-				.get(`${url}/api/project/get`, { timeout: 30000 })
-				.then((res) => {
-					response.status(200).send(res.data);
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			getRequest('/api/project/get', null);
 			break;
 		case 'GetEditProject':
-			axios
-				.get(`${url}/api/project/getOne`, { params: { id: request.query.id }, timeout: 30000 })
-				.then((res) => {
-					response.status(200).send(res.data);
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			getRequest('/api/project/getOne', { id: request.query.id });
 			break;
 		case 'GetTechnique':
-			axios
-				.get(`${url}/api/technique/get`, { timeout: 30000 })
-				.then((res) => {
-					response.status(200).send(res.data);
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			getRequest('/api/technique/get', null);
 			break;
 		case 'GetTechniqueType':
-			axios
-				.get(`${url}/api/techniqueType/get`, { timeout: 30000 })
-				.then((res) => {
-					response.status(200).send(res.data);
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			getRequest('/api/techniqueType/get', null);
 			break;
 		case 'GetSkill':
-			axios
-				.get(`${url}/api/skill/get`, { timeout: 30000 })
-				.then((res) => {
-					response.status(200).send(res.data);
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			getRequest('/api/skill/get', null);
 			break;
 		case 'GetSkillDeleted':
-			axios
-				.get(`${url}/api/skill/getDeleted`, { timeout: 30000 })
-				.then((res) => {
-					response.status(200).send(res.data);
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			getRequest('/api/skill/getDeleted', null);
 			break;
 		case 'GetAbout':
-			axios
-				.get(`${url}/api/about/get`, { timeout: 30000 })
-				.then((res) => {
-					response.status(200).send(res.data);
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			getRequest('/api/about/get', null);
 			break;
 		default:
 			response.status(404);
@@ -113,74 +72,19 @@ export default (request: NowRequest, response: NowResponse) => {
 
 	switch (request.body?.params?.query) {
 		case 'PostProject':
-			axios
-				.post(`${url}/api/project/post`, data, { timeout: 30000 })
-				.then(() => {
-					response.status(200).send('ok');
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			postRequest('/api/project/post', data);
 			break;
 		case 'PostMyProfile':
-			axios
-				.post(`${url}/api/my_profile/post`, data, { timeout: 30000 })
-				.then(() => {
-					response.status(200).send('ok');
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			postRequest('/api/my_profile/post', data);
 			break;
 		case 'PostTechnique':
-			axios
-				.post(`${url}/api/technique/post`, data, { timeout: 30000 })
-				.then(() => {
-					response.status(200).send('ok');
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			postRequest('/api/technique/post', data);
 			break;
 		case 'PostAbout':
-			axios
-				.post(`${url}/api/about/post`, data, { timeout: 30000 })
-				.then(() => {
-					response.status(200).send('ok');
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			postRequest('/api/about/post', data);
 			break;
 		case 'PostSkill':
-			axios
-				.post(`${url}/api/skill/post`, data, { timeout: 30000 })
-				.then(() => {
-					response.status(200).send('ok');
-				})
-				.catch((error) => {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.statusText);
-					console.log(error.response.headers);
-					response.status(error.statusCode).send(error);
-				});
+			postRequest('/api/skill/post', data);
 			break;
 		default:
 			response.status(404);
