@@ -4,12 +4,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useStoreState } from '~/ducks/selector';
 import { ProfileCreateState } from '~/Type/Profile';
 import CustomInput from '../Form/CustomInput';
-import _ from 'lodash';
 
 const create = (props: ProfileCreateState): JSX.Element => {
 	const methods = useForm();
 	const profiles = useStoreState().profiles;
-	const myProfiles = _.mapKeys(useStoreState().myProfiles, 'profile.id');
+	// const myProfiles = _.mapKeys(useStoreState().myProfiles, 'profile.id');
 	const { profileFieldList, handleClickAddProfile, handleClickDeleteProfile, handleSubmit } = props;
 	return (
 		<Container style={{ width: '80%', marginTop: 50 }}>

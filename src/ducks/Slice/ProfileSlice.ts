@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ProfileState } from '~/Type/Profile';
 import { requestFairure } from './NetworkSlice';
 
-export const initialState: Array<ProfileState> = [{ id: 0, name: '', displayOrder: 0 }];
+export const initialState: Array<ProfileState> = [{ id: 0, name: '', dateType: false, displayOrder: 0 }];
 
 const profileSlice = createSlice({
 	name: 'profile',
