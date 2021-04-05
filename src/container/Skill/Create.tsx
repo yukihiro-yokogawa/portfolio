@@ -32,7 +32,6 @@ const create = (): JSX.Element => {
 	 * TechniqueのTextFieldコンポーネントが変更された際に実行される、VersionのTextFieldコンポーネントで使用するAutoCompleteオブジェクトを生成するイベントハンドラ.
 	 */
 	const handleChangeTechnique = (event: React.ChangeEvent<any>, index: number) => {
-		console.log(techniques);
 		const key = _.findKey(autoCompleteVersions, (autoCompleteVersion) => {
 			return autoCompleteVersion.id == index;
 		});

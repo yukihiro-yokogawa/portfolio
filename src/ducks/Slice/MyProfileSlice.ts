@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { MyProfileState } from '~/Type/Profile';
 import { requestFairure, requestLoading, requestSuccess } from './NetworkSlice';
+import _ from 'lodash';
 
 export const initialState: Array<MyProfileState> = [
-	{ id: 0, title: '', description: '', date: '', deleted: false, profile: { id: 0, name: '', displayOrder: 0 } },
+	{ id: 0, title: '', description: '', date: '', deleted: false, profile: { id: 0, name: '', dateType: false, displayOrder: 0 } },
 ];
 
 const MyProfileSlice = createSlice({
@@ -26,7 +27,7 @@ export const getMyProfileAsync = () => async (
 	axios
 		.get(`/api/my_profile/get`, { params: { query: 'GetMyProfile' } })
 		.then((response) => {
-			dispatch(getMyProfileRequest(response.data));
+			dispatch(getMyProfileRequest(_.orderBy(response.data, 'profile.displayOrder')));
 		})
 		.catch((err) => {
 			console.log(err);

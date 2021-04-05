@@ -40,6 +40,5 @@ const create = (props: { project: ProjectState }): JSX.Element => {
 export default create;
 
 create.getInitialProps = async ({ query }) => {
-	console.log(JSON.parse(query.param));
 	return { project: query.param == 'new' ? [] : JSON.parse(query.param) };
 };

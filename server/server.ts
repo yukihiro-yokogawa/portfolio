@@ -36,7 +36,7 @@ app.prepare().then(() => {
 			});
 	});
 
-	server.post('/api.my_profile/post', (req, res) => {
+	server.post('/api/my_profile/post', (req, res) => {
 		axios
 			.post(`http://localhost:8080/api/my_profile/post`, req.body.params.data)
 			.then((response) => {

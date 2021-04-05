@@ -23,31 +23,34 @@ const CustomInput = (props: CustomInputState): JSX.Element => {
 		<>
 			<ConnectForm>
 				{({ watch, errors, register }) => (
-					<TextField
-						defaultValue={value}
-						id="outlined-margin-dense"
-						label={`${label} ${required ? '(必須)' : ''}${
-							length != 0 ? ` ${watch(name)?.length ? watch(name).length : '0'}/${props.length}` : ''
-						}`}
-						style={{ margin: 8 }}
-						placeholder={placeholder}
-						fullWidth
-						margin="normal"
-						InputLabelProps={{
-							shrink: true,
-						}}
-						type={date ? 'date' : 'text'}
-						name={name}
-						multiline={length < 100 || url ? false : true}
-						inputRef={register({ required: required, maxLength: length })}
-						error={Boolean(_.get(errors, name))}
-						helperText={
-							_.get(errors, name) && `${label}${length === 0 ? `を入力してください` : `は${length}文字以内にして下さい`}。`
-						}
-						className={useStyles().textField}
-						inputProps={length != 0 ? { maxLength: length } : {}}
-						autoComplete="off"
-					/>
+					<>
+						<TextField
+							defaultValue={value}
+							id="outlined-margin-dense"
+							label={`${label} ${required ? '(必須)' : ''}${
+								length != 0 ? ` ${watch(name)?.length ? watch(name).length : '0'}/${props.length}` : ''
+							}`}
+							style={{ margin: 8 }}
+							placeholder={placeholder}
+							fullWidth
+							margin="normal"
+							InputLabelProps={{
+								shrink: true,
+							}}
+							type={date ? 'date' : 'text'}
+							name={name}
+							multiline={length < 100 || url ? false : true}
+							inputRef={register({ required: required, maxLength: length })}
+							error={Boolean(_.get(errors, name))}
+							helperText={
+								_.get(errors, name) &&
+								`${label}${length === 0 ? `を入力してください` : `は${length}文字以内にして下さい`}。`
+							}
+							className={useStyles().textField}
+							inputProps={length != 0 ? { maxLength: length } : {}}
+							autoComplete="off"
+						/>
+					</>
 				)}
 			</ConnectForm>
 		</>

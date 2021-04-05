@@ -1,12 +1,11 @@
 import { Box, Container } from '@material-ui/core';
 import React from 'react';
 import ContentAddButton from '../ContentAddButton';
-import _ from 'lodash';
 import { useStoreState } from '~/ducks/selector';
+import { getDateString } from '~/util/conversionUtils';
 
-const profile: React.FC = () => {
+const profile = (props: { myProfiles: any }): JSX.Element => {
 	const profiles = useStoreState().profiles;
-	const myProfile = _.mapKeys(useStoreState().myProfiles, 'profile.displayOrder');
 
 	return (
 		<>
@@ -15,23 +14,21 @@ const profile: React.FC = () => {
 				{profiles.map((profile, index) => (
 					<Box key={index} alignItems="center" width={1}>
 						<h3 className="title">{profile.name}</h3>
-						{myProfile[profile.displayOrder] !== undefined ? (
-							myProfile[profile.displayOrder]?.date !== null ? (
-								<>
-									<ul className="timeline">
-										<li>
-											<p className="timeline-date">{myProfile[profile.displayOrder]?.date}</p>
-											<div className="timeline-content">
-												<h3>{myProfile[profile.displayOrder]?.title}</h3>
-												<pre>{myProfile[profile.displayOrder]?.description}</pre>
-											</div>
-										</li>
-									</ul>
-								</>
+						{props.myProfiles[profile.displayOrder]?.map((myProfile, index) =>
+							myProfile.date !== null ? (
+								<ul key={index} className="timeline">
+									<li>
+										<p className="timeline-date">{getDateString(myProfile.date)}</p>
+										<div className="timeline-content">
+											<h3>{myProfile.title}</h3>
+											<pre>{myProfile.description}</pre>
+										</div>
+									</li>
+								</ul>
 							) : (
-								<div>{myProfile[profile.displayOrder]?.description}</div>
-							)
-						) : null}
+								<div key={index}>{myProfile.description}</div>
+							),
+						)}
 					</Box>
 				))}
 			</Container>

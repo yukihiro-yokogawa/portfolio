@@ -126,6 +126,20 @@ export default (request: NowRequest, response: NowResponse) => {
 					response.status(error.statusCode).send(error);
 				});
 			break;
+		case 'PostMyProfile':
+			axios
+				.post(`${url}/api/my_profile/post`, data, { timeout: 30000 })
+				.then(() => {
+					response.status(200).send('ok');
+				})
+				.catch((error) => {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.statusText);
+					console.log(error.response.headers);
+					response.status(error.statusCode).send(error);
+				});
+			break;
 		case 'PostTechnique':
 			axios
 				.post(`${url}/api/technique/post`, data, { timeout: 30000 })
