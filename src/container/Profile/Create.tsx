@@ -1,28 +1,35 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useContext, useState } from 'react';
 import Create from '~/component/Profile/Create';
-import { useStoreState } from '~/ducks/selector';
-import { getMyProfileAsync, postMyProfileAsync } from '~/ducks/Slice/MyProfileSlice';
-import { getProfilesAsync } from '~/ducks/Slice/ProfileSlice';
-import { MyProfileDataState } from '~/Type/Profile';
+import { MyProfileDataState, MyProfileState } from '~/Type/Profile';
 import _ from 'lodash';
+import { useDispatch } from 'react-redux';
+import { postMyProfileAsync } from '~/ducks/Slice/MyProfileSlice';
+import { MyProfilesContext } from '~/pages/Profile/create';
 
 const create = (): JSX.Element => {
 	const dispatch = useDispatch();
+	const carrerProfile: Array<MyProfileState> =
+		Object.keys(useContext(MyProfilesContext)).length !== 0
+			? _(useContext(MyProfilesContext))
+					.map((myProfile) => {
+						if (myProfile[0]?.profile.name === '経歴') {
+							return myProfile;
+						}
+					})
+					.compact()
+					.flattenDeep()
+					.value()
+			: [{ static: {} }];
 
-	const [profileFieldList, setProfileFieldList] = useState(useStoreState().myProfiles.map((_, i) => i));
+	const [careerFieldList, setCareerFieldList] = useState(carrerProfile.map((_, i) => i));
 
-	useEffect(() => {
-		dispatch(getProfilesAsync());
-		dispatch(getMyProfileAsync());
-	}, [dispatch]);
 	/**
 	 * 技術新規追加フォーム増加イベント.
 	 */
 	const handleClickAddProfile = useCallback(() => {
-		const newProfileField = profileFieldList.length == 0 ? 0 : _.max(profileFieldList) + 1;
-		setProfileFieldList([...profileFieldList, newProfileField]);
-	}, [profileFieldList]);
+		const newCareerField = careerFieldList.length == 0 ? 0 : _.max(careerFieldList) + 1;
+		setCareerFieldList([...careerFieldList, newCareerField]);
+	}, [careerFieldList]);
 
 	/**
 	 * 技術新規追加フォーム減少イベント
@@ -31,15 +38,15 @@ const create = (): JSX.Element => {
 	 */
 	const handleClickDeleteProfile = useCallback(
 		(key: number) => {
-			const newProfileField = _.without(profileFieldList, key);
-			setProfileFieldList(newProfileField);
+			const newCareerField = _.without(careerFieldList, key);
+			setCareerFieldList(newCareerField);
 		},
-		[profileFieldList],
+		[careerFieldList],
 	);
 
 	const handleSubmit = (profilesDataForm: MyProfileDataState) => {
 		const myProfiles = [];
-		_.forEach(profilesDataForm.profiles, (profileData) => {
+		_.forEach(profilesDataForm.myProfiles, (profileData) => {
 			profileData.static !== undefined ? myProfiles.push(profileData.static) : myProfiles.push(...profileData.dynamic);
 		});
 		dispatch(postMyProfileAsync(myProfiles));
@@ -48,7 +55,7 @@ const create = (): JSX.Element => {
 	return (
 		<>
 			<Create
-				profileFieldList={profileFieldList}
+				careerFieldList={careerFieldList}
 				handleClickAddProfile={handleClickAddProfile}
 				handleClickDeleteProfile={handleClickDeleteProfile}
 				handleSubmit={handleSubmit}

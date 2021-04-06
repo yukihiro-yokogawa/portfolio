@@ -15,12 +15,12 @@ export type ProfileState = {
 };
 
 export type ProfileCreateState = {
-	profileFieldList: Array<number>;
+	careerFieldList: Array<number>;
 	handleClickAddProfile: () => void;
 	handleClickDeleteProfile: (value: number, index: number) => void;
 	handleSubmit: (event: unknown) => void;
 };
 
 export type MyProfileDataState = {
-	profiles: Array<{ static: MyProfileState; dynamic: Array<MyProfileState> }>;
+	myProfiles: Array<{ static: MyProfileState; dynamic: Array<MyProfileState> }>;
 };

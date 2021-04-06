@@ -9,7 +9,7 @@ const profile = (props: { myProfiles: any }): JSX.Element => {
 
 	return (
 		<>
-			<ContentAddButton linkHref="/Profile/create" linkAs="/profile/edit" query={null} type="new" />
+			<ContentAddButton linkHref="/Profile/create" linkAs="/profile/edit" query={props.myProfiles} type="new" />
 			<Container style={{ width: '80%', marginTop: 50 }}>
 				{profiles.map((profile, index) => (
 					<Box key={index} alignItems="center" width={1}>

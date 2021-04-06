@@ -1,15 +1,41 @@
 import { Box, Button, Container, Fab } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useStoreState } from '~/ducks/selector';
 import { ProfileCreateState } from '~/Type/Profile';
 import CustomInput from '../Form/CustomInput';
+import _ from 'lodash';
+import { getDateString } from '~/util/conversionUtils';
 
 const create = (props: ProfileCreateState): JSX.Element => {
-	const methods = useForm();
 	const profiles = useStoreState().profiles;
+	const myProfiles = useStoreState().myProfiles;
+	const methods = useForm();
+	// const myProfiles = useStoreState().myProfiles;
+
 	// const myProfiles = _.mapKeys(useStoreState().myProfiles, 'profile.id');
-	const { profileFieldList, handleClickAddProfile, handleClickDeleteProfile, handleSubmit } = props;
+	const { careerFieldList, handleClickAddProfile, handleClickDeleteProfile, handleSubmit } = props;
+
+	const { setValue } = methods;
+
+	useEffect(() => {
+		const newMyProfiles = [];
+		_.forEach(myProfiles, (myProfile) => {
+			if (myProfile.profile.dateType === false) {
+				newMyProfiles.push({ static: myProfile });
+			} else {
+				const lastMyProfile = _.last(newMyProfiles).dynamic;
+				const newMyProfile = { ...myProfile, date: getDateString(myProfile.date) };
+				lastMyProfile === undefined
+					? newMyProfiles.push({ dynamic: [newMyProfile] })
+					: lastMyProfile[0].profile.name === newMyProfile.profile.name
+					? lastMyProfile.push(newMyProfile)
+					: null;
+			}
+		});
+		setValue('myProfiles', newMyProfiles);
+	}, [myProfiles, setValue]);
+
 	return (
 		<Container style={{ width: '80%', marginTop: 50 }}>
 			<FormProvider {...methods}>
@@ -20,7 +46,7 @@ const create = (props: ProfileCreateState): JSX.Element => {
 							<>
 								{profile.dateType === true ? (
 									<>
-										{profileFieldList.map((item, index2) => (
+										{careerFieldList.map((item, index2) => (
 											<Box
 												alignItems="center"
 												width={1}
@@ -31,43 +57,43 @@ const create = (props: ProfileCreateState): JSX.Element => {
 											>
 												<input
 													type="hidden"
-													name={`profiles[${index1}].dynamic[${index2}].deleted`}
+													name={`myProfiles[${index1}].dynamic[${index2}].deleted`}
 													value={'false'}
 													ref={methods.register}
 												/>
 												<input
 													type="hidden"
-													name={`profiles[${index1}].dynamic[${index2}].id`}
+													name={`myProfiles[${index1}].dynamic[${index2}].id`}
 													value={'0'}
 													ref={methods.register}
 												/>
 												<input
 													type="hidden"
-													name={`profiles[${index1}].dynamic[${index2}].profile.id`}
+													name={`myProfiles[${index1}].dynamic[${index2}].profile.id`}
 													value={profile.id != null ? profile.id : '0'}
 													ref={methods.register}
 												/>
 												<input
 													type="hidden"
-													name={`profiles[${index1}].dynamic[${index2}].profile.dateType`}
+													name={`myProfiles[${index1}].dynamic[${index2}].profile.dateType`}
 													value={`${profile.dateType}`}
 													ref={methods.register}
 												/>
 												<input
 													type="hidden"
-													name={`profiles[${index1}].dynamic[${index2}].profile.displayOrder`}
+													name={`myProfiles[${index1}].dynamic[${index2}].profile.displayOrder`}
 													value={profile.displayOrder}
 													ref={methods.register}
 												/>
 												<input
 													type="hidden"
-													name={`profiles[${index1}].dynamic[${index2}].profile.name`}
+													name={`myProfiles[${index1}].dynamic[${index2}].profile.name`}
 													value={profile.name}
 													ref={methods.register}
 												/>
 												<CustomInput
 													label={`${profile.name}の日付`}
-													name={`profiles[${index1}].dynamic[${index2}].date`}
+													name={`myProfiles[${index1}].dynamic[${index2}].date`}
 													required={false}
 													length={0}
 													url={false}
@@ -78,7 +104,7 @@ const create = (props: ProfileCreateState): JSX.Element => {
 												/>
 												<CustomInput
 													label={`${profile.name}のタイトル`}
-													name={`profiles[${index1}].dynamic[${index2}].title`}
+													name={`myProfiles[${index1}].dynamic[${index2}].title`}
 													required={false}
 													length={64}
 													url={false}
@@ -89,7 +115,7 @@ const create = (props: ProfileCreateState): JSX.Element => {
 												/>
 												<CustomInput
 													label={profile.name}
-													name={`profiles[${index1}].dynamic[${index2}].description`}
+													name={`myProfiles[${index1}].dynamic[${index2}].description`}
 													required={false}
 													length={1024}
 													url={false}
@@ -116,40 +142,40 @@ const create = (props: ProfileCreateState): JSX.Element => {
 									<>
 										<input
 											type="hidden"
-											name={`profiles[${index1}].static.deleted`}
+											name={`myProfiles[${index1}].static.deleted`}
 											value={'false'}
 											ref={methods.register}
 										/>
-										<input type="hidden" name={`profiles[${index1}].static.id`} value={'0'} ref={methods.register} />
-										<input type="hidden" name={`profiles[${index1}].static.title`} value="" ref={methods.register} />
-										<input type="hidden" name={`profiles[${index1}].static.date`} value="" ref={methods.register} />
+										<input type="hidden" name={`myProfiles[${index1}].static.id`} value={'0'} ref={methods.register} />
+										<input type="hidden" name={`myProfiles[${index1}].static.title`} value="" ref={methods.register} />
+										<input type="hidden" name={`myProfiles[${index1}].static.date`} value="" ref={methods.register} />
 										<input
 											type="hidden"
-											name={`profiles[${index1}].static.profile.id`}
+											name={`myProfiles[${index1}].static.profile.id`}
 											value={profile.id != null ? profile.id : '0'}
 											ref={methods.register}
 										/>
 										<input
 											type="hidden"
-											name={`profiles[${index1}].static.profile.dateType`}
+											name={`myProfiles[${index1}].static.profile.dateType`}
 											value={`${profile.dateType}`}
 											ref={methods.register}
 										/>
 										<input
 											type="hidden"
-											name={`profiles[${index1}].static.profile.displayOrder`}
+											name={`myProfiles[${index1}].static.profile.displayOrder`}
 											value={profile.displayOrder}
 											ref={methods.register}
 										/>
 										<input
 											type="hidden"
-											name={`profiles[${index1}].static.profile.name`}
+											name={`myProfiles[${index1}].static.profile.name`}
 											value={profile.name}
 											ref={methods.register}
 										/>
 										<CustomInput
 											label={profile.name}
-											name={`profiles[${index1}].static.description`}
+											name={`myProfiles[${index1}].static.description`}
 											required={false}
 											length={1024}
 											url={false}
