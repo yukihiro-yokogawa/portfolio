@@ -57,7 +57,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 								length={0}
 								url={false}
 								date={false}
-								value={skills[index]?.technique.name}
+								value={''}
 								autoComplete={autoCompleteTechniques}
 								placeholder="使用している技術名を入力してください"
 								customStyle={{ width: '60%' }}
@@ -71,7 +71,7 @@ const create = (props: SkillCreateState): JSX.Element => {
 								length={0}
 								url={false}
 								date={false}
-								value={skills[index]?.technique.version}
+								value={''}
 								autoComplete={
 									_.find(autoCompleteVersions, (autoCompleteVersion) => {
 										return autoCompleteVersion?.id == index;
