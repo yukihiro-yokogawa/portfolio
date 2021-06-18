@@ -1,12 +1,12 @@
-import React from 'react';
-import Profile from '~/container/Profile/Profile';
+import React from "react";
+import Profile from "~/container/Profile/Profile";
 
 const profile: React.FC = () => {
-	return (
-		<div>
-			<Profile />
-		</div>
-	);
+  return (
+    <div>
+      <Profile />
+    </div>
+  );
 };
 
 export default profile;
