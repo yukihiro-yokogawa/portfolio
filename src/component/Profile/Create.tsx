@@ -26,10 +26,10 @@ const create = (props: ProfileCreateState): JSX.Element => {
   useEffect(() => {
     const newMyProfiles = [];
     _.forEach(myProfiles, (myProfile) => {
-      if (myProfile.profile.dateType === false) {
+      if (!myProfile.profile.dateType) {
         newMyProfiles.push({ static: myProfile });
       } else {
-        const lastMyProfile = _.last(newMyProfiles).dynamic;
+        const lastMyProfile = _.last(newMyProfiles)?.dynamic;
         const newMyProfile = {
           ...myProfile,
           date: getDateString(myProfile.date),
