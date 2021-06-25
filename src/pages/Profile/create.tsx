@@ -1,7 +1,6 @@
 import React, { createContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Create from "~/container/Profile/Create";
-import { getMyProfileAsync } from "~/ducks/Slice/MyProfileSlice";
 import { getProfilesAsync } from "~/ducks/Slice/ProfileSlice";
 
 export const MyProfilesContext: React.Context<any> = createContext({});
@@ -11,7 +10,6 @@ const create = (props: { myProfiles: any }): JSX.Element => {
 
   useEffect(() => {
     dispatch(getProfilesAsync());
-    dispatch(getMyProfileAsync());
   }, [dispatch]);
 
   return (

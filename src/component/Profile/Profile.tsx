@@ -6,13 +6,12 @@ import { getDateString } from "~/util/conversionUtils";
 
 const profile = (props: { myProfiles: any }): JSX.Element => {
   const profiles = useStoreState().profiles;
-
   return (
     <>
       <ContentAddButton
         linkHref="/Profile/create"
         linkAs="/profile/edit"
-        query={props.myProfiles}
+        query={useStoreState().myProfiles}
         type="new"
       />
       <Container style={{ width: "80%", marginTop: 50 }}>

@@ -7,6 +7,16 @@ export type MyProfileState = {
   profile: ProfileState;
 };
 
+export type MyProfileDataState = {
+  id: number;
+  myProfileId: number;
+  title: string;
+  description: string;
+  date: string;
+  deleted: boolean;
+  profile: ProfileState;
+};
+
 export type ProfileState = {
   id: number;
   name: string;
@@ -15,12 +25,10 @@ export type ProfileState = {
 };
 
 export type ProfileCreateState = {
-  careerFieldList: Array<number>;
-  handleClickAddProfile: () => void;
-  handleClickDeleteProfile: (value: number, index: number) => void;
   handleSubmit: (event: unknown) => void;
 };
 
-export type MyProfileDataState = {
-  myProfiles: Array<{ static: MyProfileState; dynamic: Array<MyProfileState> }>;
+export type MyProfilesDataState = {
+  introduction: MyProfileDataState;
+  careers: Array<MyProfileDataState>;
 };

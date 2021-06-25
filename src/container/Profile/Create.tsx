@@ -1,70 +1,49 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext } from "react";
 import Create from "~/component/Profile/Create";
-import { MyProfileDataState, MyProfileState } from "~/Type/Profile";
+import { MyProfilesDataState, MyProfileState } from "~/Type/Profile";
 import _ from "lodash";
 import { useDispatch } from "react-redux";
 import { postMyProfileAsync } from "~/ducks/Slice/MyProfileSlice";
 import { MyProfilesContext } from "~/pages/Profile/create";
+import { getDateString } from "~/util/conversionUtils";
 
 const create = (): JSX.Element => {
   const dispatch = useDispatch();
-  const carrerProfile: Array<MyProfileState> =
-    Object.keys(useContext(MyProfilesContext)).length !== 0
-      ? _(useContext(MyProfilesContext))
-          .map((myProfile) => {
-            if (myProfile[0]?.profile.name === "経歴") {
-              return myProfile;
-            }
-          })
-          .compact()
-          .flattenDeep()
-          .value()
-      : [{ static: {} }];
+  const myProfiles = useContext(MyProfilesContext);
 
-  const [careerFieldList, setCareerFieldList] = useState(
-    carrerProfile.map((_, i) => i)
-  );
-
-  /**
-   * 技術新規追加フォーム増加イベント.
-   */
-  const handleClickAddProfile = useCallback(() => {
-    const newCareerField =
-      careerFieldList.length == 0 ? 0 : _.max(careerFieldList) + 1;
-    setCareerFieldList([...careerFieldList, newCareerField]);
-  }, [careerFieldList]);
-
-  /**
-   * 技術新規追加フォーム減少イベント
-   *
-   * @param {number} key
-   */
-  const handleClickDeleteProfile = useCallback(
-    (key: number) => {
-      const newCareerField = _.without(careerFieldList, key);
-      setCareerFieldList(newCareerField);
-    },
-    [careerFieldList]
-  );
-
-  const handleSubmit = (profilesDataForm: MyProfileDataState) => {
-    const myProfiles = [];
-    _.forEach(profilesDataForm.myProfiles, (profileData) => {
-      profileData.static !== undefined
-        ? myProfiles.push(profileData.static)
-        : myProfiles.push(...profileData.dynamic);
+  const handleSubmit = (profilesDataForm: MyProfilesDataState) => {
+    let oldSkills = _.cloneDeep(myProfiles);
+    const newMyProfiles = [];
+    newMyProfiles.push(profilesDataForm.introduction);
+    _.forEach(profilesDataForm.careers, (profileData) => {
+      const newProfileData: MyProfileState = {
+        id: Number(profileData.myProfileId),
+        title: profileData.title,
+        description: profileData.description,
+        date: profileData.date,
+        deleted: profileData.deleted,
+        profile: profileData.profile,
+      };
+      newMyProfiles.push(newProfileData);
+      _.remove(oldSkills, (oldSkill: any) => {
+        return oldSkill.id === newProfileData.id;
+      });
     });
-    dispatch(postMyProfileAsync(myProfiles));
+    _.forEach(oldSkills, (oldSkill) => {
+      oldSkill?.profile?.name !== "自己紹介"
+        ? newMyProfiles.push({
+            ...oldSkill,
+            date: getDateString(oldSkill.date),
+            deleted: "true",
+          })
+        : null;
+    });
+    dispatch(postMyProfileAsync(newMyProfiles));
   };
 
   return (
     <>
-      <Create
-        careerFieldList={careerFieldList}
-        handleClickAddProfile={handleClickAddProfile}
-        handleClickDeleteProfile={handleClickDeleteProfile}
-        handleSubmit={handleSubmit}
-      />
+      <Create handleSubmit={handleSubmit} />
     </>
   );
 };

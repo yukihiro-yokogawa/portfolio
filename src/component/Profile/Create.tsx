@@ -1,134 +1,149 @@
 import { Box, Button, Container, Fab } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import React, { useContext, useMemo } from "react";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { useStoreState } from "~/ducks/selector";
-import { ProfileCreateState } from "~/Type/Profile";
+import { MyProfileState, ProfileCreateState } from "~/Type/Profile";
 import CustomInput from "../Form/CustomInput";
 import _ from "lodash";
 import { getDateString } from "~/util/conversionUtils";
+import { MyProfilesContext } from "~/pages/Profile/create";
 
-const create = (props: ProfileCreateState): JSX.Element => {
+const create = (props: ProfileCreateState) => {
+  let introduction: MyProfileState;
+  const careers: Array<any> = [];
   const profiles = useStoreState().profiles;
-  const myProfiles = useStoreState().myProfiles;
-  const methods = useForm();
-  // const myProfiles = useStoreState().myProfiles;
+  const myProfiles = useContext(MyProfilesContext);
+  const { handleSubmit } = props;
 
-  // const myProfiles = _.mapKeys(useStoreState().myProfiles, 'profile.id');
-  const {
-    careerFieldList,
-    handleClickAddProfile,
-    handleClickDeleteProfile,
-    handleSubmit,
-  } = props;
-
-  const { setValue } = methods;
-
-  useEffect(() => {
-    const newMyProfiles = [];
+  const createIntroduction = useMemo(() => {
     _.forEach(myProfiles, (myProfile) => {
       if (!myProfile.profile.dateType) {
-        newMyProfiles.push({ static: myProfile });
-      } else {
-        const lastMyProfile = _.last(newMyProfiles)?.dynamic;
-        const newMyProfile = {
-          ...myProfile,
-          date: getDateString(myProfile.date),
-        };
-        lastMyProfile === undefined
-          ? newMyProfiles.push({ dynamic: [newMyProfile] })
-          : lastMyProfile[0].profile.name === newMyProfile.profile.name
-          ? lastMyProfile.push(newMyProfile)
-          : null;
+        introduction = myProfile;
       }
     });
-    setValue("myProfiles", newMyProfiles);
-  }, [myProfiles, setValue]);
+    return introduction;
+  }, [myProfiles]);
+
+  const createCareers = useMemo(() => {
+    _.forEach(myProfiles, (myProfile) => {
+      if (myProfile.profile.dateType) {
+        const newMyProfile = {
+          myProfileId: myProfile.id,
+          title: myProfile.title,
+          description: myProfile.description,
+          date: getDateString(myProfile.date),
+          profile: myProfile.profile,
+          deleted: myProfile.deleted,
+        };
+        careers.push(newMyProfile);
+      }
+    });
+    return careers;
+  }, [myProfiles]);
+
+  const methods = useForm({
+    defaultValues: {
+      introduction: createIntroduction,
+      careers: createCareers,
+    },
+  });
+
+  const { control } = methods;
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "careers",
+  });
 
   return (
     <Container style={{ width: "80%", marginTop: 50 }}>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)}>
-          {profiles.map((profile, index1) => (
+          {profiles.map((profile) => (
             <Box key={profile.name} alignItems="center" width={1}>
               <h3 className="title">{profile.name}</h3>
               <>
                 {profile.dateType === true ? (
                   <>
-                    {careerFieldList.map((item, index2) => (
+                    {fields.map((field, index2) => (
                       <Box
                         alignItems="center"
                         width={1}
                         display="flex"
                         flexWrap="wrap"
                         style={{ justifyContent: "space-between" }}
-                        key={item}
+                        key={field.id}
                       >
                         <input
                           type="hidden"
-                          name={`myProfiles[${index1}].dynamic[${index2}].deleted`}
-                          value={"false"}
-                          ref={methods.register}
+                          name={`careers[${index2}].myProfileId`}
+                          defaultValue={
+                            field.myProfileId && field.myProfileId !== ""
+                              ? field.myProfileId
+                              : 0
+                          }
+                          ref={methods.register()}
                         />
                         <input
                           type="hidden"
-                          name={`myProfiles[${index1}].dynamic[${index2}].id`}
-                          value={"0"}
-                          ref={methods.register}
+                          name={`careers[${index2}].deleted`}
+                          defaultValue={"false"}
+                          ref={methods.register()}
                         />
                         <input
                           type="hidden"
-                          name={`myProfiles[${index1}].dynamic[${index2}].profile.id`}
-                          value={profile.id != null ? profile.id : "0"}
-                          ref={methods.register}
+                          name={`careers[${index2}].profile.id`}
+                          defaultValue={profile.id != null ? profile.id : "0"}
+                          ref={methods.register()}
                         />
                         <input
                           type="hidden"
-                          name={`myProfiles[${index1}].dynamic[${index2}].profile.dateType`}
-                          value={`${profile.dateType}`}
-                          ref={methods.register}
+                          name={`careers[${index2}].profile.dateType`}
+                          defaultValue={`${profile.dateType}`}
+                          ref={methods.register()}
                         />
                         <input
                           type="hidden"
-                          name={`myProfiles[${index1}].dynamic[${index2}].profile.displayOrder`}
-                          value={profile.displayOrder}
-                          ref={methods.register}
+                          name={`careers[${index2}].profile.displayOrder`}
+                          defaultValue={profile.displayOrder}
+                          ref={methods.register()}
                         />
                         <input
                           type="hidden"
-                          name={`myProfiles[${index1}].dynamic[${index2}].profile.name`}
-                          value={profile.name}
-                          ref={methods.register}
+                          name={`careers[${index2}].profile.name`}
+                          defaultValue={profile.name}
+                          ref={methods.register()}
                         />
                         <CustomInput
                           label={`${profile.name}の日付`}
-                          name={`myProfiles[${index1}].dynamic[${index2}].date`}
+                          name={`careers[${index2}].date`}
                           required={false}
                           length={0}
                           url={false}
                           date={true}
-                          value=""
+                          value={field.date}
                           placeholder={`${profile.name}の日付を入力してください。`}
                           customStyle={{ width: "30%" }}
                         />
                         <CustomInput
                           label={`${profile.name}のタイトル`}
-                          name={`myProfiles[${index1}].dynamic[${index2}].title`}
+                          name={`careers[${index2}].title`}
                           required={false}
                           length={64}
                           url={false}
                           date={false}
-                          value=""
+                          value={field.title}
                           placeholder={`${profile.name}のタイトルを入力してください。`}
                           customStyle={{ width: "60%" }}
                         />
                         <CustomInput
                           label={profile.name}
-                          name={`myProfiles[${index1}].dynamic[${index2}].description`}
+                          name={`careers[${index2}].description`}
                           required={false}
                           length={1024}
                           url={false}
                           date={false}
-                          value=""
+                          value={field.description}
                           placeholder={`${profile.name}の概要を入力してください`}
                           customStyle={{ width: "90%" }}
                         />
@@ -138,7 +153,7 @@ const create = (props: ProfileCreateState): JSX.Element => {
                           size="small"
                           style={{ width: "36px", height: "36px" }}
                           onClick={() => {
-                            handleClickDeleteProfile(item, index2);
+                            remove(index2);
                           }}
                         >
                           ×
@@ -150,55 +165,51 @@ const create = (props: ProfileCreateState): JSX.Element => {
                   <>
                     <input
                       type="hidden"
-                      name={`myProfiles[${index1}].static.deleted`}
-                      value={"false"}
+                      name={`introduction.deleted`}
                       ref={methods.register}
                     />
                     <input
                       type="hidden"
-                      name={`myProfiles[${index1}].static.id`}
-                      value={"0"}
+                      name={`introduction.id`}
                       ref={methods.register}
                     />
                     <input
                       type="hidden"
-                      name={`myProfiles[${index1}].static.title`}
-                      value=""
+                      name={`introduction.title`}
                       ref={methods.register}
                     />
                     <input
                       type="hidden"
-                      name={`myProfiles[${index1}].static.date`}
-                      value=""
+                      name={`introduction.date`}
                       ref={methods.register}
                     />
                     <input
                       type="hidden"
-                      name={`myProfiles[${index1}].static.profile.id`}
+                      name={`introduction.profile.id`}
                       value={profile.id != null ? profile.id : "0"}
                       ref={methods.register}
                     />
                     <input
                       type="hidden"
-                      name={`myProfiles[${index1}].static.profile.dateType`}
+                      name={`introduction.profile.dateType`}
                       value={`${profile.dateType}`}
                       ref={methods.register}
                     />
                     <input
                       type="hidden"
-                      name={`myProfiles[${index1}].static.profile.displayOrder`}
+                      name={`introduction.profile.displayOrder`}
                       value={profile.displayOrder}
                       ref={methods.register}
                     />
                     <input
                       type="hidden"
-                      name={`myProfiles[${index1}].static.profile.name`}
+                      name={`introduction.profile.name`}
                       value={profile.name}
                       ref={methods.register}
                     />
                     <CustomInput
                       label={profile.name}
-                      name={`myProfiles[${index1}].static.description`}
+                      name={`introduction.description`}
                       required={false}
                       length={1024}
                       url={false}
@@ -209,19 +220,20 @@ const create = (props: ProfileCreateState): JSX.Element => {
                     />
                   </>
                 )}
-
-                {profile.dateType === true ? (
-                  <Button
-                    style={{ margin: 8 }}
-                    onClick={handleClickAddProfile}
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                  >
-                    add
-                  </Button>
-                ) : null}
               </>
+              {profile.dateType === true ? (
+                <Button
+                  style={{ margin: 8 }}
+                  onClick={() => {
+                    append({});
+                  }}
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                >
+                  add
+                </Button>
+              ) : null}
             </Box>
           ))}
           <Button
