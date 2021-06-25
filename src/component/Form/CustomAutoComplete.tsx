@@ -20,6 +20,7 @@ const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
     length,
     url,
     date,
+    value,
     autoComplete,
     placeholder,
     customStyle,
@@ -34,6 +35,7 @@ const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
             <Autocomplete
               freeSolo
               options={typeof autoComplete === "undefined" ? [] : autoComplete}
+              defaultValue={{ name: value, type: "" }}
               style={customStyle}
               groupBy={(option) => option.type}
               getOptionLabel={(option) => option.name}

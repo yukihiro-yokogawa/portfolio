@@ -1,7 +1,7 @@
 import { Box, Button, Container, Fab } from "@material-ui/core";
 import _ from "lodash";
 import React, { useContext, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import TechniqueCreateModal from "~/container/Modal/TechniqueCreateModal";
 import { useStoreState } from "~/ducks/selector";
 import { SkillsContext } from "~/pages/Skill/create";
@@ -11,12 +11,9 @@ import CustomRadioField from "../Form/CustomRadioFIeld";
 
 const create = (props: SkillCreateState): JSX.Element => {
   const {
-    techniqueFieldList,
     autoCompleteTechniques,
     autoCompleteVersions,
     handleChangeTechnique,
-    handleClickAddTechnique,
-    handleClickDeleteTechnique,
     handleSubmit,
   } = props;
 
@@ -27,25 +24,36 @@ const create = (props: SkillCreateState): JSX.Element => {
 
   const skills = useContext(SkillsContext);
 
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      skills: skills,
+    },
+  });
+  const { control } = methods;
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "skills",
+  });
+
   return (
     <Container style={{ width: "80%", marginTop: 50 }}>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)}>
-          {techniqueFieldList.map((item, index) => (
+          {fields.map((field, index) => (
             <Box
               alignItems="center"
               width={1}
               display="flex"
               flexWrap="wrap"
               style={{ marginTop: "10px", justifyContent: " space-between" }}
-              key={item}
+              key={field.id}
             >
               <input
                 type="hidden"
                 name={`skills[${index}].deleted`}
-                value={"false"}
-                ref={methods.register}
+                defaultValue={"false"}
+                ref={methods.register()}
               />
               <CustomRadioField
                 name={`skills[${index}].level`}
@@ -68,7 +76,7 @@ const create = (props: SkillCreateState): JSX.Element => {
                 length={0}
                 url={false}
                 date={false}
-                value={""}
+                value={field.technique.name}
                 autoComplete={autoCompleteTechniques}
                 placeholder="使用している技術名を入力してください"
                 customStyle={{ width: "60%" }}
@@ -82,7 +90,7 @@ const create = (props: SkillCreateState): JSX.Element => {
                 length={0}
                 url={false}
                 date={false}
-                value={""}
+                value={field.technique.version}
                 autoComplete={
                   _.find(autoCompleteVersions, (autoCompleteVersion) => {
                     return autoCompleteVersion?.id == index;
@@ -98,8 +106,7 @@ const create = (props: SkillCreateState): JSX.Element => {
                 size="small"
                 style={{ width: "36px", height: "36px" }}
                 onClick={() => {
-                  handleClickDeleteTechnique(item, index);
-                  methods.reset();
+                  remove(index);
                 }}
               >
                 ×
@@ -117,7 +124,9 @@ const create = (props: SkillCreateState): JSX.Element => {
           </Button>
           <Button
             style={{ margin: 8 }}
-            onClick={handleClickAddTechnique}
+            onClick={() => {
+              append({});
+            }}
             variant="contained"
             color="primary"
             size="medium"

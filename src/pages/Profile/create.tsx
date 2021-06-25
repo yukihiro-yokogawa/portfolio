@@ -25,6 +25,5 @@ export default create;
 
 create.getInitialProps = async ({ query }) => {
   const myProfiles = JSON.parse(query.param);
-  console.log(myProfiles);
   return { myProfiles: myProfiles };
 };

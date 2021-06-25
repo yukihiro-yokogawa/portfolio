@@ -1,19 +1,15 @@
 import _ from "lodash";
-import { useMemo, useState, useContext } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import Create from "~/component/Skill/Create";
 import { useStoreState } from "~/ducks/selector";
 import { postSkillAsync } from "~/ducks/Slice/SkillSlice";
-import { SkillsContext } from "~/pages/Skill/create";
 import { SkillStates } from "~/Type/Skill";
 import { AutoCompleteVersionState, TechniqueState } from "~/Type/Technique";
 
 const create = (): JSX.Element => {
   const dispatch = useDispatch();
-  // 使用技術追加のDOM変更用変数.
-  const [techniqueFieldList, setTechniqueFieldList] = useState(
-    useContext(SkillsContext).map((_, i) => i)
-  );
+
   // version入力部分のオートコンプリート.
   const [autoCompleteVersions, setAutoCompleteVersions] = useState([]);
   const { skills, techniques } = useStoreState();
@@ -63,38 +59,6 @@ const create = (): JSX.Element => {
     }
   };
 
-  /**
-   * 技術新規追加フォーム増加イベント.
-   */
-  const handleClickAddTechnique = () => {
-    const newTehcniqueField =
-      techniqueFieldList.length == 0 ? 0 : _.max(techniqueFieldList) + 1;
-    setTechniqueFieldList([...techniqueFieldList, newTehcniqueField]);
-  };
-
-  /**
-   * 技術新規追加フォーム減少イベント
-   *
-   * @param {number} key
-   */
-  const handleClickDeleteTechnique = (key: number, index: number) => {
-    const newTechniqueField = _.without(techniqueFieldList, key);
-    setTechniqueFieldList(newTechniqueField);
-    const deletedAutoCompleteVersions = _.filter(
-      autoCompleteVersions,
-      (autoCompleteVersion) => {
-        return autoCompleteVersion.id !== index;
-      }
-    );
-    // versionのAutoCompleteリストを操作.
-    _.forEach(deletedAutoCompleteVersions, (autoCompleteVersion) => {
-      autoCompleteVersion.id > index
-        ? (autoCompleteVersion.id = autoCompleteVersion.id - 1)
-        : null;
-    });
-    setAutoCompleteVersions([...deletedAutoCompleteVersions]);
-  };
-
   const handleSubmit = (skillsDataForm: SkillStates) => {
     let oldSkills = skills;
     _.forEach(skillsDataForm.skills, (skillData) => {
@@ -128,12 +92,9 @@ const create = (): JSX.Element => {
   return (
     <>
       <Create
-        techniqueFieldList={techniqueFieldList}
         autoCompleteTechniques={autoCompleteTechniques}
         autoCompleteVersions={autoCompleteVersions}
         handleChangeTechnique={handleChangeTechnique}
-        handleClickAddTechnique={handleClickAddTechnique}
-        handleClickDeleteTechnique={handleClickDeleteTechnique}
         handleSubmit={handleSubmit}
       />
     </>
