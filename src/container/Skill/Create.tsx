@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import Create from "~/component/Skill/Create";
 import { useStoreState } from "~/ducks/selector";
@@ -25,6 +25,25 @@ const create = (): JSX.Element => {
       .uniqBy("name")
       .value();
   }, [techniques]);
+
+  useEffect(() => {
+    const defaultAutoCompleteVersions = [];
+    _.forEach(skills, (skill, index) => {
+      const autoCompleteVersion = {
+        id: index,
+        autoComplete: _(techniques)
+          .filter((technique) => {
+            return technique.name == skill.technique.name;
+          })
+          .map((technique) => {
+            return { id: technique.id, name: technique.version, type: "" };
+          })
+          .value(),
+      };
+      defaultAutoCompleteVersions.push(autoCompleteVersion);
+    });
+    setAutoCompleteVersions([...defaultAutoCompleteVersions]);
+  }, [skills, techniques]);
 
   /**
    * TechniqueのTextFieldコンポーネントが変更された際に実行される、VersionのTextFieldコンポーネントで使用するAutoCompleteオブジェクトを生成するイベントハンドラ.
@@ -59,6 +78,11 @@ const create = (): JSX.Element => {
     }
   };
 
+  /**
+   * Skillを登録する際に実行される、登録用イベントハンドラ.
+   *
+   * @param {SkillStates} skillsDataForm
+   */
   const handleSubmit = (skillsDataForm: SkillStates) => {
     let oldSkills = skills;
     _.forEach(skillsDataForm.skills, (skillData) => {

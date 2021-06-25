@@ -35,7 +35,6 @@ const create = (props: SkillCreateState): JSX.Element => {
     control,
     name: "skills",
   });
-
   return (
     <Container style={{ width: "80%", marginTop: 50 }}>
       <FormProvider {...methods}>
@@ -76,8 +75,8 @@ const create = (props: SkillCreateState): JSX.Element => {
                 length={0}
                 url={false}
                 date={false}
-                value={field.technique.name}
-                autoComplete={autoCompleteTechniques}
+                value={field?.technique?.name ? field?.technique?.name : ""}
+                autoCompletes={autoCompleteTechniques}
                 placeholder="使用している技術名を入力してください"
                 customStyle={{ width: "60%" }}
                 handleChange={handleChangeTechnique}
@@ -90,8 +89,10 @@ const create = (props: SkillCreateState): JSX.Element => {
                 length={0}
                 url={false}
                 date={false}
-                value={field.technique.version}
-                autoComplete={
+                value={
+                  field?.technique?.version ? field?.technique?.version : ""
+                }
+                autoCompletes={
                   _.find(autoCompleteVersions, (autoCompleteVersion) => {
                     return autoCompleteVersion?.id == index;
                   })?.autoComplete

@@ -97,7 +97,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   url={false}
                   date={false}
                   value={projectTechniques[index]?.technique.name}
-                  autoComplete={autoCompleteTechniques}
+                  autoCompletes={autoCompleteTechniques}
                   placeholder="使用している技術名を入力してください"
                   customStyle={{ width: "60%" }}
                   handleChange={handleChangeTechnique}
@@ -111,7 +111,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   url={false}
                   date={false}
                   value={projectTechniques[index]?.technique.version}
-                  autoComplete={
+                  autoCompletes={
                     _.find(autoCompleteVersions, (autoCompleteVersion) => {
                       return autoCompleteVersion?.id == index;
                     })?.autoComplete

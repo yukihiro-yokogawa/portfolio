@@ -4,6 +4,7 @@ import { AutoCompleteState } from "~/Type/Form";
 import { ConnectForm } from "./ConnectForm";
 import _ from "lodash";
 import { Autocomplete } from "@material-ui/lab";
+import { Controller } from "react-hook-form";
 
 /**
  * Material UiのTextFieldコンポーネントをラッピングしたカスタムコンポーネント.
@@ -21,7 +22,7 @@ const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
     url,
     date,
     value,
-    autoComplete,
+    autoCompletes,
     placeholder,
     customStyle,
     handleChange,
@@ -34,11 +35,18 @@ const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
           <>
             <Autocomplete
               freeSolo
-              options={typeof autoComplete === "undefined" ? [] : autoComplete}
-              defaultValue={{ name: value, type: "" }}
+              options={
+                typeof autoCompletes === "undefined" ? [] : autoCompletes
+              }
               style={customStyle}
               groupBy={(option) => option.type}
               getOptionLabel={(option) => option.name}
+              defaultValue={{
+                name: value,
+                type: _.find(autoCompletes, (autoComplete) => {
+                  return autoComplete.name === value;
+                })?.type,
+              }}
               renderInput={(params) => (
                 <>
                   <TextField

@@ -31,7 +31,7 @@ const create = (props: { skills: Array<any> }): JSX.Element => {
   useEffect(() => {
     dispatch(getTechniquesAsync());
     dispatch(getTechniqueTypeAsync());
-    dispatch(getSkillsAsync());
+    // dispatch(getSkillsAsync());
     dispatch(getSkillsByDeletedAsync());
   }, [dispatch]);
 
