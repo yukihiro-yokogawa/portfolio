@@ -3,7 +3,7 @@ import { Box, Button, Container } from "@material-ui/core";
 import CustomSelectField from "../Form/CustomSelectField";
 import { WorkCreateState } from "~/Type/Work";
 import React, { useContext, useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { useStoreState } from "~/ducks/selector";
 import { Fab } from "@material-ui/core";
 import TechniqueCreateModal from "~/container/Modal/TechniqueCreateModal";
@@ -22,13 +22,10 @@ import { getDateString } from "~/util/conversionUtils";
 const create = (props: WorkCreateState): JSX.Element => {
   const {
     abouts,
-    techniqueFieldList,
     aboutFieldList,
     autoCompleteTechniques,
     autoCompleteVersions,
     handleChangeTechnique,
-    handleClickAddTechnique,
-    handleClickDeleteTechnique,
     handleClickAddAbout,
     handleSubmit,
   } = props;
@@ -50,12 +47,22 @@ const create = (props: WorkCreateState): JSX.Element => {
     setModal(show);
   };
 
-  const methods = useForm();
-  const { setValue } = methods;
+  const methods = useForm({
+    defaultValues: {
+      projectTechniques: projectTechniques,
+      projectAbouts: projectAbouts,
+    },
+  });
+  const { setValue, control } = methods;
 
   useEffect(() => {
     setValue("projectAbouts", projectAbouts);
   }, [setValue, projectAbouts]);
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "projectTechniques",
+  });
 
   return (
     <>
@@ -66,7 +73,7 @@ const create = (props: WorkCreateState): JSX.Element => {
               type="hidden"
               name="id"
               value={id != null ? id : "0"}
-              ref={methods.register}
+              ref={methods.register()}
             />
             <CustomInput
               label="ProjectTitle"
@@ -79,14 +86,14 @@ const create = (props: WorkCreateState): JSX.Element => {
               placeholder="プロジェクトのタイトルを入力してください"
               customStyle={null}
             />
-            {techniqueFieldList.map((item, index) => (
+            {fields.map((field, index) => (
               <Box
                 alignItems="center"
                 width={1}
                 display="flex"
                 flexWrap="wrap"
                 style={{ justifyContent: "space-between" }}
-                key={item}
+                key={field.id}
               >
                 <CustomAutoComplete
                   index={index}
@@ -96,7 +103,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   length={0}
                   url={false}
                   date={false}
-                  value={projectTechniques[index]?.technique.name}
+                  value={field?.technique.name}
                   autoCompletes={autoCompleteTechniques}
                   placeholder="使用している技術名を入力してください"
                   customStyle={{ width: "60%" }}
@@ -110,7 +117,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   length={0}
                   url={false}
                   date={false}
-                  value={projectTechniques[index]?.technique.version}
+                  value={field?.technique.version}
                   autoCompletes={
                     _.find(autoCompleteVersions, (autoCompleteVersion) => {
                       return autoCompleteVersion?.id == index;
@@ -126,8 +133,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   size="small"
                   style={{ width: "36px", height: "36px" }}
                   onClick={() => {
-                    handleClickDeleteTechnique(item, index);
-                    methods.reset();
+                    remove(index);
                   }}
                 >
                   ×
@@ -145,7 +151,9 @@ const create = (props: WorkCreateState): JSX.Element => {
             </Button>
             <Button
               style={{ margin: 8 }}
-              onClick={handleClickAddTechnique}
+              onClick={() => {
+                append({});
+              }}
               variant="contained"
               color="primary"
               size="medium"
@@ -229,7 +237,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   type="hidden"
                   name={`projectAbouts[${index}].about.name`}
                   value={value}
-                  ref={methods.register}
+                  ref={methods.register()}
                 />
                 <CustomInput
                   label={value}
