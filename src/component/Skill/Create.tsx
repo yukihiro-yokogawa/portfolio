@@ -35,6 +35,7 @@ const create = (props: SkillCreateState): JSX.Element => {
     control,
     name: "skills",
   });
+
   return (
     <Container style={{ width: "80%", marginTop: 50 }}>
       <FormProvider {...methods}>
@@ -57,7 +58,7 @@ const create = (props: SkillCreateState): JSX.Element => {
               <CustomRadioField
                 name={`skills[${index}].level`}
                 label="level"
-                defaultValue={skills[index]?.level}
+                defaultValue={field?.level}
                 values={[
                   { name: "1" },
                   { name: "2" },

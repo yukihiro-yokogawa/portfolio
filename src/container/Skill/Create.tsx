@@ -86,11 +86,13 @@ const create = (): JSX.Element => {
   const handleSubmit = (skillsDataForm: SkillStates) => {
     let oldSkills = skills;
     _.forEach(skillsDataForm.skills, (skillData) => {
-      skillData.deleted = false;
+      skillData.technique.version === skillData.technique.version.trim();
       const existSkill = _.find(skills, (skill) => {
         return (
-          skill.technique.name == skillData.technique.name &&
-          skill.technique.version == skillData.technique.version
+          skill.technique.name.trim() === skillData.technique.name.trim() &&
+          skill.technique.version.trim() ===
+            skillData.technique.version.trim() &&
+          skill.level === Number(skillData.level)
         );
       });
       oldSkills = _.without(oldSkills, existSkill);
@@ -100,7 +102,10 @@ const create = (): JSX.Element => {
         return;
       }
       const technique: TechniqueState = _.find(techniques, (technique) => {
-        return technique.name == skillData.technique.name;
+        return (
+          technique.name == skillData.technique.name &&
+          technique.version === skillData.technique.version
+        );
       });
       if (typeof technique !== "undefined") {
         skillData.technique.id = technique?.id;

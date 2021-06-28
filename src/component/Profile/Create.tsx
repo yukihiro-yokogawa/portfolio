@@ -166,46 +166,46 @@ const create = (props: ProfileCreateState) => {
                     <input
                       type="hidden"
                       name={`introduction.deleted`}
-                      ref={methods.register}
+                      ref={methods.register()}
                     />
                     <input
                       type="hidden"
                       name={`introduction.id`}
-                      ref={methods.register}
+                      ref={methods.register()}
                     />
                     <input
                       type="hidden"
                       name={`introduction.title`}
-                      ref={methods.register}
+                      ref={methods.register()}
                     />
                     <input
                       type="hidden"
                       name={`introduction.date`}
-                      ref={methods.register}
+                      ref={methods.register()}
                     />
                     <input
                       type="hidden"
                       name={`introduction.profile.id`}
                       value={profile.id != null ? profile.id : "0"}
-                      ref={methods.register}
+                      ref={methods.register()}
                     />
                     <input
                       type="hidden"
                       name={`introduction.profile.dateType`}
                       value={`${profile.dateType}`}
-                      ref={methods.register}
+                      ref={methods.register()}
                     />
                     <input
                       type="hidden"
                       name={`introduction.profile.displayOrder`}
                       value={profile.displayOrder}
-                      ref={methods.register}
+                      ref={methods.register()}
                     />
                     <input
                       type="hidden"
                       name={`introduction.profile.name`}
                       value={profile.name}
-                      ref={methods.register}
+                      ref={methods.register()}
                     />
                     <CustomInput
                       label={profile.name}

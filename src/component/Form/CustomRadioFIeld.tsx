@@ -9,10 +9,6 @@ import {
 import React from "react";
 import { ConnectForm } from "./ConnectForm";
 import _ from "lodash";
-import { ControlPointDuplicateRounded } from "@material-ui/icons";
-import { toNamespacedPath } from "path";
-import { Controller } from "react-hook-form";
-
 /**
  * Material UiのFormControl（ラジオボタン）コンポーネントをラッピングしたカスタムコンポーネント.
  *
@@ -31,36 +27,34 @@ const CustomRadioField = (props: {
   return (
     <>
       <ConnectForm>
-        {({ errors, register, control }) => (
-          <Controller
-            name={name}
-            control={control}
-            defaultValue={String(defaultValue)}
-            as={
-              <FormControl
-                style={{ ...customStyle, margin: "8px" }}
-                component="fieldset"
-                error={Boolean(_.get(errors, name))}
-              >
-                <FormLabel>{label}</FormLabel>
-                <RadioGroup row aria-label={label} name={name}>
-                  {values.map((value, index) => (
-                    <FormControlLabel
-                      key={index}
-                      value={value.name}
-                      control={<Radio color="primary" />}
-                      label={value.name}
-                      labelPlacement="bottom"
-                      inputRef={register({ required: true })}
-                    />
-                  ))}
-                </RadioGroup>
-                {_.get(errors, name) ? (
-                  <FormHelperText>選択してください</FormHelperText>
-                ) : null}
-              </FormControl>
-            }
-          />
+        {({ errors, register }) => (
+          <FormControl
+            style={{ ...customStyle, margin: "8px" }}
+            component="fieldset"
+            error={Boolean(_.get(errors, name))}
+          >
+            <FormLabel>{label}</FormLabel>
+            <RadioGroup
+              row
+              aria-label={label}
+              name={name}
+              defaultValue={String(defaultValue)}
+            >
+              {values.map((value, index) => (
+                <FormControlLabel
+                  key={index}
+                  value={value.name}
+                  control={<Radio color="primary" />}
+                  label={value.name}
+                  labelPlacement="bottom"
+                  inputRef={register({ required: true })}
+                />
+              ))}
+            </RadioGroup>
+            {_.get(errors, name) ? (
+              <FormHelperText>選択してください</FormHelperText>
+            ) : null}
+          </FormControl>
         )}
       </ConnectForm>
     </>

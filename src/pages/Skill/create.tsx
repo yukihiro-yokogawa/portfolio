@@ -1,10 +1,7 @@
 import React, { createContext, useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Create from "~/container/Skill/Create";
-import {
-  getSkillsAsync,
-  getSkillsByDeletedAsync,
-} from "~/ducks/Slice/SkillSlice";
+import { getSkillsByDeletedAsync } from "~/ducks/Slice/SkillSlice";
 import { getTechniquesAsync } from "~/ducks/Slice/TechniqueSlice";
 import { getTechniqueTypeAsync } from "~/ducks/Slice/TechniqueTypeSlice";
 import _ from "lodash";
@@ -31,7 +28,6 @@ const create = (props: { skills: Array<any> }): JSX.Element => {
   useEffect(() => {
     dispatch(getTechniquesAsync());
     dispatch(getTechniqueTypeAsync());
-    // dispatch(getSkillsAsync());
     dispatch(getSkillsByDeletedAsync());
   }, [dispatch]);
 

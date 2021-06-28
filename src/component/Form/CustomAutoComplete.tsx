@@ -4,8 +4,6 @@ import { AutoCompleteState } from "~/Type/Form";
 import { ConnectForm } from "./ConnectForm";
 import _ from "lodash";
 import { Autocomplete } from "@material-ui/lab";
-import { Controller } from "react-hook-form";
-
 /**
  * Material UiのTextFieldコンポーネントをラッピングしたカスタムコンポーネント.
  *
