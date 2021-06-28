@@ -34,11 +34,13 @@ const customAutoComplete = (props: AutoCompleteState): JSX.Element => {
             <Autocomplete
               freeSolo
               options={
-                typeof autoCompletes === "undefined" ? [] : autoCompletes
+                typeof autoCompletes === "undefined"
+                  ? [{ name: "", type: "" }]
+                  : autoCompletes
               }
               style={customStyle}
-              groupBy={(option) => option.type}
-              getOptionLabel={(option) => option.name}
+              groupBy={(option) => (option ? option?.type : "")}
+              getOptionLabel={(option) => (option ? option?.name : "")}
               defaultValue={{
                 name: value,
                 type: _.find(autoCompletes, (autoComplete) => {

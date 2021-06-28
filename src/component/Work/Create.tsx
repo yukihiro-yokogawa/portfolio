@@ -2,7 +2,7 @@ import CustomInput from "../Form/CustomInput";
 import { Box, Button, Container } from "@material-ui/core";
 import CustomSelectField from "../Form/CustomSelectField";
 import { WorkCreateState } from "~/Type/Work";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { useStoreState } from "~/ducks/selector";
 import { Fab } from "@material-ui/core";
@@ -26,7 +26,6 @@ const create = (props: WorkCreateState): JSX.Element => {
     autoCompleteTechniques,
     autoCompleteVersions,
     handleChangeTechnique,
-    handleClickAddAbout,
     handleSubmit,
   } = props;
 
@@ -53,15 +52,16 @@ const create = (props: WorkCreateState): JSX.Element => {
       projectAbouts: projectAbouts,
     },
   });
-  const { setValue, control } = methods;
+  const { control } = methods;
 
-  useEffect(() => {
-    setValue("projectAbouts", projectAbouts);
-  }, [setValue, projectAbouts]);
-
-  const { fields, append, remove } = useFieldArray({
+  const projectTechniqueFieldArray = useFieldArray({
     control,
     name: "projectTechniques",
+  });
+
+  const projectAboutFieldArray = useFieldArray({
+    control,
+    name: "projectAbouts",
   });
 
   return (
@@ -86,7 +86,7 @@ const create = (props: WorkCreateState): JSX.Element => {
               placeholder="プロジェクトのタイトルを入力してください"
               customStyle={null}
             />
-            {fields.map((field, index) => (
+            {projectTechniqueFieldArray.fields.map((field, index) => (
               <Box
                 alignItems="center"
                 width={1}
@@ -103,7 +103,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   length={0}
                   url={false}
                   date={false}
-                  value={field?.technique.name}
+                  value={field?.technique?.name}
                   autoCompletes={autoCompleteTechniques}
                   placeholder="使用している技術名を入力してください"
                   customStyle={{ width: "60%" }}
@@ -117,7 +117,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   length={0}
                   url={false}
                   date={false}
-                  value={field?.technique.version}
+                  value={field?.technique?.version}
                   autoCompletes={
                     _.find(autoCompleteVersions, (autoCompleteVersion) => {
                       return autoCompleteVersion?.id == index;
@@ -133,7 +133,7 @@ const create = (props: WorkCreateState): JSX.Element => {
                   size="small"
                   style={{ width: "36px", height: "36px" }}
                   onClick={() => {
-                    remove(index);
+                    projectTechniqueFieldArray.remove(index);
                   }}
                 >
                   ×
@@ -152,7 +152,7 @@ const create = (props: WorkCreateState): JSX.Element => {
             <Button
               style={{ margin: 8 }}
               onClick={() => {
-                append({});
+                projectTechniqueFieldArray.append({});
               }}
               variant="contained"
               color="primary"
@@ -229,25 +229,39 @@ const create = (props: WorkCreateState): JSX.Element => {
               selectValue={abouts}
               editSelectValue={aboutFieldList}
               customStyle={null}
-              handleClick={handleClickAddAbout}
+              handleClick={(e) => {
+                if (e.length > projectAboutFieldArray?.fields?.length) {
+                  projectAboutFieldArray.append({
+                    about: { name: e[e.length - 1] },
+                  });
+                } else if (e.length < projectAboutFieldArray?.fields?.length) {
+                  const index = _.filter(
+                    projectAboutFieldArray.fields,
+                    (field, index) => {
+                      return field?.about?.name === e[Number(index)];
+                    }
+                  ).length;
+                  projectAboutFieldArray.remove(index);
+                }
+              }}
             />
-            {aboutFieldList.map((value, index) => (
-              <Box key={value}>
+            {projectAboutFieldArray.fields.map((field, index) => (
+              <Box key={field.id}>
                 <input
                   type="hidden"
                   name={`projectAbouts[${index}].about.name`}
-                  value={value}
-                  ref={methods.register()}
+                  value={field?.about?.name}
+                  ref={methods.register({})}
                 />
                 <CustomInput
-                  label={value}
+                  label={field?.about?.name}
                   name={`projectAbouts[${index}].description`}
                   required={true}
                   length={512}
-                  value=""
+                  value={field?.description}
                   url={false}
                   date={false}
-                  placeholder={`${value}を入力してください`}
+                  placeholder={`を入力してください`}
                   customStyle={null}
                 />
               </Box>

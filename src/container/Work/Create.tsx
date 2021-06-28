@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import _ from "lodash";
 import Create from "~/component/Work/Create";
 import { ProjectState } from "~/Type/Project";
@@ -20,21 +26,16 @@ const create = (): JSX.Element => {
 
   const { projectTechniques, projectAbouts } = useContext(ProjectContext);
 
-  // 使用技術追加のDOM変更用変数.
-  const [techniqueFieldList, setTechniqueFieldList] = useState(
-    projectTechniques.length == 0 ? [0] : projectTechniques.map((_, i) => i)
-  );
   // version入力部分のオートコンプリート.
   const [autoCompleteVersions, setAutoCompleteVersions] = useState([]);
 
   // project詳細のDOM変更用変数.
-  const [aboutFieldList, setAboutFieldList] = useState(
+  const aboutFieldList =
     projectAbouts.length == 0
       ? []
       : _.map(projectAbouts, (projectAbout) => {
           return projectAbout.about.name;
-        })
-  );
+        });
 
   // aboutsの値が変更しないならキャッシュから取得.
   const aboutsArr = useMemo(() => {
@@ -56,6 +57,25 @@ const create = (): JSX.Element => {
       .uniqBy("name")
       .value();
   }, [techniques]);
+
+  useEffect(() => {
+    const defaultAutoCompleteVersions = [];
+    _.forEach(projectTechniques, (skill, index) => {
+      const autoCompleteVersion = {
+        id: index,
+        autoComplete: _(techniques)
+          .filter((technique) => {
+            return technique.name == skill.technique.name;
+          })
+          .map((technique) => {
+            return { id: technique.id, name: technique.version, type: "" };
+          })
+          .value(),
+      };
+      defaultAutoCompleteVersions.push(autoCompleteVersion);
+    });
+    setAutoCompleteVersions([...defaultAutoCompleteVersions]);
+  }, [projectTechniques, techniques]);
 
   /**
    * TechniqueのTextFieldコンポーネントが変更された際に実行される、VersionのTextFieldコンポーネントで使用するAutoCompleteオブジェクトを生成するイベントハンドラ.
@@ -91,55 +111,6 @@ const create = (): JSX.Element => {
   );
 
   /**
-   * 技術新規追加フォーム増加イベント.
-   */
-  const handleClickAddTechnique = useCallback(() => {
-    const newTehcniqueField =
-      techniqueFieldList.length == 0 ? 0 : _.max(techniqueFieldList) + 1;
-    setTechniqueFieldList([...techniqueFieldList, newTehcniqueField]);
-  }, [techniqueFieldList]);
-
-  /**
-   * 技術新規追加フォーム減少イベント
-   *
-   * @param {number} key
-   */
-  const handleClickDeleteTechnique = useCallback(
-    (key: number, index: number) => {
-      const newTechniqueField = _.without(techniqueFieldList, key);
-      setTechniqueFieldList(newTechniqueField);
-      const deletedAutoCompleteVersions = _.filter(
-        autoCompleteVersions,
-        (autoCompleteVersion) => {
-          return autoCompleteVersion.id !== index;
-        }
-      );
-      // versionのAutoCompleteリストを操作.
-      _.forEach(deletedAutoCompleteVersions, (autoCompleteVersion) => {
-        autoCompleteVersion.id > index
-          ? (autoCompleteVersion.id = autoCompleteVersion.id - 1)
-          : null;
-      });
-      setAutoCompleteVersions([...deletedAutoCompleteVersions]);
-    },
-    [autoCompleteVersions, techniqueFieldList]
-  );
-
-  /**
-   * プロジェクトの特徴を記載するフォームを増やすイベント.
-   *
-   * @param {string[]} values
-   */
-  const handleClickAddAbout = useCallback((values: string[]) => {
-    const aboutsName = [];
-    _.forEach(values, (value) => {
-      aboutsName.push(value);
-    });
-    aboutsName.splice(1, 0);
-    setAboutFieldList(aboutsName);
-  }, []);
-
-  /**
    * サブミット時のイベント.
    *
    * @param {*} event
@@ -153,7 +124,11 @@ const create = (): JSX.Element => {
       });
       _(projectDataForm.projectTechniques).forEach((projectTechnique) => {
         projectTechnique.technique.id = _.find(techniques, (technique) => {
-          return technique.name === projectTechnique.technique.name;
+          projectTechnique.technique.version = projectTechnique.technique.version.trim();
+          return (
+            technique.name === projectTechnique.technique.name &&
+            technique.version === projectTechnique.technique.version
+          );
         }).id;
       });
       _(projectDataForm.projectTechniques).forEach((projectTechnique) => {
@@ -175,14 +150,10 @@ const create = (): JSX.Element => {
     <>
       <Create
         abouts={aboutsArr}
-        techniqueFieldList={techniqueFieldList}
         aboutFieldList={aboutFieldList}
         autoCompleteTechniques={autoCompleteTechniques}
         autoCompleteVersions={autoCompleteVersions}
         handleChangeTechnique={handleChangeTechnique}
-        handleClickAddTechnique={handleClickAddTechnique}
-        handleClickDeleteTechnique={handleClickDeleteTechnique}
-        handleClickAddAbout={handleClickAddAbout}
         handleSubmit={handleSubmit}
       />
     </>

@@ -87,7 +87,8 @@ export const postProjectAsync = (project: ProjectState) => async (
       params: { data: project, query: "PostProject" },
     })
     .then(() => {
-      dispatch(postProjectRequest(project));
+      console.log(project);
+      // dispatch(postProjectRequest(project));
       dispatch(requestSuccess());
     })
     .catch((err) => {

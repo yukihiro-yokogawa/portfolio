@@ -1,6 +1,7 @@
 import express from "express";
 import next from "next";
 import axios from "axios";
+import path from "path";
 
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
@@ -181,6 +182,30 @@ app.prepare().then(() => {
         res.status(err.statusCode).send(err);
       });
   });
+
+  server.get("/profile", (_req, res) =>
+    res.sendFile(path.join(path.resolve("./src/pages/Profile/", "profile.tsx")))
+  );
+
+  server.get("/profile/edit", (_req, res) =>
+    res.sendFile(path.join(path.resolve("./src/pages/Profile/", "create.tsx")))
+  );
+
+  server.get("/skill", (_req, res) =>
+    res.sendFile(path.join(path.resolve("./src/pages/Skill/", "skill.tsx")))
+  );
+
+  server.get("/skill/edit", (_req, res) =>
+    res.sendFile(path.join(path.resolve("./src/pages/Skill/", "create.tsx")))
+  );
+
+  server.get("/work/new", (_req, res) =>
+    res.sendFile(path.join(path.resolve("./src/pages/Work/", "work.tsx")))
+  );
+
+  server.get("/work/edit", (_req, res) =>
+    res.sendFile(path.join(path.resolve("./src/pages/Work/", "create.tsx")))
+  );
 
   server.all("*", (req, res) => {
     return handle(req, res);
