@@ -61,8 +61,8 @@ export const postMyProfileAsync = (myProfiles: Array<MyProfileState>) => async (
     .post("/api/my_profile/post", {
       params: { data: myProfiles, query: "PostMyProfile" },
     })
-    .then(() => {
-      dispatch(postMyProfileRequest(myProfiles));
+    .then((response) => {
+      dispatch(postMyProfileRequest(response.data));
       dispatch(requestSuccess());
     })
     .catch((err) => {

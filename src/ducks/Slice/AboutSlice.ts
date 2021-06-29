@@ -52,8 +52,8 @@ export const postAboutAsync = (about: AboutState) => async (
   dispatch(requestLoading());
   axios
     .post(`/api/about/post`, { params: { data: about, query: "PostAbout" } })
-    .then(() => {
-      dispatch(postAboutRequest(about));
+    .then((response) => {
+      dispatch(postAboutRequest(response.data));
       dispatch(requestSuccess());
     })
     .catch((err) => {

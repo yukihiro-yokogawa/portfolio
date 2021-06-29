@@ -1,10 +1,10 @@
 import express from "express";
 import next from "next";
 import axios from "axios";
-import path from "path";
 
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
+const url = dev ? "http://localhost:8080" : "http://portfolioapi:8080";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -15,7 +15,7 @@ app.prepare().then(() => {
 
   server.get("/api/profile/get", (_req, res) => {
     axios
-      .get(`http://localhost:8080/api/profile/get`)
+      .get(`${url}/api/profile/get`)
       .then((response) => {
         res.send(response.data);
       })
@@ -27,7 +27,7 @@ app.prepare().then(() => {
 
   server.get("/api/my_profile/get", (_req, res) => {
     axios
-      .get(`http://localhost:8080/api/my_profile/get`)
+      .get(`${url}/api/my_profile/get`)
       .then((response) => {
         res.send(response.data);
       })
@@ -39,7 +39,7 @@ app.prepare().then(() => {
 
   server.post("/api/my_profile/post", (req, res) => {
     axios
-      .post(`http://localhost:8080/api/my_profile/post`, req.body.params.data)
+      .post(`${url}/api/my_profile/post`, req.body.params.data)
       .then((response) => {
         res.send(response.data);
       })
@@ -51,7 +51,7 @@ app.prepare().then(() => {
 
   server.get("/api/project/get", (_req, res) => {
     axios
-      .get(`http://localhost:8080/api/project/get`)
+      .get(`${url}/api/project/get`)
       .then((response) => {
         res.send(response.data);
       })
@@ -63,7 +63,7 @@ app.prepare().then(() => {
 
   server.get("/api/project/getOne", (req, res) => {
     axios
-      .get(`http://localhost:8080/api/project/getOne`, {
+      .get(`${url}/api/project/getOne`, {
         params: { id: req.query.id },
       })
       .then((response) => {
@@ -77,7 +77,7 @@ app.prepare().then(() => {
 
   server.post("/api/project/post", (req, res) => {
     axios
-      .post(`http://localhost:8080/api/project/post`, req.body.params.data)
+      .post(`${url}/api/project/post`, req.body.params.data)
       .then((response) => {
         res.send(response.data);
       })
@@ -89,7 +89,7 @@ app.prepare().then(() => {
 
   server.get("/api/technique/get", (_req, res) => {
     axios
-      .get(`http://localhost:8080/api/technique/get`)
+      .get(`${url}/api/technique/get`)
       .then((response) => {
         res.send(response.data);
       })
@@ -101,7 +101,7 @@ app.prepare().then(() => {
 
   server.post("/api/technique/post", (req, res) => {
     axios
-      .post(`http://localhost:8080/api/technique/post`, req.body.params.data)
+      .post(`${url}/api/technique/post`, req.body.params.data)
       .then((response) => {
         res.send(response.data);
       })
@@ -113,7 +113,7 @@ app.prepare().then(() => {
 
   server.get("/api/about/get", (_req, res) => {
     axios
-      .get(`http://localhost:8080/api/about/get`)
+      .get(`${url}/api/about/get`)
       .then((response) => {
         res.send(response.data);
       })
@@ -125,7 +125,7 @@ app.prepare().then(() => {
 
   server.post("/api/about/post", (req, res) => {
     axios
-      .post(`http://localhost:8080/api/about/post`, req.body.params.data)
+      .post(`${url}/api/about/post`, req.body.params.data)
       .then((response) => {
         res.send(response.data);
       })
@@ -137,7 +137,7 @@ app.prepare().then(() => {
 
   server.get("/api/techniqueType/get", (_req, res) => {
     axios
-      .get(`http://localhost:8080/api/techniqueType/get`)
+      .get(`${url}/api/techniqueType/get`)
       .then((response) => {
         res.send(response.data);
       })
@@ -149,7 +149,7 @@ app.prepare().then(() => {
 
   server.get("/api/skill/get", (_req, res) => {
     axios
-      .get(`http://localhost:8080/api/skill/get`)
+      .get(`${url}/api/skill/get`)
       .then((response) => {
         res.send(response.data);
       })
@@ -161,7 +161,7 @@ app.prepare().then(() => {
 
   server.get("/api/skill/getDeleted", (_req, res) => {
     axios
-      .get(`http://localhost:8080/api/skill/getDeleted`)
+      .get(`${url}/api/skill/getDeleted`)
       .then((response) => {
         res.send(response.data);
       })
@@ -173,7 +173,7 @@ app.prepare().then(() => {
 
   server.post("/api/skill/post", (req, res) => {
     axios
-      .post(`http://localhost:8080/api/skill/post`, req.body.params.data)
+      .post(`${url}/api/skill/post`, req.body.params.data)
       .then((response) => {
         res.send(response.data);
       })
@@ -182,30 +182,6 @@ app.prepare().then(() => {
         res.status(err.statusCode).send(err);
       });
   });
-
-  server.get("/profile", (_req, res) =>
-    res.sendFile(path.join(path.resolve("./src/pages/Profile/", "profile.tsx")))
-  );
-
-  server.get("/profile/edit", (_req, res) =>
-    res.sendFile(path.join(path.resolve("./src/pages/Profile/", "create.tsx")))
-  );
-
-  server.get("/skill", (_req, res) =>
-    res.sendFile(path.join(path.resolve("./src/pages/Skill/", "skill.tsx")))
-  );
-
-  server.get("/skill/edit", (_req, res) =>
-    res.sendFile(path.join(path.resolve("./src/pages/Skill/", "create.tsx")))
-  );
-
-  server.get("/work/new", (_req, res) =>
-    res.sendFile(path.join(path.resolve("./src/pages/Work/", "work.tsx")))
-  );
-
-  server.get("/work/edit", (_req, res) =>
-    res.sendFile(path.join(path.resolve("./src/pages/Work/", "create.tsx")))
-  );
 
   server.all("*", (req, res) => {
     return handle(req, res);

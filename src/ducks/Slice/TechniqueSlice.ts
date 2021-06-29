@@ -58,8 +58,8 @@ export const postTechniqueAsync = (technique: TechniqueState) => async (
     .post("/api/technique/post", {
       params: { data: technique, query: "PostTechnique" },
     })
-    .then(() => {
-      dispatch(postTechniqueRequest(technique));
+    .then((response) => {
+      dispatch(postTechniqueRequest(response.data));
       dispatch(requestSuccess());
     })
     .catch((err) => {
