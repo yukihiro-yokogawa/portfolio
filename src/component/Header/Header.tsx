@@ -14,22 +14,17 @@ const Header: React.FC = () => {
           <ul className="inner-nav">
             <Link href="/">
               <li className="menu">
-                <a>top</a>
-              </li>
-            </Link>
-            <Link href="/Profile/profile" as="/profile">
-              <li className="menu">
-                <a>profile</a>
+                <a>Profile</a>
               </li>
             </Link>
             <Link href="/Skill/skill" as="/skill">
               <li className="menu">
-                <a>skill</a>
+                <a>Skill</a>
               </li>
             </Link>
             <Link href="/Work/work" as="/work">
               <li className="menu">
-                <a>work</a>
+                <a>Work</a>
               </li>
             </Link>
           </ul>

@@ -1,8 +1,7 @@
 import React from "react";
-import News from "~/container/News/News";
-
-const news: React.FC = () => {
-  return <News />;
+import Profile from "./Profile/profile";
+const profile: React.FC = () => {
+  return <Profile />;
 };
 
-export default news;
+export default profile;
